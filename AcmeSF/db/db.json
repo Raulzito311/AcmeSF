@@ -3,17 +3,17 @@
         {
             "descricao": "À vista sem juros",
             "meses": 1,
-            "juros": 0.05
+            "juros": 0.00
         },
         {
             "descricao": "2 vezes sem juros",
             "meses": 2,
-            "juros": 0.05
+            "juros": 0.00
         },
         {
             "descricao": "3 vezes sem juros",
             "meses": 3,
-            "juros": 0.05
+            "juros": 0.00
         },
         {
             "descricao": "4 vezes",
@@ -33,92 +33,92 @@
         {
             "descricao": "7 vezes",
             "meses": 7,
-            "juros": 0.05
+            "juros": 0.075
         },
         {
             "descricao": "8 vezes",
             "meses": 8,
-            "juros": 0.05
+            "juros": 0.075
         },
         {
             "descricao": "9 vezes",
             "meses": 9,
-            "juros": 0.05
+            "juros": 0.075
         },
         {
             "descricao": "10 vezes",
             "meses": 10,
-            "juros": 0.05
+            "juros": 0.1
         },
         {
             "descricao": "11 vezes",
             "meses": 11,
-            "juros": 0.05
+            "juros": 0.1
         },
         {
             "descricao": "12 vezes",
             "meses": 12,
-            "juros": 0.05
+            "juros": 0.1
         },
         {
             "descricao": "13 vezes",
             "meses": 13,
-            "juros": 0.05
+            "juros": 0.125
         },
         {
             "descricao": "14 vezes",
             "meses": 14,
-            "juros": 0.05
+            "juros": 0.125
         },
         {
             "descricao": "15 vezes",
             "meses": 15,
-            "juros": 0.05
+            "juros": 0.125
         },
         {
             "descricao": "16 vezes",
             "meses": 16,
-            "juros": 0.05
+            "juros": 0.15
         },
         {
             "descricao": "17 vezes",
             "meses": 17,
-            "juros": 0.05
+            "juros": 0.15
         },
         {
             "descricao": "18 vezes",
             "meses": 18,
-            "juros": 0.05
+            "juros": 0.15
         },
         {
             "descricao": "19 vezes",
             "meses": 19,
-            "juros": 0.05
+            "juros": 0.175
         },
         {
             "descricao": "20 vezes",
             "meses": 20,
-            "juros": 0.05
+            "juros": 0.175
         },
         {
             "descricao": "21 vezes",
             "meses": 21,
-            "juros": 0.05
+            "juros": 0.175
         },
         {
             "descricao": "22 vezes",
             "meses": 22,
-            "juros": 0.05
+            "juros": 0.2
         },
         {
             "descricao": "23 vezes",
             "meses": 23,
-            "juros": 0.05
+            "juros": 0.2
         },
         {
             "descricao": "24 vezes",
             "meses": 24,
-            "juros": 0.05
+            "juros": 0.2
         }
     ]
 }
