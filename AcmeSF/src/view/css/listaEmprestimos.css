@@ -1,0 +1,6 @@
+.DivTitulo{
+    display: flex;
+    flex-direction: row;
+    gap: 60%;
+    padding: 30px 50px 30px 50px;
+}
