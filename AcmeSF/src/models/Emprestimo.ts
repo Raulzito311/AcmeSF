@@ -1,44 +1,40 @@
+import { FormaDePagamento } from "./FormaDePagamento";
+
 export class Emprestimo {
-    clienteId: number; 
-    valorEmprestimo: number;
-    formaPagamentoId: number; 
-    dataHora: Date; 
-    valorFinal: number; 
-    parcelas: number[];
-  
-    constructor(
-      clienteId: number,
-      valorEmprestimo: number,
-      formaPagamentoId: number,
-      dataHora: Date,
-      valorFinal: number,
-    ) {
-      this.clienteId = clienteId;
-      this.valorEmprestimo = valorEmprestimo;
-      this.formaPagamentoId = formaPagamentoId;
-      this.dataHora = dataHora;
-      this.valorFinal = valorFinal;
-      this.parcelas = [];
-    }
+	clienteId: number;
+	valorEmprestimo: number;
+	formaDePagamento: FormaDePagamento;
+	dataHora: Date;
+	valorFinal: number;
+	parcelas: number[];
 
-    calcularValorFinal(): void {
-        let formaPagamento = obterFormaDePagamentoPeloId(this.formaPagamentoId); //linha passivel de erro pois a função obterFormaDePagamentoPeloId ainda não foi implementada
-        this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * formaPagamento.juros);
-    }
-  
-    gerarParcelas(): void {
-        let formaPagamento = obterFormaDePagamentoPeloId(this.formaPagamentoId); //linha passivel de erro pois a função obterFormaDePagamentoPeloId ainda não foi implementada
-        let valorParcela = parseFloat((this.valorFinal / formaPagamento.meses).toFixed(2));
-        let soma = valorParcela * formaPagamento.meses;
+	constructor(clienteId: number,
+				valorEmprestimo: number,
+				formaDePagamento: FormaDePagamento,
+				dataHora: Date) {
+		this.clienteId = clienteId;
+		this.valorEmprestimo = valorEmprestimo;
+		this.formaDePagamento = formaDePagamento;
+		this.dataHora = dataHora;
 
-        for(let i = 0; i < formaPagamento.meses; i++){
-            this.parcelas.push(valorParcela);
-        }
+		this.parcelas = [];
 
-        if(this.valorFinal > soma){
-            let ValorSobra = this.valorFinal - soma;
-            this.parcelas[this.parcelas.length - 1] = parseFloat((this.parcelas[this.parcelas.length - 1] + ValorSobra).toFixed(2));
-        }
-    }
-  }
-  
+		this.configurar();
+	}
+
+	private configurar(): void {
+		this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * this.formaDePagamento.juros);
+
+		const valorParcela = Math.floor((this.valorFinal / this.formaDePagamento.meses) * 100) / 100;
+		let centavosSobrando = Math.round((this.valorFinal - (valorParcela * this.formaDePagamento.meses)) * 100);
+
+		for (let i = 0; i < this.formaDePagamento.meses; i++) {
+			let valor = valorParcela;
+			if (centavosSobrando > 0) {
+				valor += 0.01;
+				centavosSobrando--;
+			}
+			this.parcelas.push(Math.round(valor*100)/100);
+		}
+	}
+}
