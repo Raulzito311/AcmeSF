@@ -1,8 +1,5 @@
-async function listarEmprestimos() {
-    const listagem = await fetch('../html/listaEmprestimos.html');
-    const lista = await listagem.text();
+import { ControllerEmprestimo } from "./controllers/ControllerEmprestimo";
 
-    document.querySelector("main")!.innerHTML = lista;
-}
+const controller = new ControllerEmprestimo();
 
-listarEmprestimos();
+controller.init();
