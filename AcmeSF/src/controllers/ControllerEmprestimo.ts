@@ -6,7 +6,9 @@ export class ControllerEmprestimo {
         this.view = new ViewEmprestimo();
     }
 
-    public init(): void {
+    public async init(): Promise<void> {
+        await this.view.carregarTabelaDeEmprestimos();
+        
         this.view.listarEmprestimos([]);
     }
 }

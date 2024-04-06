@@ -1,6 +1,10 @@
-.DivTitulo{
+.titulo {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 30px 50px 30px 50px;
+}
+
+.semEmprestimos {
+    text-align: center;
 }

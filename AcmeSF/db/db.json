@@ -2,21 +2,21 @@
     "formasDePagamento": [
         {
             "id": 1,
-            "descricao": "À vista sem juros",
+            "descricao": "1 vez",
             "meses": 1,
-            "juros": 0.00
+            "juros": 0.025
         },
         {
             "id": 2,
-            "descricao": "2 vezes sem juros",
+            "descricao": "2 vezes",
             "meses": 2,
-            "juros": 0.00
+            "juros": 0.025
         },
         {
             "id": 3,
-            "descricao": "3 vezes sem juros",
+            "descricao": "3 vezes",
             "meses": 3,
-            "juros": 0.00
+            "juros": 0.025
         },
         {
             "id": 4,
@@ -143,6 +143,14 @@
             "descricao": "24 vezes",
             "meses": 24,
             "juros": 0.2
+        }
+    ],
+    "emprestimos": [
+        {
+            "clienteId": 1,
+            "formaDePagamentoId": 3,
+            "valorEmprestado": 1000.00,
+            "data": "2024-04-11"
         }
     ]
 }
