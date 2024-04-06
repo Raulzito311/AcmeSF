@@ -1,0 +1,19 @@
+{
+    "name": "acmesf/api",
+    "scripts": {
+        "test": "kahlan"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^5.2"
+    },
+    "require": {
+        "phputil/extenso": "^2.0",
+        "phputil/router": "^0.2.15",
+        "phputil/cors": "^0.2.2"
+    }
+}
