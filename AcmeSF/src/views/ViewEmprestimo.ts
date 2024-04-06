@@ -3,7 +3,7 @@ import { Emprestimo } from "../models/Emprestimo";
 export class ViewEmprestimo {
 
     public async carregarTabelaDeEmprestimos(): Promise<void> {
-        const listagem = await fetch('../../html/listaEmprestimos.html');
+        const listagem = await fetch('./html/listaEmprestimos.html');
         const lista = await listagem.text();
     
         document.querySelector("main")!.innerHTML = lista;

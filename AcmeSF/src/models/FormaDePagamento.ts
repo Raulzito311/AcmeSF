@@ -1,6 +1,13 @@
-export type FormaDePagamento = {
-    id: number;
-    descricao: string;
-    meses: number;
-    juros: number;
-};
+export class FormaDePagamento {
+    readonly id: number;
+    readonly descricao: string;
+    readonly meses: number;
+    readonly juros: number;
+
+    constructor(id: number, descricao: string, meses: number, juros: number) {
+        this.id = id;
+        this.descricao = descricao;
+        this.meses = meses;
+        this.juros = juros;
+    }
+}

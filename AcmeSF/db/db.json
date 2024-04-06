@@ -145,12 +145,32 @@
             "juros": 0.2
         }
     ],
+    "clientes": [
+        {
+            "id": 1,
+            "cpf": "028.759.627-84",
+            "nome": "Thiago Delgado",
+            "dataNascimento": "1994-04-11"
+        },
+        {
+            "id": 2,
+            "cpf": "062.148.365-24",
+            "nome": "Raul Fernandes",
+            "dataNascimento": "2003-03-06"
+        }
+    ],
     "emprestimos": [
         {
             "clienteId": 1,
             "formaDePagamentoId": 3,
             "valorEmprestado": 1000.00,
-            "data": "2024-04-11"
+            "data": "2024-02-17"
+        },
+        {
+            "clienteId": 2,
+            "formaDePagamentoId": 10,
+            "valorEmprestado": 5000.00,
+            "data": "2023-07-22"
         }
     ]
 }

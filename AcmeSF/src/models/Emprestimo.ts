@@ -2,30 +2,29 @@ import { Cliente } from "./Cliente";
 import { FormaDePagamento } from "./FormaDePagamento";
 
 export class Emprestimo {
-	cliente: Cliente;
-	valorEmprestimo: number;
-	formaDePagamento: FormaDePagamento;
-	dataHora: Date;
-	valorFinal: number;
-	parcelas: number[];
+	readonly id: number;
+	readonly cliente: Cliente;
+	readonly valorEmprestimo: number;
+	readonly formaDePagamento: FormaDePagamento;
+	readonly dataHora: Date;
+	readonly valorFinal: number;
+	readonly parcelas: number[];
 
-	constructor(cliente: Cliente,
-				valorEmprestimo: number,
-				formaDePagamento: FormaDePagamento,
-				dataHora: Date) {
+	constructor(id: number, cliente: Cliente, valorEmprestimo: number, formaDePagamento: FormaDePagamento, dataHora: Date) {
+		this.id = id;
 		this.cliente = cliente;
 		this.valorEmprestimo = valorEmprestimo;
 		this.formaDePagamento = formaDePagamento;
 		this.dataHora = dataHora;
 
-		this.parcelas = [];
-
-		this.calcularValores();
-	}
-
-	private calcularValores(): void {
 		this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * this.formaDePagamento.juros);
 
+		this.parcelas = [];
+
+		this.calcularParcelas();
+	}
+
+	private calcularParcelas(): void {
 		const valorParcela = Math.floor((this.valorFinal / this.formaDePagamento.meses) * 100) / 100;
 		let centavosSobrando = Math.round((this.valorFinal - (valorParcela * this.formaDePagamento.meses)) * 100);
 
