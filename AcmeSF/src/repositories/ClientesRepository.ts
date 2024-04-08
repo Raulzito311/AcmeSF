@@ -2,7 +2,7 @@ import { Cliente } from "../models/Cliente";
 import { API } from "./API";
 import { Repository } from "./Repository";
 
-export class ClienteRepository implements Repository<Cliente> {
+export class ClientesRepository implements Repository<Cliente> {
     async buscarPeloId(id: number): Promise<Cliente> {
         const res = await fetch(`${API}/clientes?id=${id}`);
         if (!res.ok)

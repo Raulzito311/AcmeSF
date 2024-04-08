@@ -1,14 +1,14 @@
 import { Emprestimo } from "../models/Emprestimo";
 import { API } from "./API";
-import { ClienteRepository } from "./ClienteRepository";
-import { FormaDePagamentoRepository } from "./FormaDePagamentoRepository";
+import { ClientesRepository } from "./ClientesRepository";
+import { FormasDePagamentoRepository } from "./FormasDePagamentoRepository";
 import { Repository } from "./Repository";
 
-export class EmprestimoRepository implements Repository<Emprestimo> {
-    readonly clientes: ClienteRepository;
-    readonly formasDePagamento: FormaDePagamentoRepository;
+export class EmprestimosRepository implements Repository<Emprestimo> {
+    readonly clientes: ClientesRepository;
+    readonly formasDePagamento: FormasDePagamentoRepository;
 
-    constructor(clientes: ClienteRepository, formasDePagamento: FormaDePagamentoRepository) {
+    constructor(clientes: ClientesRepository, formasDePagamento: FormasDePagamentoRepository) {
         this.clientes = clientes;
         this.formasDePagamento = formasDePagamento;
     }
