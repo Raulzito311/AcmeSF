@@ -1,15 +1,15 @@
+import { Cliente } from "../models/Cliente";
 import { Emprestimo } from "../models/Emprestimo";
+import { FormaDePagamento } from "../models/FormaDePagamento";
+import { View } from "./View";
 
-export class ViewEmprestimo {
+export class ViewEmprestimo extends View {
 
-    public async carregarTabelaDeEmprestimos(): Promise<void> {
-        const listagem = await fetch('/src/views/html/listaEmprestimos.html');
-        const lista = await listagem.text();
-    
-        document.querySelector("main")!.innerHTML = lista;
+    public async carregarListagemDeEmprestimos(): Promise<void> {
+        await this.carregarConteudo('listaEmprestimos.html');
     }
 
-    public listarEmprestimos(emprestimos: Array<Emprestimo>): void {
+    public listarEmprestimos(emprestimos: Emprestimo[]): void {
         const tbody = document.querySelector('tbody');
 
         if (emprestimos.length == 0) {
@@ -56,6 +56,17 @@ export class ViewEmprestimo {
             tr.append(tdData, tdCliente, tdCPF, tdValorEmprestimo, tdFormaDePagamento, tdValorFinal);
             tbody?.appendChild(tr);
         }
+    }
+
+    public async carregarSolicitacaoDeEmprestimo(clientes: Cliente[], formasDePagamento: FormaDePagamento[]): Promise<void> {
+        await this.carregarConteudo('solicitarEmprestimo.html');
+        // TODO: mostrar opções de formas de pagamento e clientes
+    }
+
+    public adicionarListenerParaSolicitacao(solicitar: Function): void {
+        document.getElementById('solicitar')?.addEventListener('click', () => {
+            solicitar();
+        });
     }
     
 }
