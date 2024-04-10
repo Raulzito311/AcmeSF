@@ -51,4 +51,6 @@ export class EmprestimosRepository implements Repository<Emprestimo> {
         return emprestimos;
     }
 
+    // TODO: Implementar função para adicionar um novo empréstimo
+
 }

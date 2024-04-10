@@ -63,9 +63,22 @@ export class ViewEmprestimo extends View {
         // TODO: mostrar opções de formas de pagamento e clientes
     }
 
-    public adicionarListenerParaSolicitacao(solicitar: Function): void {
+    /**
+     * @param solicitar Função que será chamada ao clicar no botão de redirecionar para a tela de solicitar emprestimo
+     */
+    public adicionarListenerParaRedirecionarParaSolicitacao(solicitar: Function): void {
         document.getElementById('solicitar')?.addEventListener('click', () => {
             solicitar();
+        });
+    }
+
+    /**
+     * @param solicitar Função que será chamada ao submeter a solicitação de empréstimo
+     */
+    public adicionarListenerParaSolicitacao(solicitar: Function): void {
+        document.querySelector('form')?.addEventListener('submit', () => {
+            // TODO: garantir que os campos foram validados
+            solicitar();// TODO: enviar os dados dos campos (cliente, valor, forma)
         });
     }
     

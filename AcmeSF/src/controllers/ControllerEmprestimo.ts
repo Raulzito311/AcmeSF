@@ -21,12 +21,14 @@ export class ControllerEmprestimo {
     public async init(): Promise<void> {
         await this.view.carregarListagemDeEmprestimos();
 
-        this.view.adicionarListenerParaSolicitacao(this.carregarSolicitacaoDeEmprestimo.bind(this));
+        this.view.adicionarListenerParaRedirecionarParaSolicitacao(this.carregarSolicitacaoDeEmprestimo.bind(this));
         
         this.view.listarEmprestimos(await this.emprestimosRepo.buscarTodos());
     }
 
     public async carregarSolicitacaoDeEmprestimo(): Promise<void> {
         this.view.carregarSolicitacaoDeEmprestimo(await this.clientesRepo.buscarTodos(), await this.formasDePagamentoRepo.buscarTodos());
+
+        this.view.adicionarListenerParaSolicitacao(() => {}); // TODO: implementar função que será chamada para criar emprestimo
     }
 }
