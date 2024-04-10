@@ -1,5 +1,5 @@
-DELETE FROM forma_de_pagamento; -- WHERE 1;
-INSERT INTO forma_de_pagamento 
+DELETE FROM formas_de_pagamento; -- WHERE 1;
+INSERT INTO formas_de_pagamento 
 	(id, descricao, juros, meses) 
     VALUES
     (1, "3 vezes sem juros", 0.00, 3),
