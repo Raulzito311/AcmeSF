@@ -12,11 +12,17 @@
             $this->pdo->exec($sql);
         });
         it("carrega todas as formas de Pagamento", function(){
-            $repo = new RepositorioFormaDePagamentoEmBDR($this->pdo);
-            $formasDePagamento = $repo->todasFormasDePagamentos();
+            $repo = new FormaDePagamentoRepositoryBDR($this->pdo);
+            $formasDePagamento = $repo->buscarTodos();
             expect($formasDePagamento)->toBeAn('array');
             expect($formasDePagamento[0])->toBeAnInstanceOf('FormaDePagamento');
 
+        });
+        it("carrega forma de pagamento pelo id", function(){
+            $repo = new FormaDePagamentoRepositoryBDR($this->pdo);
+            $formaDePagamento = $repo->buscarPeloId(1);
+            expect($formaDePagamento)->toBeAnInstanceOf('FormaDePagamento');
+            expect($formaDePagamento->getDescricao())->toBe("3 vezes sem juros");
         });
     });
 ?>
