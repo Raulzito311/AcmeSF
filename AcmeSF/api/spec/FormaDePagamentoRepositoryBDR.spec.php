@@ -1,7 +1,7 @@
 <?php
     require_once "vendor/autoload.php";
 
-    describe("RepositorioFormaDePagamentoEmBDR", function(){
+    describe("FormaDePagamentoRepositoryBDR", function(){
         beforeAll(function(){
             $this->pdo = new PDO("mysql:dbname=acmesf;host=localhost;charset=utf8",
                 "root",
