@@ -18,20 +18,6 @@ class Emprestimo {
 		$this->valorFinal = $this->valorEmprestimo + ($this->valorEmprestimo * $this->formaDePagamento->getJuros());
 	}
 
-	function calcularParcelas(){
-		$valorParcela = floor(($this->valorFinal / $this->formaDePagamento->getMeses()) * 100) / 100;
-		$centavosSobrando = round(($this->valorFinal - ($valorParcela * $this->formaDePagamento->getMeses())) * 100);
-	  
-		for ($i = 0; $i < $this->formaDePagamento->getMeses(); $i++) {
-		  $valor = $valorParcela;
-		  if ($centavosSobrando > 0) {
-			$valor += 0.01;
-			$centavosSobrando--;
-		  }
-		  $this->parcelas[] = round($valor * 100) / 100;
-		}
-	}
-
 	function getValorEmprestimo(){
 		return $this->valorEmprestimo;
 	}

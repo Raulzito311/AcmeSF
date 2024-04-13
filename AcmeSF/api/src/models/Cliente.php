@@ -13,5 +13,11 @@ class Cliente{
         $this->nome = $nome;    
         $this->dataNascimento = $dataNascimento;    
     }
+    function getNome(){
+        return $this->nome;
+    }
+    function getdataNascimento(){
+        return $this->dataNascimento;
+    }
 }
 ?>

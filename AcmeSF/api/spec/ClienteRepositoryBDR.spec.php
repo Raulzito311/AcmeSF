@@ -23,5 +23,13 @@
             $cliente = $repo->buscarPeloId(1);
             expect($cliente)->toBeAnInstanceOf('Cliente');
             expect($cliente->getNome())->toBe("Rodrigo Jorge");
+            expect($cliente->getdataNascimento())->toBeAnInstanceOf("DateTime");;
+        });
+        it("carrega cliente pelo id 2", function(){
+            $repo = new clienteRepositoryBDR($this->pdo);
+            $cliente = $repo->buscarPeloId(2);
+            expect($cliente)->toBeAnInstanceOf('Cliente');
+            expect($cliente->getNome())->toBe("Raul Fernandes");
+            expect($cliente->getdataNascimento())->toBeAnInstanceOf("DateTime");
         });
     });

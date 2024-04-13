@@ -11,8 +11,8 @@ DELETE FROM clientes; -- WHERE 1;
 INSERT INTO clientes 
 	(id, cpf, nome, dataNascimento) 
     VALUES
-    (1, "12345678910", "Rodrigo Jorge", "12/02/2003"),
-    (2, "10987654321", "Raul Fernandes", "15/05/2002"),
-    (3, "54321678910", "Thiago Delgado", "22/06/1995"),
+    (1, "12345678910", "Rodrigo Jorge", "2003-02-12 00:00:00"),
+    (2, "10987654321", "Raul Fernandes", "2002-05-15 00:00:00"),
+    (3, "54321678910", "Thiago Delgado", "1995-06-22 00:00:00");
 
    
