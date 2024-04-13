@@ -1,8 +1,8 @@
 import { FormaDePagamento } from "../models/FormaDePagamento";
 import { API } from "./API";
-import { Repository } from "./Repository";
+import { Service } from "./Service";
 
-export class FormasDePagamentoRepository implements Repository<FormaDePagamento> {
+class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarPeloId(id: number): Promise<FormaDePagamento> {
         const res = await fetch(`${API}/formasDePagamento?id=${id}`);
         if (!res.ok)
@@ -22,8 +22,10 @@ export class FormasDePagamentoRepository implements Repository<FormaDePagamento>
 
         const formasDePagamentoJson: any[] = await res.json();
 
-        const formasDePagamento: FormaDePagamento[] = formasDePagamentoJson.map(f => new FormaDePagamento(f.id, f.descrricao, f.meses, f.juros));
+        const formasDePagamento: FormaDePagamento[] = formasDePagamentoJson.map(f => new FormaDePagamento(f.id, f.descricao, f.meses, f.juros));
 
         return formasDePagamento;
     }
 }
+
+export const formasDePagamentoService = new FormasDePagamentoService();

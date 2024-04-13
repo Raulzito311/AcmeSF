@@ -1,16 +1,16 @@
 import { Cliente } from "../models/Cliente";
 import { API } from "./API";
-import { Repository } from "./Repository";
+import { Service } from "./Service";
 
-export class ClientesRepository implements Repository<Cliente> {
+class ClientesService implements Service<Cliente> {
     async buscarPeloId(id: number): Promise<Cliente> {
-        const res = await fetch(`${API}/clientes?id=${id}`);
+        const res = await fetch(`${API}/clientes/${id}`);
         if (!res.ok)
             throw new Error("API de clientes indisponível");
 
-        const clientesJson: any[] = await res.json();
+        const clientesJson: any = await res.json();
 
-        const cliente: Cliente = new Cliente(clientesJson[0].id, clientesJson[0].cpf, clientesJson[0].nome, new Date(clientesJson[0].dataNascimento));
+        const cliente: Cliente = new Cliente(clientesJson.id, clientesJson.cpf, clientesJson.nome, new Date(clientesJson.dataNascimento));
 
         return cliente;
     }
@@ -27,3 +27,5 @@ export class ClientesRepository implements Repository<Cliente> {
         return clientes;
     }
 }
+
+export const clientesService = new ClientesService();

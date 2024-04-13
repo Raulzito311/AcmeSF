@@ -1,5 +1,1 @@
-import { ControllerEmprestimo } from "./controllers/ControllerEmprestimo";
-
-const controller = new ControllerEmprestimo();
-
-controller.init();
+import('./views/listarEmprestimos/listarEmprestimos.ts');

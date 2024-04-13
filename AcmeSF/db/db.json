@@ -148,13 +148,13 @@
     "clientes": [
         {
             "id": 1,
-            "cpf": "028.759.627-84",
+            "cpf": "182.198.228-21",
             "nome": "Thiago Delgado",
             "dataNascimento": "1994-04-11"
         },
         {
             "id": 2,
-            "cpf": "062.148.365-24",
+            "cpf": "062.148.367-25",
             "nome": "Raul Fernandes",
             "dataNascimento": "2003-03-06"
         }

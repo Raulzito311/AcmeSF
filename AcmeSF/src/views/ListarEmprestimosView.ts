@@ -1,12 +1,11 @@
-import { Cliente } from "../models/Cliente";
 import { Emprestimo } from "../models/Emprestimo";
-import { FormaDePagamento } from "../models/FormaDePagamento";
+import { SolicitarEmprestimoView } from "./SolicitarEmprestimoView";
 import { View } from "./View";
 
-export class ViewEmprestimo extends View {
+export class ListarEmprestimosView extends View {
 
-    public async carregarListagemDeEmprestimos(): Promise<void> {
-        await this.carregarConteudo('listaEmprestimos.html');
+    constructor() {
+        super('listarEmprestimos');
     }
 
     public listarEmprestimos(emprestimos: Emprestimo[]): void {
@@ -58,27 +57,11 @@ export class ViewEmprestimo extends View {
         }
     }
 
-    public async carregarSolicitacaoDeEmprestimo(clientes: Cliente[], formasDePagamento: FormaDePagamento[]): Promise<void> {
-        await this.carregarConteudo('solicitarEmprestimo.html');
-        // TODO: mostrar opções de formas de pagamento e clientes
-    }
+    protected async load(): Promise<void> {
+        await super.load();
 
-    /**
-     * @param solicitar Função que será chamada ao clicar no botão de redirecionar para a tela de solicitar emprestimo
-     */
-    public adicionarListenerParaRedirecionarParaSolicitacao(solicitar: Function): void {
         document.getElementById('solicitar')?.addEventListener('click', () => {
-            solicitar();
-        });
-    }
-
-    /**
-     * @param solicitar Função que será chamada ao submeter a solicitação de empréstimo
-     */
-    public adicionarListenerParaSolicitacao(solicitar: Function): void {
-        document.querySelector('form')?.addEventListener('submit', () => {
-            // TODO: garantir que os campos foram validados
-            solicitar();// TODO: enviar os dados dos campos (cliente, valor, forma)
+            import('./solicitarEmprestimo/solicitarEmprestimo.ts');
         });
     }
     

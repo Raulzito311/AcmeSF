@@ -1,19 +1,21 @@
-import { Cliente } from "../models/Cliente";
-import { Emprestimo } from "../models/Emprestimo";
-import { FormaDePagamento } from "../models/FormaDePagamento";
-
 export class View {
-    private main: HTMLElement;
+    private id: string;
 
-    constructor() {
-        this.main = document.querySelector('main')!;
+    constructor(id: string) {
+        this.id = id;
+
+        this.load();
     }
 
-    protected async carregarConteudo(path: string): Promise<void> {
-        const conteudo = await fetch(`/src/views/html/${path}`);
-        const html = await conteudo.text();
+    protected async load(): Promise<void> {
+        const main = document.querySelector('main')!;
+
+        const html = await fetch(`/src/views/${this.id}/${this.id}.html`);
     
-        this.main.innerHTML = html;
+        main.innerHTML = await html.text();
+
+        await import(`./${this.id}/${this.id}.ts`);
+        await import(`./${this.id}/${this.id}.css`);
     }
     
 }

@@ -1,18 +1,10 @@
 import { Emprestimo } from "../models/Emprestimo";
 import { API } from "./API";
-import { ClientesRepository } from "./ClientesRepository";
-import { FormasDePagamentoRepository } from "./FormasDePagamentoRepository";
-import { Repository } from "./Repository";
+import { clientesService } from "./ClientesService";
+import { formasDePagamentoService } from "./FormasDePagamentoService";
+import { Service } from "./Service";
 
-export class EmprestimosRepository implements Repository<Emprestimo> {
-    readonly clientes: ClientesRepository;
-    readonly formasDePagamento: FormasDePagamentoRepository;
-
-    constructor(clientes: ClientesRepository, formasDePagamento: FormasDePagamentoRepository) {
-        this.clientes = clientes;
-        this.formasDePagamento = formasDePagamento;
-    }
-
+class EmprestimosService implements Service<Emprestimo> {
     async buscarPeloId(id: number): Promise<Emprestimo> {
         const res = await fetch(`${API}/emprestimos?id=${id}`);
         if (!res.ok)
@@ -22,9 +14,9 @@ export class EmprestimosRepository implements Repository<Emprestimo> {
 
         const emprestimo: Emprestimo = new Emprestimo(
             emprestimosJson[0].id, 
-            await this.clientes.buscarPeloId(emprestimosJson[0].clienteId), 
+            await clientesService.buscarPeloId(emprestimosJson[0].clienteId), 
             emprestimosJson[0].valorEmprestado, 
-            await this.formasDePagamento.buscarPeloId(emprestimosJson[0].formaDePagamentoId), 
+            await formasDePagamentoService.buscarPeloId(emprestimosJson[0].formaDePagamentoId), 
             new Date(emprestimosJson[0].data));
 
         return emprestimo;
@@ -42,9 +34,9 @@ export class EmprestimosRepository implements Repository<Emprestimo> {
         for (const e of emprestimosJson) {
             emprestimos.push(new Emprestimo(
                                 e.id, 
-                                await this.clientes.buscarPeloId(e.clienteId), 
+                                await clientesService.buscarPeloId(e.clienteId), 
                                 e.valorEmprestado, 
-                                await this.formasDePagamento.buscarPeloId(e.formaDePagamentoId), 
+                                await formasDePagamentoService.buscarPeloId(e.formaDePagamentoId), 
                                 new Date(e.data)));
         }
 
@@ -54,3 +46,5 @@ export class EmprestimosRepository implements Repository<Emprestimo> {
     // TODO: Implementar função para adicionar um novo empréstimo
 
 }
+
+export const emprestimosService = new EmprestimosService();
