@@ -13,6 +13,7 @@ export class SolicitarEmprestimoView extends View {
     public async exibirSolicitacaoDeEmprestimo(clientes: Cliente[], formasDePagamento: FormaDePagamento[]): Promise<void> {
         const inputCPF: HTMLInputElement = <HTMLInputElement> document.getElementById('cpf');
 
+        // Formata o cpf digitado
         inputCPF.addEventListener('input', function(event) {
             const target: HTMLInputElement = <HTMLInputElement>event.target;
             
@@ -23,6 +24,7 @@ export class SolicitarEmprestimoView extends View {
                                     .replace(/(-\d{2})\d+$/, '$1'); // Impede entrada de mais de 11 dígitos
         });
 
+        // Valida o cliente
         inputCPF.addEventListener('blur', function (event) {
             const target: HTMLInputElement = <HTMLInputElement>event.target;
             const invalidCpf = document.getElementById('invalidCpf');
@@ -67,6 +69,7 @@ export class SolicitarEmprestimoView extends View {
             }
         });
 
+        // Preenche as opções de formas de pagamento
         const select: HTMLSelectElement = <HTMLSelectElement>document.getElementById('formaDePagamento');
 
         for (const formaDePagamento of formasDePagamento) {
@@ -81,12 +84,20 @@ export class SolicitarEmprestimoView extends View {
      * @param solicitar Função que será chamada ao submeter a solicitação de empréstimo
      */
     public adicionarListenerParaSolicitacao(solicitar: Function): void {
-        document.getElementById('formEmprestimo')?.addEventListener('submit', (event) => {
+        document.getElementById('formEmprestimo')?.addEventListener('submit', async (event) => {
             event.preventDefault();
-            console.log('Form submit');
             
-            // TODO: garantir que os campos foram validados
-            solicitar();// TODO: enviar os dados dos campos (cliente, valor, forma)
+            // TODO: garantir que valor e forma de pagamento foram validados
+
+            // TODO: Preencher com os valores dos inputs
+            /*const emprestimo = await Emprestimo.of({
+                clienteId: 0,
+                formaDePagamentoId: 0,
+                valorEmprestimo: 0,
+                data: new Date()
+            });*/
+
+            //solicitar(emprestimo);// TODO: enviar objeto de Emprestimo
         });
     }
     

@@ -4,13 +4,13 @@ import { Service } from "./Service";
 
 class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarPeloId(id: number): Promise<FormaDePagamento> {
-        const res = await fetch(`${API}/formasDePagamento?id=${id}`);
+        const res = await fetch(`${API}/formasDePagamento/${id}`);
         if (!res.ok)
             throw new Error("API de formas de pagamento indisponível");
 
-        const formasDePagamentoJson: any[] = await res.json();
+        const formaDePagamentoJson = await res.json();
 
-        const formaDePagamento: FormaDePagamento = new FormaDePagamento(formasDePagamentoJson[0].id, formasDePagamentoJson[0].descricao, formasDePagamentoJson[0].meses, formasDePagamentoJson[0].juros);
+        const formaDePagamento: FormaDePagamento = FormaDePagamento.of(formaDePagamentoJson);
 
         return formaDePagamento;
     }
@@ -22,7 +22,7 @@ class FormasDePagamentoService implements Service<FormaDePagamento> {
 
         const formasDePagamentoJson: any[] = await res.json();
 
-        const formasDePagamento: FormaDePagamento[] = formasDePagamentoJson.map(f => new FormaDePagamento(f.id, f.descricao, f.meses, f.juros));
+        const formasDePagamento: FormaDePagamento[] = formasDePagamentoJson.map(f => FormaDePagamento.of(f));
 
         return formasDePagamento;
     }

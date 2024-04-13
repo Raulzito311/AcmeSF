@@ -1,3 +1,5 @@
+import { clientesService } from "../services/ClientesService";
+import { formasDePagamentoService } from "../services/FormasDePagamentoService";
 import { Cliente } from "./Cliente";
 import { FormaDePagamento } from "./FormaDePagamento";
 
@@ -6,22 +8,29 @@ export class Emprestimo {
 	readonly cliente: Cliente;
 	readonly valorEmprestimo: number;
 	readonly formaDePagamento: FormaDePagamento;
-	readonly dataHora: Date;
+	readonly data: Date;
 	readonly valorFinal: number;
 	readonly parcelas: number[];
 
-	constructor(id: number, cliente: Cliente, valorEmprestimo: number, formaDePagamento: FormaDePagamento, dataHora: Date) {
+	constructor(id: number, cliente: Cliente, valorEmprestimo: number, formaDePagamento: FormaDePagamento, data: Date) {
 		this.id = id;
 		this.cliente = cliente;
 		this.valorEmprestimo = valorEmprestimo;
 		this.formaDePagamento = formaDePagamento;
-		this.dataHora = dataHora;
+		this.data = data;
 
 		this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * this.formaDePagamento.juros);
 
 		this.parcelas = [];
 
 		this.calcularParcelas();
+	}
+
+	static async of(json: EmprestimoJson): Promise<Emprestimo> {
+		const cliente = await clientesService.buscarPeloId(json.clienteId);
+		const formaDePagamento = await formasDePagamentoService.buscarPeloId(json.formaDePagamentoId);
+
+		return new this(json.id || -1, cliente, json.valorEmprestimo, formaDePagamento, new Date(json.data));
 	}
 
 	private calcularParcelas(): void {
@@ -37,4 +46,12 @@ export class Emprestimo {
 			this.parcelas.push(Math.round(valor*100)/100);
 		}
 	}
+}
+
+export type EmprestimoJson = {
+	id?: number;
+	clienteId: number;
+	formaDePagamentoId: number;
+	valorEmprestimo: number;
+	data: string | Date;
 }

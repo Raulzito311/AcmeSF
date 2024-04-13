@@ -10,4 +10,15 @@ export class FormaDePagamento {
         this.meses = meses;
         this.juros = juros;
     }
+
+    static of(json: FormaDePagamentoJson) {
+        return new this(json.id, json.descricao, json.meses, json.juros);
+    }
+}
+
+export type FormaDePagamentoJson = {
+	id: number;
+    descricao: string;
+    meses: number;
+    juros: number;
 }

@@ -30,7 +30,7 @@ export class ListarEmprestimosView extends View {
 
             const tdData = document.createElement('td');
             tdData.className = 'col';
-            tdData.innerText = emprestimo.dataHora.toDateString();
+            tdData.innerText = emprestimo.data.toDateString();
 
             const tdCliente = document.createElement('td');
             tdCliente.className = 'col';

@@ -12,12 +12,7 @@ class EmprestimosService implements Service<Emprestimo> {
 
         const emprestimosJson: any[] = await res.json();
 
-        const emprestimo: Emprestimo = new Emprestimo(
-            emprestimosJson[0].id, 
-            await clientesService.buscarPeloId(emprestimosJson[0].clienteId), 
-            emprestimosJson[0].valorEmprestado, 
-            await formasDePagamentoService.buscarPeloId(emprestimosJson[0].formaDePagamentoId), 
-            new Date(emprestimosJson[0].data));
+        const emprestimo: Emprestimo = await Emprestimo.of(emprestimosJson[0]);
 
         return emprestimo;
     }
@@ -32,18 +27,13 @@ class EmprestimosService implements Service<Emprestimo> {
         const emprestimos: Emprestimo[] = [];
 
         for (const e of emprestimosJson) {
-            emprestimos.push(new Emprestimo(
-                                e.id, 
-                                await clientesService.buscarPeloId(e.clienteId), 
-                                e.valorEmprestado, 
-                                await formasDePagamentoService.buscarPeloId(e.formaDePagamentoId), 
-                                new Date(e.data)));
+            emprestimos.push(await Emprestimo.of(e));
         }
 
         return emprestimos;
     }
 
-    // TODO: Implementar função para adicionar um novo empréstimo
+    // TODO: Implementar função para adicionar um novo empréstimo - adicionar(emprestimo: Emprestimo)
 
 }
 

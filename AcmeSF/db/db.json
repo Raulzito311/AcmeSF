@@ -161,15 +161,17 @@
     ],
     "emprestimos": [
         {
+            "id": 1,
             "clienteId": 1,
             "formaDePagamentoId": 3,
-            "valorEmprestado": 1000.00,
+            "valorEmprestimo": 1000.00,
             "data": "2024-02-17"
         },
         {
+            "id": 2,
             "clienteId": 2,
             "formaDePagamentoId": 10,
-            "valorEmprestado": 5000.00,
+            "valorEmprestimo": 5000.00,
             "data": "2023-07-22"
         }
     ]

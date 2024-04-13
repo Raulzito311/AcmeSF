@@ -8,9 +8,9 @@ class ClientesService implements Service<Cliente> {
         if (!res.ok)
             throw new Error("API de clientes indisponível");
 
-        const clientesJson: any = await res.json();
+        const clienteJson: any = await res.json();
 
-        const cliente: Cliente = new Cliente(clientesJson.id, clientesJson.cpf, clientesJson.nome, new Date(clientesJson.dataNascimento));
+        const cliente: Cliente = Cliente.of(clienteJson);
 
         return cliente;
     }
@@ -22,7 +22,7 @@ class ClientesService implements Service<Cliente> {
 
         const clientesJson: any[] = await res.json();
 
-        const clientes: Cliente[] = clientesJson.map(c => new Cliente(c.id, c.cpf, c.nome, new Date(c.dataNascimento)));
+        const clientes: Cliente[] = clientesJson.map(clienteJson => Cliente.of(clienteJson));
 
         return clientes;
     }
