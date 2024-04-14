@@ -5,7 +5,7 @@
     },
     "autoload": {
         "psr-4": {
-            "": ["src/repositories/", "src/models/"]
+            "": ["src/", "src/repositories/", "src/models/", "src/controllers/"]
         }
     },
     "require-dev": {

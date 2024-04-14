@@ -1,33 +1,30 @@
 <?php
     require_once "vendor/autoload.php";
 
-    describe("ClienteRepositoryBDR", function(){
+    describe("ControlerCliente", function(){
         beforeAll(function(){
-            $this->pdo = new PDO("mysql:dbname=acmesf;host=localhost;charset=utf8",
-                "root",
-                "",
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-            );
+            $conexao = new conexao();
             $sql = file_get_contents("dados.sql");
-            $this->pdo->exec($sql);
+            $conexao->getConexao()->exec($sql);
+            $conexao->encerrar();
         });
         it("carrega todos os clientes", function(){
-            $repo = new clienteRepositoryBDR($this->pdo);
-            $clientes = $repo->buscarTodos();
+            $controller = new controllerCliente();
+            $clientes = $controller->buscarTodos();
             expect($clientes)->toBeAn('array');
             expect($clientes[0])->toBeAnInstanceOf('Cliente');
 
         });
         it("carrega cliente pelo id", function(){
-            $repo = new clienteRepositoryBDR($this->pdo);
-            $cliente = $repo->buscarPeloId(1);
+            $controller = new controllerCliente();
+            $cliente = $controller->buscarPeloId(1);
             expect($cliente)->toBeAnInstanceOf('Cliente');
             expect($cliente->getNome())->toBe("Rodrigo Jorge");
             expect($cliente->getdataNascimento())->toBeAnInstanceOf("DateTime");;
         });
         it("carrega cliente pelo id 2", function(){
-            $repo = new clienteRepositoryBDR($this->pdo);
-            $cliente = $repo->buscarPeloId(2);
+            $controller = new controllerCliente();
+            $cliente = $controller->buscarPeloId(2);
             expect($cliente)->toBeAnInstanceOf('Cliente');
             expect($cliente->getNome())->toBe("Raul Fernandes");
             expect($cliente->getdataNascimento())->toBeAnInstanceOf("DateTime");

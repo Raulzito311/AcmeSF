@@ -27,7 +27,7 @@ class ClienteRepositoryBDR implements ClienteRepository{
             throw new RepositoryException("Erro ao consultar clientes" . $e->getMessage(), 500);
         }
     }
-    
+
     public function buscarPeloId($id): Cliente{
         try{
             $ps = $this->pdo->prepare("SELECT * FROM `clientes` WHERE `id` = ?");
