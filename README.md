@@ -45,22 +45,19 @@ Let people know what your project can do specifically. Provide context and add a
 
 ## Installation
 ### Front-ent
-/AcmeSF$ 
-> pnpm i
+
+>/AcmeSF$ pnpm i
 
 ### Back-end
-/AcmeSF/api$ 
-> composer install
+>/AcmeSF/api$ composer install
 
 ## Usage
 ### Front-end
-/AcmeSF$ 
-> pnpm run dev
+>/AcmeSF$ pnpm run dev
 #### Testing
-/AcmeSF$ 
-> npx vitest
+>/AcmeSF$ npx vitest
 
 ### Back-end
-/AcmeSF/api$ 
+>/AcmeSF/api$ 
 #### Testing
-/AcmeSF/api$ 
+>/AcmeSF/api$ 
