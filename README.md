@@ -31,8 +31,13 @@ Acme Serviços Financeiros
 Programa para gerenciamento de empréstimos
 
 ## Contributors
-- Raul Fernandes
-- Rodrigo Jorge
+- [Raul Martins Furtado Fernandes](https://gitlab.com/Raulzito311)
+- [Rodrigo Jorge](https://gitlab.com/rodrigojorge12)
+
+## References
+- [Validação de CPF](https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/)
+
+***
 
 ## Installation
 ### Front-ent
