@@ -1,12 +1,12 @@
 <?php
 require_once "vendor/autoload.php";
 
-class conexao{
-    public static ?PDO $conexao = null;
+class Connection {
+    private static ?PDO $pdo = null;
 
-    function iniciar(){
+    private static function start() {
         try {
-            self::$conexao = new PDO(
+            self::$pdo = new PDO(
                 "mysql:dbname=acmesf;host=localhost;charset=utf8",
                 "root",
                 "",
@@ -18,15 +18,11 @@ class conexao{
         }
     }
 
-    function encerrar(){
-        self::$conexao = null;
-    }
-
-    function getConexao(){
-        if(self::$conexao == null){
-            $this->iniciar();
+    public static function get() {
+        if(self::$pdo == null){
+            self::start();
         }
-        return self::$conexao;
+        return self::$pdo;
     }
 }
 ?>

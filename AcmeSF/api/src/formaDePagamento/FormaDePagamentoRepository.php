@@ -2,7 +2,7 @@
 
 interface FormaDePagamentoRepository{
     function buscarTodos(): array;
-    function buscarPeloId($id): FormaDePagamento;
+    function buscarPeloId($id): ?FormaDePagamento;
 }
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 require_once "vendor/autoload.php";
 
-class controllerCliente {
+class ClienteController {
     protected ClienteRepositoryBDR $RepositoryEmBDR;
     protected $conexaoCliente;
 
