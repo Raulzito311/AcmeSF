@@ -11,12 +11,12 @@ $app
     ->use( cors() )
     ->route('/formasDePagamento')
         ->get( '/', function( $req, $res ) {
-            $view = new ViewFormaDePagamento($req, $res);
+            $view = new FormaDePagamentoView($req, $res);
             $controller = new FormaDePagamentoController($view, repositoryFormaDePagamento);
             $controller->buscarTodos();
         })
         ->get( '/:id', function( $req, $res ) {
-            $view = new ViewFormaDePagamento($req, $res);
+            $view = new FormaDePagamentoView($req, $res);
             $controller = new FormaDePagamentoController($view, repositoryFormaDePagamento);
             $controller->buscarPeloId();
         })
