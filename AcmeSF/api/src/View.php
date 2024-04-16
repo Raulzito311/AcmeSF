@@ -5,7 +5,7 @@ use phputil\router\HttpResponse;
 
 require_once "vendor/autoload.php";
 
-class View {
+abstract class View {
 
     private HttpRequest $req;
     private HttpResponse $res;
@@ -14,6 +14,9 @@ class View {
         $this->req = $req;
         $this->res = $res;
     }
+
+    public abstract function read();
+    public abstract function write($obj);
 
     public function readId(): string {
         return $this->req->param('id');
