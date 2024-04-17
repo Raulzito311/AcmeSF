@@ -1,5 +1,6 @@
 import { Emprestimo } from "../models/Emprestimo";
 import { clientesService } from "../services/ClientesService";
+import { emprestimosService } from "../services/EmprestimosService";
 import { formasDePagamentoService } from "../services/FormasDePagamentoService";
 import { SolicitarEmprestimoView } from "../views/SolicitarEmprestimoView";
 
@@ -17,7 +18,7 @@ export class ControllerSolicitarEmprestimo {
         this.view.exibirSolicitacaoDeEmprestimo(await clientesService.buscarTodos(), await formasDePagamentoService.buscarTodos());
 
         this.view.adicionarListenerParaSolicitacao((emprestimo: Emprestimo) => {
-            // TODO: invocar emprestimosService.adicionar(emprestimo)
+            emprestimosService.adicionar(emprestimo)
         });
     }
 }

@@ -33,7 +33,19 @@ class EmprestimosService implements Service<Emprestimo> {
         return emprestimos;
     }
 
-    // TODO: Implementar função para adicionar um novo empréstimo - adicionar(emprestimo: Emprestimo)
+    async adicionar(emprestimo: Emprestimo){
+        const res = await fetch(`${API}/emprestimos`, {
+            method : "POST",
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(emprestimo)
+        })
+        if (!res.ok)
+            throw new Error("API de emprestimos indisponível");
+        else 
+            alert("Emprestimo Cadastrado com sucesso");
+    }
 
 }
 

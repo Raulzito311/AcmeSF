@@ -40,10 +40,14 @@ export class SolicitarEmprestimoView extends View {
                 if (cliente) {
                     target.classList.remove('is-invalid');
                     target.classList.add('is-valid');
+                    let span = document.getElementById("input-group-text")
 
-                    const span = document.createElement('span');
-                    span.classList.add('input-group-text');
-                    span.classList.add('p-3');
+                    if(span === null){
+                        span = document.createElement('span');
+                        span.classList.add('input-group-text');
+                        span.id = "input-group-text";
+                        span.classList.add('p-3');
+                    }
 
                     const today = new Date();
                     const nascimento = new Date(cliente.dataNascimento);
@@ -84,29 +88,25 @@ export class SolicitarEmprestimoView extends View {
      * @param solicitar Função que será chamada ao submeter a solicitação de empréstimo
      */
     public adicionarListenerParaSolicitacao(solicitar: Function): void {
+        let valor = 0;
         document.getElementById('formEmprestimo')?.addEventListener('submit', async (event) => {
             event.preventDefault();
             
-            // TODO: garantir que valor e forma de pagamento foram validados
-            const target: HTMLInputElement = <HTMLInputElement>event.target;
-            let valor = 0;
+            const valorEmprestimoInput = document.getElementById('valorEmprestimo') as HTMLInputElement;
             
-            // TODO: garantir que valor e forma de pagamento foram validados
-            const valorEmprestimoInput = document.getElementById('valorEmprestimo');
             if (valorEmprestimoInput) {
-                valorEmprestimoInput.addEventListener('input', (evento) => {
-                  valor = parseFloat(target.value);
-                  
-                  if(valor > 500 && valor < 50000){
-                    target.classList.add('is-valid');
-                    target.classList.remove('is-invalid');
-                  }
-                  else{
-                    target.classList.remove('is-valid');
-                    target.classList.add('is-invalid');
-                  }
-                });
-              }
+
+                valor = parseFloat(valorEmprestimoInput.value);
+                
+                if(valor > 500 && valor < 50000){
+                    valorEmprestimoInput.classList.add('is-valid');
+                    valorEmprestimoInput.classList.remove('is-invalid');
+                }
+                else{
+                    valorEmprestimoInput.classList.remove('is-valid');
+                    valorEmprestimoInput.classList.add('is-invalid');
+                }
+            }
             // TODO: Preencher com os valores dos inputs
             const emprestimo = await Emprestimo.of({
                 clienteId : 0,

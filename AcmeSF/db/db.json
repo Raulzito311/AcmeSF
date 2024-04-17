@@ -157,6 +157,12 @@
             "cpf": "062.148.367-25",
             "nome": "Raul Fernandes",
             "dataNascimento": "2003-03-06"
+        },
+        {
+            "id": 3,
+            "cpf": "063.556.107-74",
+            "nome": "Rodrigo Jorge",
+            "dataNascimento": "2003-02-12"
         }
     ],
     "emprestimos": [
