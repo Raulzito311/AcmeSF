@@ -1,1 +1,1 @@
-export const API = "http://localhost:3000"; // TODO: Trocar para url do backend
+export const API = "http://localhost:3000/api";
