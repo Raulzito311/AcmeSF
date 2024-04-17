@@ -2,7 +2,7 @@
 require_once "vendor/autoload.php";
 
 class FormaDePagamentoController {
-    private ViewFormaDePagamento $view;
+    private FormaDePagamentoView $view;
     private FormaDePagamentoRepository $repository;
 
     function __construct($view, $repository) {

@@ -3,8 +3,8 @@
 class ClienteRepositoryBDR implements ClienteRepository{
     protected PDO $pdo;
 
-    function __construct(PDO $pdo){
-        $this->pdo = $pdo;
+    function __construct(){
+        $this->pdo = Connection::get();
     }
     public function buscarTodos():array{
         try{
