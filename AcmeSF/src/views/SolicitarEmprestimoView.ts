@@ -115,7 +115,8 @@ export class SolicitarEmprestimoView extends View {
                 data : new Date()
             });
 
-            //solicitar(emprestimo);// TODO: enviar objeto de Emprestimo
+            solicitar(emprestimo);
+            
         });
     }
     
