@@ -88,7 +88,24 @@ export class SolicitarEmprestimoView extends View {
             event.preventDefault();
             
             // TODO: garantir que valor e forma de pagamento foram validados
-
+            const target: HTMLInputElement = <HTMLInputElement>event.target;
+            
+            // TODO: garantir que valor e forma de pagamento foram validados
+            const valorEmprestimoInput = document.getElementById('valorEmprestimo');
+            if (valorEmprestimoInput) {
+                valorEmprestimoInput.addEventListener('input', (evento) => {
+                  const valor = target.value;
+                  
+                  if(parseFloat(valor) > 500 && parseFloat(valor) < 50000){
+                    target.classList.add('is-valid');
+                    target.classList.remove('is-invalid');
+                  }
+                  else{
+                    target.classList.remove('is-valid');
+                    target.classList.add('is-invalid');
+                  }
+                });
+              }
             // TODO: Preencher com os valores dos inputs
             /*const emprestimo = await Emprestimo.of({
                 clienteId: 0,
