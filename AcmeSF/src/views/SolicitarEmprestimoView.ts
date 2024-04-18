@@ -5,11 +5,10 @@ import { View } from "./View";
 import { validarCPF } from "./util/cpfUtil";
 
 export class SolicitarEmprestimoView extends View {
-
+    private cliente : Cliente | null = null;
     constructor() {
         super('solicitarEmprestimo');
     }
-
     public async exibirSolicitacaoDeEmprestimo(clientes: Cliente[], formasDePagamento: FormaDePagamento[]): Promise<void> {
         const inputCPF: HTMLInputElement = <HTMLInputElement> document.getElementById('cpf');
 
@@ -38,6 +37,15 @@ export class SolicitarEmprestimoView extends View {
             } else if (validarCPF(target.value)) {
                 const cliente = clientes.find(cliente => cliente.cpf == target.value);
                 if (cliente) {
+                    //Cria o elemento input
+                    const inputInvisivel = document.createElement('input');
+                    inputInvisivel.setAttribute('type', 'text');
+                    inputInvisivel.setAttribute('id', 'inputInvisivel');
+                    inputInvisivel.style.display = 'none';
+                    inputInvisivel.innerText = String(cliente.id);
+                    document.body.appendChild(inputInvisivel);
+
+
                     target.classList.remove('is-invalid');
                     target.classList.add('is-valid');
                     let span = document.getElementById("input-group-text")
@@ -91,7 +99,21 @@ export class SolicitarEmprestimoView extends View {
         let valor = 0;
         document.getElementById('formEmprestimo')?.addEventListener('submit', async (event) => {
             event.preventDefault();
-            
+            const selectElement = document.getElementById("formaDePagamento") as HTMLSelectElement;;
+            var opcaoSelecionada = selectElement.options[selectElement.selectedIndex];
+            var textoOpcaoSelecionada = opcaoSelecionada.textContent;
+
+            if(textoOpcaoSelecionada){
+                if(textoOpcaoSelecionada == "Escolher..."){
+                    selectElement.classList.remove('is-valid');
+                    selectElement.classList.add('is-invalid');
+                }
+                else{
+                    selectElement.classList.add('is-valid');
+                    selectElement.classList.remove('is-invalid');
+                }
+            }
+
             const valorEmprestimoInput = document.getElementById('valorEmprestimo') as HTMLInputElement;
             
             if (valorEmprestimoInput) {
@@ -107,17 +129,25 @@ export class SolicitarEmprestimoView extends View {
                     valorEmprestimoInput.classList.add('is-invalid');
                 }
             }
-            // TODO: Preencher com os valores dos inputs
-            const emprestimo = await Emprestimo.of({
-                clienteId : 0,
-                formaDePagamentoId : 0,
-                valorEmprestimo : valor,
-                data : new Date()
             });
+            (async () => {
+                const idCliente = document.getElementById("inputInvisivel")?.textContent;
+                const selectElement = document.getElementById("formaDePagamento") as HTMLSelectElement;;
+                var opcaoSelecionada = selectElement.options[selectElement.selectedIndex];
+                const idFormaDePagamento = opcaoSelecionada.value; 
+                // TODO: Preencher com os valores dos inputs
+                const emprestimo = await Emprestimo.of({
+                    clienteId : Number(idCliente),
+                    formaDePagamentoId : Number(idFormaDePagamento),
+                    valorEmprestimo : valor,
+                    data : new Date()
+                });
+                console.log(emprestimo);
+                solicitar(emprestimo);
+            })(); 
 
-            solicitar(emprestimo);
             
-        });
     }
+
     
 }
