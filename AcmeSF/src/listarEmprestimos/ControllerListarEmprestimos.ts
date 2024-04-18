@@ -7,8 +7,6 @@ export class ControllerListarEmprestimos {
 
     constructor() {
         this.view = new ListarEmprestimosView();
-
-        this.init();
     }
 
     public async init(): Promise<void> {

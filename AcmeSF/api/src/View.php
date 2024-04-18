@@ -6,8 +6,8 @@ use phputil\router\HttpResponse;
 
 abstract class View {
 
-    private HttpRequest $req;
-    private HttpResponse $res;
+    protected HttpRequest $req;
+    protected HttpResponse $res;
 
     function __construct(HttpRequest $req, HttpResponse $res) {
         $this->req = $req;

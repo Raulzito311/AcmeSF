@@ -32,7 +32,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Emprestimo::class);
             $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo, $emprestimo->dataHora]);
 
-            return $this->buscarPeloId(Connection::get()->lastInsertId('emprestimos'));
+            return $this->buscarPeloId(Connection::get()->lastInsertId());
         }catch(Exception $e){
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage(), 500);
         }

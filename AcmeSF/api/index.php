@@ -5,6 +5,10 @@ use phputil\router\Router;
 
 use function phputil\cors\cors;
 
+const repositoryCliente = new ClienteRepositoryBDR();
+const repositoryFormaDePagamento = new FormaDePagamentoRepositoryBDR();
+const repositoryEmprestimo = new EmprestimoRepositoryBDR();
+
 class App {
     public static function getRouter(): Router {
         $app = new Router();
@@ -50,10 +54,6 @@ class App {
         return $app;
     }
 }
-
-const repositoryCliente = new ClienteRepositoryBDR();
-const repositoryFormaDePagamento = new FormaDePagamentoRepositoryBDR();
-const repositoryEmprestimo = new EmprestimoRepositoryBDR();
 
 $app = App::getRouter();
 

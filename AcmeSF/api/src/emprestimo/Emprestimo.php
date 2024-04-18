@@ -1,5 +1,5 @@
 <?php
-class Emprestimo {
+class Emprestimo { // EmprestimoDTO
 	public readonly int $id;
     public readonly int $clienteId;
 	public readonly int $formaDePagamentoId;

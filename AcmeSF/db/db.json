@@ -179,6 +179,33 @@
       "formaDePagamentoId": 10,
       "valorEmprestimo": 5000,
       "data": "2023-07-22"
+    },
+    {
+      "id": -1,
+      "cliente": {
+        "id": "2",
+        "cpf": "062.148.367-25",
+        "nome": "Raul Fernandes",
+        "dataNascimento": "2003-03-06T00:00:00.000Z"
+      },
+      "valorEmprestimo": 4000,
+      "formaDePagamento": {
+        "id": "7",
+        "descricao": "7 vezes",
+        "meses": 7,
+        "juros": 0.075
+      },
+      "data": "2024-04-18T01:47:52.995Z",
+      "valorFinal": 4300,
+      "parcelas": [
+        614.29,
+        614.29,
+        614.29,
+        614.29,
+        614.28,
+        614.28,
+        614.28
+      ]
     }
   ]
 }

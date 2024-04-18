@@ -9,12 +9,10 @@ export class ControllerSolicitarEmprestimo {
     private view: SolicitarEmprestimoView;
 
     constructor() {
-        this.init();
+        this.view = new SolicitarEmprestimoView();
     }
     
     public async init(): Promise<void> {
-        this.view = new SolicitarEmprestimoView();
-
         this.view.exibirSolicitacaoDeEmprestimo(await clientesService.buscarTodos(), await formasDePagamentoService.buscarTodos());
 
         this.view.adicionarListenerParaSolicitacao((emprestimo: Emprestimo) => {
