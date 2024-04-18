@@ -18,6 +18,10 @@ abstract class View {
         return $this->req->param('id');
     }
 
+    public function readCPF():string{
+        return $this->req->param('cpf');
+    }
+
     public function notFound(): void {
         $this->res->status(404)->end();
     }
