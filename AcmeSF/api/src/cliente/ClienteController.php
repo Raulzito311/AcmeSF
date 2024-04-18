@@ -2,34 +2,23 @@
 require_once "vendor/autoload.php";
 
 class ClienteController {
-    protected ClienteRepositoryBDR $RepositoryEmBDR;
-    protected $conexaoCliente;
+    private ClienteView $view;
+    private ClienteRepository $repository;
 
-    function __construct()
-    {   
-        $this->conexaoCliente = new conexao();
-        $this->RepositoryEmBDR = new ClienteRepositoryBDR($this->conexaoCliente->getConexao());
-        $this->conexaoCliente->encerrar();
+    function __construct($view, $repository) {
+        $this->view = $view;
+        $this->repository = $repository;
     }
 
-    function buscarPeloId($id){
-        $this->conexaoCliente->iniciar();
-        $cliente = $this->RepositoryEmBDR->buscarPeloId($id);
-        $this->conexaoCliente->encerrar();
-        if($cliente){
-            return $cliente;
-        }
-        return "Não foram encontrados clientes com esse id";
+    public function buscarPeloId(): void {
+        $id = $this->view->readId();
+        $cliente = $this->repository->buscarPeloId($id);
+        $this->view->write($cliente);
     }
 
-    function buscarTodos(){
-        $this->conexaoCliente->iniciar();
-        $clientes = $this->RepositoryEmBDR->buscarTodos();
-        $this->conexaoCliente->encerrar();
-        if(!empty($clientes)){
-            return $clientes;
-        }
-        return "Não foi encontrado nenhum cliente";
+    public function buscarTodos(): void {
+        $clientes = $this->repository->buscarTodos();
+        $this->view->writeAll($clientes);
     }
 }
 
