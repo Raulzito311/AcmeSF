@@ -46,6 +46,11 @@ class App {
                         $controller = new ClienteController($view, repositoryCliente);
                         $controller->buscarPeloId();
                     })
+                    ->get( '/cpf/:cpf', function( $req, $res ) {
+                        $view = new ClienteView($req, $res);
+                        $controller = new ClienteController($view, repositoryCliente);
+                        $controller->buscarPeloCPF();
+                    })
                     ->end();
         return $app;
     }
