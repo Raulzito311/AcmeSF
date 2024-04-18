@@ -26,6 +26,18 @@ class ClientesService implements Service<Cliente> {
 
         return clientes;
     }
+
+    async buscarPeloCPF(cpf: number): Promise<Cliente> {
+        const res = await fetch(`${API}/clientes/cpf/${cpf}`);
+        if (!res.ok)
+            throw new Error("API de clientes indisponível");
+
+        const clienteJson: any = await res.json();
+
+        const cliente: Cliente = Cliente.of(clienteJson);
+
+        return cliente;
+    }
 }
 
 export const clientesService = new ClientesService();
