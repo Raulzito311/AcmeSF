@@ -37,14 +37,21 @@ class App {
                     ->end()
                 ->route('/clientes')
                     ->get( '/', function( $req, $res ) {
+                        $view = new ClienteView($req, $res);
+                        $controller = new ClienteController($view, repositoryCliente);
+                        $controller->buscarTodos();
                     })
                     ->get( '/:id', function( $req, $res ) {
+                        $view = new ClienteView($req, $res);
+                        $controller = new ClienteController($view, repositoryCliente);
+                        $controller->buscarPeloId();
                     })
                     ->end();
         return $app;
     }
 }
 
+const repositoryCliente = new ClienteRepositoryBDR();
 const repositoryFormaDePagamento = new FormaDePagamentoRepositoryBDR();
 const repositoryEmprestimo = new EmprestimoRepositoryBDR();
 
