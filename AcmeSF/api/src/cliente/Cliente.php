@@ -1,23 +1,9 @@
 <?php
 
 class Cliente{
-    protected int $id;
-    protected string $cpf;
-    protected string $nome;
-    protected DateTime $dataNascimento;
-
-    function __construct(int $id, string $cpf, string $nome, DateTime $dataNascimento)
-    {
-        $this->id = $id;
-        $this->cpf = $cpf;    
-        $this->nome = $nome;    
-        $this->dataNascimento = $dataNascimento;    
-    }
-    function getNome(){
-        return $this->nome;
-    }
-    function getdataNascimento(){
-        return $this->dataNascimento;
-    }
+    public readonly int $id;
+    public readonly string $cpf;
+    public readonly string $nome;
+    public readonly string $dataNascimento;
 }
 ?>
