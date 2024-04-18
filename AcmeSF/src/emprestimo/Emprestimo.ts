@@ -1,7 +1,7 @@
-import { clientesService } from "../services/ClientesService";
-import { formasDePagamentoService } from "../services/FormasDePagamentoService";
-import { Cliente } from "./Cliente";
-import { FormaDePagamento } from "./FormaDePagamento";
+import { clientesService } from "../cliente/ClientesService";
+import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
+import { Cliente } from "../cliente/Cliente";
+import { FormaDePagamento } from "../formaDePagamento/FormaDePagamento";
 
 export class Emprestimo {
 	readonly id: number;

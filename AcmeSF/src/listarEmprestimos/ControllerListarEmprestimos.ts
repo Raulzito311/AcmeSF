@@ -1,5 +1,5 @@
-import { emprestimosService } from "../services/EmprestimosService";
-import { ListarEmprestimosView } from "../views/ListarEmprestimosView";
+import { emprestimosService } from "../emprestimo/EmprestimosService";
+import { ListarEmprestimosView } from "./ListarEmprestimosView";
 
 export class ControllerListarEmprestimos {
 

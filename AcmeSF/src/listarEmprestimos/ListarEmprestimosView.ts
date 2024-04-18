@@ -1,6 +1,6 @@
-import { Emprestimo } from "../models/Emprestimo";
-import { SolicitarEmprestimoView } from "./SolicitarEmprestimoView";
-import { View } from "./View";
+import { Emprestimo } from "../emprestimo/Emprestimo.ts";
+import { SolicitarEmprestimoView } from "../solicitarEmprestimo/SolicitarEmprestimoView.ts";
+import { View } from "../util/View.ts";
 
 export class ListarEmprestimosView extends View {
 
@@ -61,7 +61,7 @@ export class ListarEmprestimosView extends View {
         await super.load();
 
         document.getElementById('solicitar')?.addEventListener('click', () => {
-            import('./solicitarEmprestimo/solicitarEmprestimo.ts');
+            import('../solicitarEmprestimo/solicitarEmprestimo.ts');
         });
     }
     

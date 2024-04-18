@@ -1,1 +1,1 @@
-import('./views/listarEmprestimos/listarEmprestimos.ts');
+import('./listarEmprestimos/listarEmprestimos.ts');

@@ -1,8 +1,8 @@
-import { Emprestimo } from "../models/Emprestimo";
-import { clientesService } from "../services/ClientesService";
-import { emprestimosService } from "../services/EmprestimosService";
-import { formasDePagamentoService } from "../services/FormasDePagamentoService";
-import { SolicitarEmprestimoView } from "../views/SolicitarEmprestimoView";
+import { Emprestimo } from "../emprestimo/Emprestimo";
+import { clientesService } from "../cliente/ClientesService";
+import { emprestimosService } from "../emprestimo/EmprestimosService";
+import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
+import { SolicitarEmprestimoView } from "./SolicitarEmprestimoView";
 
 export class ControllerSolicitarEmprestimo {
 

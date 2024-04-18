@@ -1,6 +1,6 @@
-import { Cliente } from "../models/Cliente";
-import { API } from "./API";
-import { Service } from "./Service";
+import { Cliente } from "./Cliente";
+import { API } from "../util/API";
+import { Service } from "../util/Service";
 
 class ClientesService implements Service<Cliente> {
     async buscarPeloId(id: number): Promise<Cliente> {

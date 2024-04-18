@@ -1,8 +1,8 @@
-import { Emprestimo } from "../models/Emprestimo";
-import { API } from "./API";
-import { clientesService } from "./ClientesService";
-import { formasDePagamentoService } from "./FormasDePagamentoService";
-import { Service } from "./Service";
+import { Emprestimo } from "./Emprestimo";
+import { API } from "../util/API";
+import { clientesService } from "../cliente/ClientesService";
+import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
+import { Service } from "../util/Service";
 
 class EmprestimosService implements Service<Emprestimo> {
     async buscarPeloId(id: number): Promise<Emprestimo> {
@@ -34,17 +34,19 @@ class EmprestimosService implements Service<Emprestimo> {
     }
 
     async adicionar(emprestimo: Emprestimo){
-        const res = await fetch(`${API}/emprestimos`, {
+        const params = {
             method : "POST",
             headers: { 
                 'Content-Type': 'application/json' 
             },
             body: JSON.stringify(emprestimo)
-        })
+        };
+        
+        const res = await fetch(`${API}/emprestimos`, params);
         if (!res.ok)
             throw new Error("API de emprestimos indisponível");
         else 
-            alert("Emprestimo Cadastrado com sucesso");
+            alert("Emprestimo solicitado com sucesso");
     }
 
 }

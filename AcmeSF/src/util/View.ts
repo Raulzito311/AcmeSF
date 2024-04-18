@@ -10,12 +10,12 @@ export class View {
     protected async load(): Promise<void> {
         const main = document.querySelector('main')!;
 
-        const html = await fetch(`/src/views/${this.id}/${this.id}.html`);
+        const html = await fetch(`/src/${this.id}/${this.id}.html`);
     
         main.innerHTML = await html.text();
 
-        await import(`./${this.id}/${this.id}.ts`);
-        await import(`./${this.id}/${this.id}.css`);
+        await import(`../${this.id}/${this.id}.ts`);
+        await import(`../${this.id}/${this.id}.css`);
     }
     
 }

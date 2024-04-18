@@ -1,6 +1,6 @@
-import { FormaDePagamento } from "../models/FormaDePagamento";
-import { API } from "./API";
-import { Service } from "./Service";
+import { FormaDePagamento } from "./FormaDePagamento";
+import { API } from "../util/API";
+import { Service } from "../util/Service";
 
 class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarPeloId(id: number): Promise<FormaDePagamento> {
