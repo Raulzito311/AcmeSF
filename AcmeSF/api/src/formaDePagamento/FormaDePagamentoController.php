@@ -5,9 +5,9 @@ class FormaDePagamentoController {
     private FormaDePagamentoView $view;
     private FormaDePagamentoRepository $repository;
 
-    function __construct($view, $repository) {
+    function __construct($view) {
         $this->view = $view;
-        $this->repository = $repository;
+        $this->repository = new FormaDePagamentoRepositoryBDR();
     }
 
     public function buscarPeloId(): void {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c53c412046a7cbb19cb07b0446563be",
+    "content-hash": "51260881527d657638207dc9652f65a7",
     "packages": [
         {
             "name": "phputil/cors",
@@ -145,6 +145,56 @@
                 "source": "https://github.com/thiagodp/router/tree/v0.2.15"
             },
             "time": "2023-12-01T21:19:47+00:00"
+        },
+        {
+            "name": "phputil/traits",
+            "version": "1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thiagodp/traits.git",
+                "reference": "c3690bb034fd991437562f22591715a6a88bd9bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thiagodp/traits/zipball/c3690bb034fd991437562f22591715a6a88bd9bf",
+                "reference": "c3690bb034fd991437562f22591715a6a88bd9bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "=4.4.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "phputil\\traits\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3"
+            ],
+            "authors": [
+                {
+                    "name": "Thiago Delgado Pinto"
+                }
+            ],
+            "description": "Useful traits for PHP",
+            "homepage": "http://github.com/thiagodp/traits",
+            "keywords": [
+                "automatic",
+                "builder",
+                "getter",
+                "setter",
+                "trait"
+            ],
+            "support": {
+                "issues": "https://github.com/thiagodp/traits/issues",
+                "source": "https://github.com/thiagodp/traits"
+            },
+            "time": "2017-01-05T01:21:28+00:00"
         }
     ],
     "packages-dev": [

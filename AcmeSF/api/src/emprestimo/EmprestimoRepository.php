@@ -2,7 +2,8 @@
 
 interface EmprestimoRepository{
     function buscarTodos(): array;
-    function adicionar(Emprestimo $emprestimo): ?Emprestimo;
+    function buscarPeloId($id): Emprestimo;
+    function adicionar(EmprestimoDTO $emprestimo): Emprestimo;
 }
 
 ?>

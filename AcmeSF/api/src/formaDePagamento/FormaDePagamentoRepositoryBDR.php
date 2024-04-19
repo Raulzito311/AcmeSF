@@ -2,9 +2,15 @@
 require_once "vendor/autoload.php";
 
 class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
-    public function buscarPeloId($id): ?FormaDePagamento {
+    private PDO $pdo;
+
+    public function __construct() {
+        $this->pdo = Connection::get();
+    }
+
+    public function buscarPeloId($id): FormaDePagamento {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM formas_de_pagamento WHERE id = ?');
+            $ps = $this->pdo->prepare('SELECT * FROM formas_de_pagamento WHERE id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, FormaDePagamento::class);
             $ps->execute([$id]);
     
@@ -16,7 +22,7 @@ class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
 
     public function buscarTodos(): array {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM formas_de_pagamento');
+            $ps = $this->pdo->prepare('SELECT * FROM formas_de_pagamento');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, FormaDePagamento::class);
             $ps->execute();
             

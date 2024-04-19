@@ -2,13 +2,33 @@
 require_once "vendor/autoload.php";
 
 class EmprestimoRepositoryBDR implements EmprestimoRepository {
-    public function buscarPeloId($id): ?Emprestimo {
+    private PDO $pdo;
+    private ClienteRepository $clienteRepo;
+    private FormaDePagamentoRepository $formaDePagamentoRepo;
+
+    public function __construct() {
+        $this->pdo = Connection::get();
+        $this->clienteRepo = new ClienteRepositoryBDR();
+        $this->formaDePagamentoRepo = new FormaDePagamentoRepositoryBDR();
+    }
+
+    private function montarEmprestimo($dto): Emprestimo {
+        $cliente = $this->clienteRepo->buscarPeloId($dto->clienteId);
+            
+        $formaDePagamento = $this->formaDePagamentoRepo->buscarPeloId($dto->formaDePagamentoId);
+        
+        return new Emprestimo($dto->id, $cliente, $formaDePagamento, $dto->valorEmprestimo, $dto->dataHora);
+    }
+
+    public function buscarPeloId($id): Emprestimo {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM emprestimos WHERE id = ?');
-            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Emprestimo::class);
+            $ps = $this->pdo->prepare('SELECT * FROM emprestimos WHERE id = ?');
+            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
             $ps->execute([$id]);
     
-            return $ps->fetchObject(Emprestimo::class);
+            $dto = $ps->fetchObject(EmprestimoDTO::class);
+            
+            return $this->montarEmprestimo($dto);
         }catch(Exception $e){
             throw new RepositoryException("Erro ao consultar emprestimo com id $id | " . $e->getMessage(), 500);
         }
@@ -16,23 +36,27 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
 
     public function buscarTodos(): array {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM emprestimos');
-            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Emprestimo::class);
+            $ps = $this->pdo->prepare('SELECT * FROM emprestimos');
+            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
             $ps->execute();
             
-            return $ps->fetchAll();
+            $dtos = $ps->fetchAll();
+
+            return array_map(function($dto) {
+                return $this->montarEmprestimo($dto);
+            }, $dtos);
         }catch(Exception $e){
             throw new RepositoryException('Erro ao consultar emprestimos | ' . $e->getMessage(), 500);
         }
     }
 
-    public function adicionar(Emprestimo $emprestimo): ?Emprestimo {
+    public function adicionar(EmprestimoDTO $emprestimo): Emprestimo {
         try{
-            $ps = Connection::get()->prepare('INSERT INTO emprestimos (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, ?)');
+            $ps = $this->pdo->prepare('INSERT INTO emprestimos (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, ?)');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Emprestimo::class);
             $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo, $emprestimo->dataHora]);
 
-            return $this->buscarPeloId(Connection::get()->lastInsertId());
+            return $this->buscarPeloId($this->pdo->lastInsertId());
         }catch(Exception $e){
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage(), 500);
         }

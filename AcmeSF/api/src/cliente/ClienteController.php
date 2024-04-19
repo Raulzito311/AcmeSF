@@ -5,9 +5,9 @@ class ClienteController {
     private ClienteView $view;
     private ClienteRepository $repository;
 
-    function __construct($view, $repository) {
+    function __construct($view) {
         $this->view = $view;
-        $this->repository = $repository;
+        $this->repository = new ClienteRepositoryBDR();
     }
 
     public function buscarPeloId(): void {

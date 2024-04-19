@@ -1,18 +1,18 @@
 <?php
 
-use phputil\router\HttpRequest;
-use phputil\router\HttpResponse;
-
 require_once "vendor/autoload.php";
 
 class EmprestimoView extends View {
-    public function read(): Emprestimo {
+    public function read(): EmprestimoDTO {
         $body = $this->req->body();
-        return new Emprestimo(null, $body->clienteId, $body->formaDePagamentoId, $body->valorEmprestimo, $body->dataHora);
+        $body->clienteId = $body->cliente->id;
+        $body->formaDePagamentoId = $body->formaDePagamento->id;
+
+        return EmprestimoDTO::of($body);
     }
 
     public function write(Emprestimo $emprestimo): void {
-        $this->res->status(200)->json(json_encode($emprestimo));
+        $this->res->status(200)->json($emprestimo);
     }
 }
 

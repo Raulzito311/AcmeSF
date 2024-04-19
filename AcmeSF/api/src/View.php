@@ -18,12 +18,17 @@ abstract class View {
         return $this->req->param('id');
     }
 
-    public function readCPF():string{
-        return $this->req->param('cpf');
+    public function notFound(): void {
+        $this->error(404);
     }
 
-    public function notFound(): void {
-        $this->res->status(404)->end();
+    public function error(int $errorCode, string $message = null): void {
+        $this->res->status($errorCode);
+        if (isset($message)) {
+            $this->res->send($message);
+            return;
+        }
+        $this->res->end();
     }
 
     public function writeAll(array $objs): void {

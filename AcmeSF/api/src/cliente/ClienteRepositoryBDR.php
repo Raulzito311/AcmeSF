@@ -1,11 +1,15 @@
 <?php
 
-class ClienteRepositoryBDR implements ClienteRepository{
-    protected PDO $pdo;
+class ClienteRepositoryBDR implements ClienteRepository {
+    private PDO $pdo;
 
-    public function buscarTodos():array{
+    public function __construct() {
+        $this->pdo = Connection::get();
+    }
+
+    public function buscarTodos(): array {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM clientes');
+            $ps = $this->pdo->prepare('SELECT * FROM clientes');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Cliente::class);
             $ps->execute();
             
@@ -15,9 +19,9 @@ class ClienteRepositoryBDR implements ClienteRepository{
         }
     }
 
-    public function buscarPeloId($id): Cliente{
+    public function buscarPeloId($id): ?Cliente {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM clientes WHERE id = ?');
+            $ps = $this->pdo->prepare('SELECT * FROM clientes WHERE id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Cliente::class);
             $ps->execute([$id]);
     
@@ -27,9 +31,9 @@ class ClienteRepositoryBDR implements ClienteRepository{
         }
     }
 
-    public function buscarPeloCPF($cpf): Cliente{
+    public function buscarPeloCPF($cpf): ?Cliente {
         try{
-            $ps = Connection::get()->prepare('SELECT * FROM clientes WHERE cpf = ?');
+            $ps = $this->pdo->prepare('SELECT * FROM clientes WHERE cpf = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Cliente::class);
             $ps->execute([$cpf]);
     
