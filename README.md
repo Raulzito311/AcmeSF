@@ -36,24 +36,26 @@ Programa para gerenciamento de empréstimos
 
 ## References
 - [Validação de CPF](https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/)
+- [Validação de datas PHP](https://stackoverflow.com/questions/14504913/verify-valid-date-using-phps-datetime-class)
 
 ***
 
 ## Installation
-### Front-ent
 
+### Front-ent
 >/AcmeSF$ pnpm i
 
 ### Back-end
 >/AcmeSF/api$ composer install
 
 ## Usage
+
 ### Front-end
 >/AcmeSF$ pnpm run dev
 #### Testing
 >/AcmeSF$ npx vitest
 
 ### Back-end
->/AcmeSF/api$ 
+>/AcmeSF/api$ php -S localhost:8080
 #### Testing
->/AcmeSF/api$ 
+>/AcmeSF/api$ composer test
