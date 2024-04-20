@@ -1,5 +1,5 @@
 /**
- * https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
+ * ref: https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/
  */
 export function validarCPF(cpf: string): boolean {
     cpf = cpf.replace(/\D+/g, '');
