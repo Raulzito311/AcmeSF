@@ -1,5 +1,8 @@
 <?php
 class DateUtil {
+    /**
+     * ref: https://stackoverflow.com/questions/14504913/verify-valid-date-using-phps-datetime-class
+     */
     public static function validateDate($date) {
         var_dump($date);
         echo 'validar data ' . $date . PHP_EOL;
