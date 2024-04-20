@@ -47,7 +47,6 @@ abstract class Controller {
 
     public function adicionar(): void {
         if ($this->repositoryError) return;
-        
         try {
             $dto = $this->view->read();
             $dto->validarDados();
@@ -57,6 +56,9 @@ abstract class Controller {
         }
         try {
             $objAdded = $this->repository->adicionar($dto);
+        } catch (DataException $ex) {
+            $this->view->error($ex->getCode(), $ex->getMessage());
+            return;
         } catch (RepositoryException $ex) {
             $this->view->error($ex->getCode());
             return;

@@ -2,14 +2,24 @@
 require_once "vendor/autoload.php";
 
 class ClienteController extends Controller {
-    function __construct($view) {
+    function __construct(ClienteView $view) {
         parent::__construct($view, ClienteRepositoryBDR::class);
     }
 
-    public function buscarPeloCPF(): void {
+    public function buscarTodos(): void {
+        $cpf = $this->view->readCPF();
+
+        if ($cpf) {
+            $this->buscarPeloCPF($cpf);
+            return;
+        }
+
+        parent::buscarTodos();
+    }
+
+    private function buscarPeloCPF($cpf): void {
         if ($this->repositoryError) return;
         
-        $cpf = $this->view->readCPF();
         try {
             $cliente = $this->repository->buscarPeloCPF($cpf);
             if (!$cliente) {

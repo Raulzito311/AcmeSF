@@ -22,12 +22,12 @@ INSERT INTO formas_de_pagamento
 INSERT INTO clientes 
 	(id, cpf, nome, dataNascimento) 
     VALUES
-    (1, "123.456.789-10", "Rodrigo Jorge", "2003-02-12"),
+    (1, "063.556.107-74", "Rodrigo Jorge", "2003-02-12"),
     (2, "062.148.367-25", "Raul Fernandes", "2003-03-06"),
-    (3, "543.216.789-10", "Thiago Delgado", "1990-06-22");
+    (3, "182.198.228-21", "Thiago Delgado", "1990-06-22");
 
 INSERT INTO emprestimos 
 	(id, clienteId, formaDePagamentoId, valorEmprestimo, dataHora) 
     VALUES
-    (1, 3, 7, 2000.00, "2024-04-15 19:22:46"),
+    (1, 3, 7, 2000.50, "2024-04-15 19:22:46"),
     (2, 1, 10, 7549.98, "2024-01-22 08:57:37");

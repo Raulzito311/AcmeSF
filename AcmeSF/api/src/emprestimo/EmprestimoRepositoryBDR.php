@@ -29,7 +29,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
             $dto = $ps->fetchObject(EmprestimoDTO::class);
             
             return $dto ? $this->montarEmprestimo($dto) : $dto;
-        }catch(Exception $e){
+        }catch(PDOException $e){
             throw new RepositoryException("Erro ao consultar emprestimo com id $id | " . $e->getMessage());
         }
     }
@@ -45,7 +45,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
             return array_map(function($dto) {
                 return $this->montarEmprestimo($dto);
             }, $dtos);
-        }catch(Exception $e){
+        }catch(PDOException $e){
             throw new RepositoryException('Erro ao consultar emprestimos | ' . $e->getMessage());
         }
     }
@@ -57,7 +57,9 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
             $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo, $emprestimo->dataHora]);
 
             return $this->buscarPeloId($this->pdo->lastInsertId());
-        }catch(Exception $e){
+        }catch(PDOException $e){
+            if ($e->getCode() == 23000)
+                throw new DataException($e->errorInfo[2]);
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
         }
     }
