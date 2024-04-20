@@ -1,30 +1,26 @@
 <?php
 require_once "vendor/autoload.php";
 
-class ClienteController {
-    private ClienteView $view;
-    private ClienteRepository $repository;
-
+class ClienteController extends Controller {
     function __construct($view) {
-        $this->view = $view;
-        $this->repository = new ClienteRepositoryBDR();
-    }
-
-    public function buscarPeloId(): void {
-        $id = $this->view->readId();
-        $cliente = $this->repository->buscarPeloId($id);
-        $this->view->write($cliente);
+        parent::__construct($view, ClienteRepositoryBDR::class);
     }
 
     public function buscarPeloCPF(): void {
+        if ($this->repositoryError) return;
+        
         $cpf = $this->view->readCPF();
-        $cliente = $this->repository->buscarPeloCPF($cpf);
+        try {
+            $cliente = $this->repository->buscarPeloCPF($cpf);
+            if (!$cliente) {
+                $this->view->notFound();
+                return;
+            }
+        } catch (RepositoryException $ex) {
+            $this->view->error($ex->getCode());
+            return;
+        }
         $this->view->write($cliente);
-    }
-
-    public function buscarTodos(): void {
-        $clientes = $this->repository->buscarTodos();
-        $this->view->writeAll($clientes);
     }
 }
 

@@ -29,6 +29,11 @@ class App {
                         $controller = new EmprestimoController($view);
                         $controller->buscarTodos();
                     })
+                    ->get( '/:id', function( $req, $res ) {
+                        $view = new EmprestimoView($req, $res);
+                        $controller = new EmprestimoController($view);
+                        $controller->buscarPeloId();
+                    })
                     ->post( '/', function( $req, $res ) {
                         $view = new EmprestimoView($req, $res);
                         $controller = new EmprestimoController($view);

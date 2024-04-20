@@ -8,7 +8,7 @@ class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
         $this->pdo = Connection::get();
     }
 
-    public function buscarPeloId($id): FormaDePagamento {
+    public function buscarPeloId($id): FormaDePagamento|bool {
         try{
             $ps = $this->pdo->prepare('SELECT * FROM formas_de_pagamento WHERE id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, FormaDePagamento::class);
@@ -16,7 +16,7 @@ class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
     
             return $ps->fetchObject(FormaDePagamento::class);
         }catch(Exception $e){
-            throw new RepositoryException('Erro ao consultar formas de pagamento' . $e->getMessage(), 500);
+            throw new RepositoryException('Erro ao consultar formas de pagamento' . $e->getMessage());
         }
     }
 
@@ -28,7 +28,7 @@ class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
             
             return $ps->fetchAll();
         }catch(Exception $e){
-            throw new RepositoryException('Erro ao consultar formas de pagamento | ' . $e->getMessage() . ' | ' . $e->getPrevious()->getMessage(), 500);
+            throw new RepositoryException('Erro ao consultar formas de pagamento | ' . $e->getMessage() . ' | ' . $e->getPrevious()->getMessage());
         }
     }
 }

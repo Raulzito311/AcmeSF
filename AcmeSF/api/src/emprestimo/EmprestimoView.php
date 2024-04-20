@@ -10,10 +10,6 @@ class EmprestimoView extends View {
 
         return EmprestimoDTO::of($body);
     }
-
-    public function write(Emprestimo $emprestimo): void {
-        $this->res->status(200)->json($emprestimo);
-    }
 }
 
 ?>

@@ -14,6 +14,14 @@ abstract class View {
         $this->res = $res;
     }
 
+    public function write($obj, int $status = 200): void {
+        $this->res->status($status)->json($obj);
+    }
+
+    public function writeAdded($obj): void {
+        $this->write($obj, 201);
+    }
+
     public function readId(): string {
         return $this->req->param('id');
     }

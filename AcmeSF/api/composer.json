@@ -5,7 +5,7 @@
     },
     "autoload": {
         "psr-4": {
-            "": ["src/", "src/cliente/", "src/emprestimo/", "src/formaDePagamento/"]
+            "": ["src/", "src/cliente/", "src/emprestimo/", "src/formaDePagamento/", "src/util", "src/exceptions", "src/abstractClasses"]
         }
     },
     "require-dev": {

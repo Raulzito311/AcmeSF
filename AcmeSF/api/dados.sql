@@ -7,17 +7,17 @@ INSERT INTO formas_de_pagamento
 	(id, descricao, meses, juros) 
     VALUES
     (1,  "1 vez",  1,  0.025),
-    (2,  "2 vez",  2,  0.025),
-    (3,  "3 vez",  3,  0.05),
-    (4,  "4 vez",  4,  0.05),
-    (5,  "5 vez",  5,  0.075),
-    (6,  "6 vez",  6,  0.075),
-    (7,  "7 vez",  7,  0.1),
-    (8,  "8 vez",  8,  0.1),
-    (9,  "9 vez",  9,  0.125),
-    (10, "10 vez", 10, 0.125),
-    (11, "11 vez", 11, 0.15),
-    (12, "12 vez", 12, 0.15);
+    (2,  "2 vezes",  2,  0.025),
+    (3,  "3 vezes",  3,  0.05),
+    (4,  "4 vezes",  4,  0.05),
+    (5,  "5 vezes",  5,  0.075),
+    (6,  "6 vezes",  6,  0.075),
+    (7,  "7 vezes",  7,  0.1),
+    (8,  "8 vezes",  8,  0.1),
+    (9,  "9 vezes",  9,  0.125),
+    (10, "10 vezes", 10, 0.125),
+    (11, "11 vezes", 11, 0.15),
+    (12, "12 vezes", 12, 0.15);
 
 INSERT INTO clientes 
 	(id, cpf, nome, dataNascimento) 
