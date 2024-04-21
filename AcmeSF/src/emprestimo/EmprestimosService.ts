@@ -1,39 +1,43 @@
-import { Emprestimo } from "./Emprestimo";
+import { Emprestimo, EmprestimoJson } from "./Emprestimo";
 import { API } from "../util/API";
-import { clientesService } from "../cliente/ClientesService";
-import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
 import { Service } from "../util/Service";
 
 class EmprestimosService implements Service<Emprestimo> {
     async buscarPeloId(id: number): Promise<Emprestimo> {
-        const res = await fetch(`${API}/emprestimos?id=${id}`);
-        if (!res.ok)
-            throw new Error("API de emprestimos indisponível");
+        const res = await fetch(`${API}/emprestimos/${id}`);
+        if (!res.ok) {
+            const text = await res.text();
+            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+        }
 
-        const emprestimosJson: any[] = await res.json();
+        const emprestimoJson: any = await res.json();
 
-        const emprestimo: Emprestimo = await Emprestimo.of(emprestimosJson[0]);
+        const emprestimo: Emprestimo = Emprestimo.of(emprestimoJson);
 
         return emprestimo;
     }
 
     async buscarTodos(): Promise<Emprestimo[]> {
         const res = await fetch(`${API}/emprestimos`);
-        if (!res.ok)
-            throw new Error("API de emprestimos indisponível");
+        if (!res.ok) {
+            const text = await res.text();
+            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+        }
 
         const emprestimosJson: any[] = await res.json();
 
         const emprestimos: Emprestimo[] = [];
 
         for (const e of emprestimosJson) {
-            emprestimos.push(await Emprestimo.of(e));
+            emprestimos.push(Emprestimo.of(e));
         }
 
         return emprestimos;
     }
 
-    async adicionar(emprestimo: Emprestimo){
+    async adicionar(emprestimo: EmprestimoJson): Promise<void> {
+        emprestimo.dataHora = emprestimo.dataHora.toLocaleString(new Intl.Locale('ja'));
+
         const params = {
             method : "POST",
             headers: { 
@@ -43,12 +47,11 @@ class EmprestimosService implements Service<Emprestimo> {
         };
         
         const res = await fetch(`${API}/emprestimos`, params);
-        if (!res.ok)
-            throw new Error("API de emprestimos indisponível");
-        else 
-            alert("Emprestimo solicitado com sucesso");
+        if (!res.ok) {
+            const text = await res.text();
+            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+        }
     }
-
 }
 
 export const emprestimosService = new EmprestimosService();

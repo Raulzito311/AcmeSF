@@ -1,5 +1,7 @@
 import { ControllerListarEmprestimos } from "./ControllerListarEmprestimos";
 
-const controller = new ControllerListarEmprestimos();
-
-controller.init();
+export function carregarPaginaDeListarEmprestimos() {
+    const controller = new ControllerListarEmprestimos();
+    
+    controller.init();
+}

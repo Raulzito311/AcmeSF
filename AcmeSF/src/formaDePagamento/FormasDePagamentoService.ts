@@ -5,8 +5,10 @@ import { Service } from "../util/Service";
 class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarPeloId(id: number): Promise<FormaDePagamento> {
         const res = await fetch(`${API}/formasDePagamento/${id}`);
-        if (!res.ok)
-            throw new Error("API de formas de pagamento indisponível");
+        if (!res.ok) {
+            const text = await res.text();
+            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+        }
 
         const formaDePagamentoJson = await res.json();
 
@@ -17,8 +19,10 @@ class FormasDePagamentoService implements Service<FormaDePagamento> {
 
     async buscarTodos(): Promise<FormaDePagamento[]> {
         const res = await fetch(`${API}/formasDePagamento`);
-        if (!res.ok)
-            throw new Error("API de formas de pagamento indisponível");
+        if (!res.ok) {
+            const text = await res.text();
+            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+        }
 
         const formasDePagamentoJson: any[] = await res.json();
 

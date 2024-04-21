@@ -15,7 +15,6 @@ export class View {
         main.innerHTML = await html.text();
 
         await import(`../${this.id}/${this.id}.css`);
-        await import(`../${this.id}/${this.id}.ts`);
     }
     
 }

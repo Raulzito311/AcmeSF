@@ -1,5 +1,7 @@
 import { ControllerSolicitarEmprestimo } from "./ControllerSolicitarEmprestimo";
 
-const controller = new ControllerSolicitarEmprestimo();
-
-controller.init();
+export function carregarPaginaDeSolicitarEmprestimo() {
+    const controller = new ControllerSolicitarEmprestimo();
+    
+    controller.init();
+}

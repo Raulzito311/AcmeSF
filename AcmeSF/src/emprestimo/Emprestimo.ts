@@ -1,23 +1,23 @@
 import { clientesService } from "../cliente/ClientesService";
 import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
-import { Cliente } from "../cliente/Cliente";
-import { FormaDePagamento } from "../formaDePagamento/FormaDePagamento";
+import { Cliente, ClienteJson } from "../cliente/Cliente";
+import { FormaDePagamento, FormaDePagamentoJson } from "../formaDePagamento/FormaDePagamento";
 
 export class Emprestimo {
 	readonly id: number;
 	readonly cliente: Cliente;
 	readonly valorEmprestimo: number;
 	readonly formaDePagamento: FormaDePagamento;
-	readonly data: Date;
+	readonly dataHora: Date;
 	readonly valorFinal: number;
 	readonly parcelas: number[];
 
-	constructor(id: number, cliente: Cliente, valorEmprestimo: number, formaDePagamento: FormaDePagamento, data: Date) {
+	constructor(id: number, cliente: Cliente, valorEmprestimo: number, formaDePagamento: FormaDePagamento, dataHora: Date) {
 		this.id = id;
 		this.cliente = cliente;
 		this.valorEmprestimo = valorEmprestimo;
 		this.formaDePagamento = formaDePagamento;
-		this.data = data;
+		this.dataHora = dataHora;
 
 		this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * this.formaDePagamento.juros);
 
@@ -26,11 +26,11 @@ export class Emprestimo {
 		this.calcularParcelas();
 	}
 
-	static async of(json: EmprestimoJson): Promise<Emprestimo> {
-		const cliente = await clientesService.buscarPeloId(json.clienteId);
-		const formaDePagamento = await formasDePagamentoService.buscarPeloId(json.formaDePagamentoId);
+	static of(json: EmprestimoJson): Emprestimo {
+		const cliente = Cliente.of(json.cliente);
+		const formaDePagamento = FormaDePagamento.of(json.formaDePagamento);
 
-		return new this(json.id || -1, cliente, json.valorEmprestimo, formaDePagamento, new Date(json.data));
+		return new this(json.id || -1, cliente, json.valorEmprestimo, formaDePagamento, new Date(json.dataHora));
 	}
 
 	private calcularParcelas(): void {
@@ -50,8 +50,8 @@ export class Emprestimo {
 
 export type EmprestimoJson = {
 	id?: number;
-	clienteId: number;
-	formaDePagamentoId: number;
+	cliente: ClienteJson;
+	formaDePagamento: FormaDePagamentoJson;
 	valorEmprestimo: number;
-	data: string | Date;
+	dataHora: string | Date;
 }

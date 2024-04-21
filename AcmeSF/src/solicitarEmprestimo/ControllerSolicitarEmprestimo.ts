@@ -1,5 +1,5 @@
-import { Emprestimo } from "../emprestimo/Emprestimo";
 import { clientesService } from "../cliente/ClientesService";
+import { EmprestimoJson } from "../emprestimo/Emprestimo";
 import { emprestimosService } from "../emprestimo/EmprestimosService";
 import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
 import { SolicitarEmprestimoView } from "./SolicitarEmprestimoView";
@@ -9,14 +9,14 @@ export class ControllerSolicitarEmprestimo {
     private view: SolicitarEmprestimoView;
 
     constructor() {
-        this.view = new SolicitarEmprestimoView();
+        this.view = new SolicitarEmprestimoView(clientesService.buscarPeloCPF);
     }
     
     public async init(): Promise<void> {
-        this.view.exibirSolicitacaoDeEmprestimo(await clientesService.buscarTodos(), await formasDePagamentoService.buscarTodos());
+        this.view.exibirSolicitacaoDeEmprestimo(await formasDePagamentoService.buscarTodos());
 
-        this.view.adicionarListenerParaSolicitacao((emprestimo: Emprestimo) => {
-            emprestimosService.adicionar(emprestimo)
+        this.view.adicionarListenerParaSolicitacao(async (emprestimo: EmprestimoJson) => {
+            await emprestimosService.adicionar(emprestimo);
         });
     }
 }

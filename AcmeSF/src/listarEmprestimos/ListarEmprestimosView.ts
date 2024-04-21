@@ -1,5 +1,5 @@
 import { Emprestimo } from "../emprestimo/Emprestimo.ts";
-import { SolicitarEmprestimoView } from "../solicitarEmprestimo/SolicitarEmprestimoView.ts";
+import { carregarPaginaDeSolicitarEmprestimo } from "../solicitarEmprestimo/solicitarEmprestimo.ts";
 import { View } from "../util/View.ts";
 
 export class ListarEmprestimosView extends View {
@@ -30,7 +30,7 @@ export class ListarEmprestimosView extends View {
 
             const tdData = document.createElement('td');
             tdData.className = 'col';
-            tdData.innerText = emprestimo.data.toDateString();
+            tdData.innerText = emprestimo.dataHora.toLocaleString(new Intl.Locale('ja'));
 
             const tdCliente = document.createElement('td');
             tdCliente.className = 'col';
@@ -61,7 +61,7 @@ export class ListarEmprestimosView extends View {
         await super.load();
 
         document.getElementById('solicitar')?.addEventListener('click', () => {
-            import('../solicitarEmprestimo/solicitarEmprestimo.ts');
+            carregarPaginaDeSolicitarEmprestimo();
         });
     }
     

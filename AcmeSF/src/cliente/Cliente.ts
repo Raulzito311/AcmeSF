@@ -12,13 +12,13 @@ export class Cliente {
     }
 
     static of(json: ClienteJson) {
-        return new this(json.id, json.cpf, json.nome, new Date(json.dataNascimento));
+        return new this(json.id, <string>json.cpf, <string>json.nome, new Date(<string>json.dataNascimento));
     }
 }
 
 export type ClienteJson = {
 	id: number;
-    cpf: string;
-    nome: string;
-    dataNascimento: string;
+    cpf?: string;
+    nome?: string;
+    dataNascimento?: string;
 }
