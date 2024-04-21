@@ -47,7 +47,7 @@ describe('ClienteController', function() {
         expect($cliente->id)->toBe(1);
         expect($cliente->nome)->toBe('Rodrigo Jorge');
         expect($cliente->cpf)->toBe('063.556.107-74');
-        expect($cliente->dataNascimento)->toBe('2003-02-12 00:00:00');
+        expect($cliente->dataNascimento)->toBe('2003-02-12');
     });
     it('returns status "404 - Not Found" for an inexistant Cliente id', function() {
         $req = new FakeHttpRequest();
