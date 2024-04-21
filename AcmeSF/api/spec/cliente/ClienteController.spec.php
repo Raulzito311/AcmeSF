@@ -64,7 +64,8 @@ describe('ClienteController', function() {
     it('retrieves one Cliente by CPF', function() {
         $req = new FakeHttpRequest();
         $req->withMethod('GET');
-        $req->withUrl('/clientes?cpf=063.556.107.74');
+        $req->withUrl('/clientes?cpf=063.556.107-74');
+        $req->withParams(['cpf' => '063.556.107-74']);
         $res = new FakeHttpResponse();
 
         $app = App::getRouter();
@@ -87,7 +88,8 @@ describe('ClienteController', function() {
     it('returns status "404 - Not Found" for an inexistant Cliente CPf', function() {
         $req = new FakeHttpRequest();
         $req->withMethod('GET');
-        $req->withUrl('clientes?cpf=093.221.320-00');
+        $req->withUrl('/clientes?cpf=093.221.320-00');
+        $req->withParams(['cpf' => '093.221.320-00']);
         $res = new FakeHttpResponse();
 
         $app = App::getRouter();

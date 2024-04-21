@@ -5,7 +5,7 @@ use phputil\router\FakeHttpResponse;
 
 require_once "vendor/autoload.php";
 
-describe('ClienteController', function() {
+describe('FormaDePagamentoController', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);
