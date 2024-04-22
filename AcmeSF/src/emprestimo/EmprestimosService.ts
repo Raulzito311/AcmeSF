@@ -6,7 +6,7 @@ class EmprestimosService implements Service<Emprestimo> {
     async buscarPeloId(id: number): Promise<Emprestimo> {
         const res = await fetch(`${API}/emprestimos/${id}`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 
@@ -20,7 +20,7 @@ class EmprestimosService implements Service<Emprestimo> {
     async buscarTodos(): Promise<Emprestimo[]> {
         const res = await fetch(`${API}/emprestimos`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 
@@ -48,7 +48,7 @@ class EmprestimosService implements Service<Emprestimo> {
         
         const res = await fetch(`${API}/emprestimos`, params);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
     }

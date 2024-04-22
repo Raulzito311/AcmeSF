@@ -6,7 +6,7 @@ class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarPeloId(id: number): Promise<FormaDePagamento> {
         const res = await fetch(`${API}/formasDePagamento/${id}`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 
@@ -20,7 +20,7 @@ class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarTodos(): Promise<FormaDePagamento[]> {
         const res = await fetch(`${API}/formasDePagamento`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 

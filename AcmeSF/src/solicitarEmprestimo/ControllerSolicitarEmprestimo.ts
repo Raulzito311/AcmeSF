@@ -2,13 +2,16 @@ import { clientesService } from "../cliente/ClientesService";
 import { EmprestimoJson } from "../emprestimo/Emprestimo";
 import { emprestimosService } from "../emprestimo/EmprestimosService";
 import { formasDePagamentoService } from "../formaDePagamento/FormasDePagamentoService";
+import { carregarPaginaDeListarEmprestimos } from "../listarEmprestimos/listarEmprestimos";
+import { Controller } from "../util/Controller";
 import { SolicitarEmprestimoView } from "./SolicitarEmprestimoView";
 
-export class ControllerSolicitarEmprestimo {
+export class ControllerSolicitarEmprestimo extends Controller {
 
-    private view: SolicitarEmprestimoView;
+    protected view: SolicitarEmprestimoView;
 
     constructor() {
+        super();
         this.view = new SolicitarEmprestimoView(clientesService.buscarPeloCPF);
     }
     
@@ -18,7 +21,15 @@ export class ControllerSolicitarEmprestimo {
         this.view.exibirSolicitacaoDeEmprestimo(await formasDePagamentoService.buscarTodos());
 
         this.view.adicionarListenerParaSolicitacao(async (emprestimo: EmprestimoJson) => {
-            await emprestimosService.adicionar(emprestimo);
+            try {
+                await emprestimosService.adicionar(emprestimo);
+            } catch (errorMessage) {
+                this.view.alert(<string> errorMessage, 'danger');
+            }
+                    
+            const controllerListar = await carregarPaginaDeListarEmprestimos();
+
+            controllerListar.alert('Empréstimo realizado com sucesso', 'success');
         });
     }
 }

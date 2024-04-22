@@ -143,7 +143,7 @@ export class SolicitarEmprestimoView extends View {
      * @param solicitar Função que será chamada ao submeter a solicitação de empréstimo
      */
     public adicionarListenerParaSolicitacao(solicitar: Function): void {
-        document.getElementById('formEmprestimo')?.addEventListener('submit', async (event) => {
+        document.getElementById('formEmprestimo')?.addEventListener('submit', (event) => {
             event.preventDefault();
 
             let dadosValidos = true;
@@ -206,13 +206,7 @@ export class SolicitarEmprestimoView extends View {
                     dataHora: new Date()
                 };
 
-                try {
-                    await solicitar(emprestimo);
-                    
-                    await carregarPaginaDeListarEmprestimos();
-                } catch (errorMessage) {
-                    alert(errorMessage);
-                }
+                solicitar(emprestimo);
             }
         }); 
     }

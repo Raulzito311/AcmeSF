@@ -6,7 +6,7 @@ class ClientesService implements Service<Cliente> {
     async buscarPeloId(id: number): Promise<Cliente> {
         const res = await fetch(`${API}/clientes/${id}`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 
@@ -20,7 +20,7 @@ class ClientesService implements Service<Cliente> {
     async buscarTodos(): Promise<Cliente[]> {
         const res = await fetch(`${API}/clientes`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 
@@ -34,7 +34,7 @@ class ClientesService implements Service<Cliente> {
     async buscarPeloCPF(cpf: number): Promise<Cliente> {
         const res = await fetch(`${API}/clientes?cpf=${cpf}`);
         if (!res.ok) {
-            const text = await res.text();
+            const text = (await res.text()).trim();
             throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
         }
 
