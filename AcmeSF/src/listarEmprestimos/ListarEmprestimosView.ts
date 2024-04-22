@@ -30,7 +30,7 @@ export class ListarEmprestimosView extends View {
 
             const tdData = document.createElement('td');
             tdData.className = 'col';
-            tdData.innerText = emprestimo.dataHora.toLocaleString(new Intl.Locale('ja'));
+            tdData.innerText = emprestimo.dataHora.toLocaleString(new Intl.Locale('pt-BR'));
 
             const tdCliente = document.createElement('td');
             tdCliente.className = 'col';
@@ -57,7 +57,7 @@ export class ListarEmprestimosView extends View {
         }
     }
 
-    protected async load(): Promise<void> {
+    public async load(): Promise<void> {
         await super.load();
 
         document.getElementById('solicitar')?.addEventListener('click', () => {

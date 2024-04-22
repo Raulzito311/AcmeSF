@@ -3,11 +3,9 @@ export class View {
 
     constructor(id: string) {
         this.id = id;
-
-        this.load();
     }
 
-    protected async load(): Promise<void> {
+    public async load(): Promise<void> {
         const main = document.querySelector('main')!;
 
         const html = await fetch(`/src/${this.id}/${this.id}.html`);

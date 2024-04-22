@@ -21,9 +21,7 @@ export class Emprestimo {
 
 		this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * this.formaDePagamento.juros);
 
-		this.parcelas = [];
-
-		this.calcularParcelas();
+		this.parcelas = Emprestimo.calcularParcelas(this.valorFinal, this.formaDePagamento.meses);
 	}
 
 	static of(json: EmprestimoJson): Emprestimo {
@@ -33,18 +31,26 @@ export class Emprestimo {
 		return new this(json.id || -1, cliente, json.valorEmprestimo, formaDePagamento, new Date(json.dataHora));
 	}
 
-	private calcularParcelas(): void {
-		const valorParcela = Math.floor((this.valorFinal / this.formaDePagamento.meses) * 100) / 100;
-		let centavosSobrando = Math.round((this.valorFinal - (valorParcela * this.formaDePagamento.meses)) * 100);
+	public static validarValor(valor: number): boolean {
+		return valor >= 500 && valor <= 50000;
+	}
 
-		for (let i = 0; i < this.formaDePagamento.meses; i++) {
+	public static calcularParcelas(valorFinal: number, qtdMeses: number): number[] {
+		const valorParcela = Math.floor((valorFinal / qtdMeses) * 100) / 100;
+		let centavosSobrando = Math.round((valorFinal - (valorParcela * qtdMeses)) * 100);
+
+		const parcelas = [];
+
+		for (let i = 0; i < qtdMeses; i++) {
 			let valor = valorParcela;
 			if (centavosSobrando > 0) {
 				valor += 0.01;
 				centavosSobrando--;
 			}
-			this.parcelas.push(Math.round(valor*100)/100);
+			parcelas.push(Math.round(valor*100)/100);
 		}
+
+		return parcelas;
 	}
 }
 

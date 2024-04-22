@@ -13,6 +13,8 @@ export class ControllerSolicitarEmprestimo {
     }
     
     public async init(): Promise<void> {
+        await this.view.load();
+        
         this.view.exibirSolicitacaoDeEmprestimo(await formasDePagamentoService.buscarTodos());
 
         this.view.adicionarListenerParaSolicitacao(async (emprestimo: EmprestimoJson) => {

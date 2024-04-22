@@ -1,4 +1,4 @@
-import { EmprestimoJson } from "../emprestimo/Emprestimo";
+import { Emprestimo, EmprestimoJson } from "../emprestimo/Emprestimo";
 import { FormaDePagamento } from "../formaDePagamento/FormaDePagamento";
 import { carregarPaginaDeListarEmprestimos } from "../listarEmprestimos/listarEmprestimos.ts";
 import { View } from "../util/View";
@@ -28,7 +28,7 @@ export class SolicitarEmprestimoView extends View {
 
         // Formata o valor do emprestimo digitado
         inputValor.addEventListener('input', function(event) {
-            const target = <HTMLInputElement>event.target;
+            const target = <HTMLInputElement> event.target;
             
             if (target.value.match(/(\d+\.\d{2}).+/))
                 target.value = target.value.replace(/(\d+\.\d{2}).+/, '$1'); // Impede entrada de mais de 2 casas decimais
@@ -38,32 +38,20 @@ export class SolicitarEmprestimoView extends View {
         inputCPF.addEventListener('blur', async (event) => {
             const target: HTMLInputElement = <HTMLInputElement> event.target;
             const invalidCpf = document.getElementById('invalidCpf');
-            const divCliente = document.getElementById('cliente');
             const inputClienteId = <HTMLInputElement> document.getElementById('inputClienteId');
 
             if (!target.value) {
-                divCliente!.innerHTML = '';
                 invalidCpf!.innerText = 'Por favor, insira o cpf do cliente';
                 target.classList.remove('is-valid');
                 target.classList.add('is-invalid');
             } else if (validarCPF(target.value)) {
                 try {
                     const cliente = await this.buscarPeloCPF(target.value);
-
-                    //Cria o elemento input
-                    inputClienteId.innerText = cliente.id.toString();
     
                     target.classList.remove('is-invalid');
                     target.classList.add('is-valid');
-    
-                    let span = document.getElementById("input-group-text")
-    
-                    if(span === null){
-                        span = document.createElement('span');
-                        span.classList.add('input-group-text');
-                        span.id = "input-group-text";
-                        span.classList.add('p-3');
-                    }
+
+                    inputClienteId.innerText = cliente.id.toString();
     
                     const today = new Date();
                     const nascimento = new Date(cliente.dataNascimento);
@@ -72,33 +60,83 @@ export class SolicitarEmprestimoView extends View {
                     if (new Date(today.getFullYear(), today.getMonth(), today.getDate()) < new Date(today.getFullYear(), nascimento.getMonth(), nascimento.getDate()))
                         idade--;
     
-                    span.innerText = `${cliente.nome} | ${idade} anos`;
-    
-                    divCliente!.appendChild(span);
+                    inputCPF.value = `${inputCPF.value} | ${cliente.nome}, ${idade} anos`;
                 } catch (error) {
                     inputClienteId.innerText = '';
-                    divCliente!.innerHTML = '';
                     invalidCpf!.innerText = 'Por favor, insira o CPF de um cliente já cadastrado';
                     target.classList.remove('is-valid');
                     target.classList.add('is-invalid');
                 }
             } else {
-                divCliente!.innerHTML = '';
                 invalidCpf!.innerText = 'Por favor, insira um CPF válido';
                 target.classList.remove('is-valid');
                 target.classList.add('is-invalid');
             }
         });
 
+        const select = <HTMLSelectElement>document.getElementById('formaDePagamento');
+        
         // Preenche as opções de formas de pagamento
-        const select: HTMLSelectElement = <HTMLSelectElement>document.getElementById('formaDePagamento');
-
         for (const formaDePagamento of formasDePagamento) {
-            const option: HTMLOptionElement = document.createElement('option');
+            const option = document.createElement('option');
             option.innerText = formaDePagamento.descricao;
             option.value = formaDePagamento.id.toString();
             select.appendChild(option);
         }
+
+        select.addEventListener('change', (ev) => {
+            this.atualizarParcelas(formasDePagamento);
+        });
+
+        inputValor.addEventListener('blur', (ev) => {
+            this.atualizarParcelas(formasDePagamento);
+
+            const invalidValor = document.getElementById('invalidValor');
+            const valor = parseFloat(inputValor.value);
+
+            if(Emprestimo.validarValor(valor)){
+                inputValor.classList.add('is-valid');
+                inputValor.classList.remove('is-invalid');
+            } else {
+                invalidValor!.innerText = valor ? 'Por favor, insira um valor entre R$ 500,00 e R$ 50.000,00' : 'Por favor, insira o valor do emprestimo';
+                inputValor.classList.remove('is-valid');
+                inputValor.classList.add('is-invalid');
+            }
+        });
+    }
+
+    private atualizarParcelas(formasDePagamento: FormaDePagamento[]) {
+        const inputValor = <HTMLInputElement> document.getElementById('valorEmprestimo');
+        const selectFormaDePagamento = <HTMLSelectElement>document.getElementById('formaDePagamento');
+
+        const divParcelas = <HTMLDivElement> document.getElementById('parcelas');
+        divParcelas.innerHTML = '';
+
+        const formaDePagamentoId = Number(selectFormaDePagamento.value);
+        const valor = parseFloat(inputValor.value);
+
+        if (!formaDePagamentoId || !valor || !Emprestimo.validarValor(valor)) return;
+
+        const formaDePagamento = <FormaDePagamento> formasDePagamento.find(f => f.id === formaDePagamentoId);
+
+        const title = document.createElement('h3');
+        title.innerText = 'Parcelas:';
+        divParcelas.appendChild(title);
+
+        const parcelas = Emprestimo.calcularParcelas(valor, formaDePagamento.meses);
+
+        const ol = document.createElement('ol');
+
+        const date = new Date();
+
+        for (const parcela of parcelas) {
+            const li = document.createElement('li');
+            date.setDate(date.getDate() + 30);
+            li.innerText = `R$${parcela} | Vencimento: ${date.toLocaleDateString()}`;
+            ol.appendChild(li);
+        }
+
+        divParcelas.appendChild(ol);
     }
 
     /**
@@ -115,7 +153,7 @@ export class SolicitarEmprestimoView extends View {
             const inputClienteId = document.getElementById('inputClienteId') as HTMLInputElement;
             const clienteId = Number(inputClienteId.textContent);
 
-            if (clienteId || isNaN(clienteId)) {
+            if (clienteId) {
                 inputCPF.classList.add('is-valid');
                 inputCPF.classList.remove('is-invalid');
             } else {
@@ -126,12 +164,12 @@ export class SolicitarEmprestimoView extends View {
             /* CLIENTE - end */
 
             /* VALOR EMPRESTIMO - start */
-            const valorEmprestimoInput = document.getElementById('valorEmprestimo') as HTMLInputElement;
+            const valorEmprestimoInput = <HTMLInputElement> document.getElementById('valorEmprestimo');
             const invalidValor = document.getElementById('invalidValor');
 
             const valor = parseFloat(valorEmprestimoInput.value);
             
-            if(valor >= 500 && valor <= 50000){
+            if(Emprestimo.validarValor(valor)){
                 valorEmprestimoInput.classList.add('is-valid');
                 valorEmprestimoInput.classList.remove('is-invalid');
             } else {
@@ -143,10 +181,10 @@ export class SolicitarEmprestimoView extends View {
             /* VALOR EMPRESTIMO - end */
 
             /* FORMA DE PAGAMENTO - start */
-            const selectElement = document.getElementById("formaDePagamento") as HTMLSelectElement;
+            const selectElement = <HTMLSelectElement> document.getElementById("formaDePagamento");
             const formaDePagamentoId = Number(selectElement.value);
 
-            if(formaDePagamentoId || isNaN(formaDePagamentoId)) {
+            if(formaDePagamentoId) {
                 selectElement.classList.add('is-valid');
                 selectElement.classList.remove('is-invalid');
             } else {
@@ -171,7 +209,7 @@ export class SolicitarEmprestimoView extends View {
                 try {
                     await solicitar(emprestimo);
                     
-                    carregarPaginaDeListarEmprestimos();
+                    await carregarPaginaDeListarEmprestimos();
                 } catch (errorMessage) {
                     alert(errorMessage);
                 }

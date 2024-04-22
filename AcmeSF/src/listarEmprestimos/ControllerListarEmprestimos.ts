@@ -10,6 +10,8 @@ export class ControllerListarEmprestimos {
     }
 
     public async init(): Promise<void> {
+        await this.view.load();
+        
         this.view.listarEmprestimos(await emprestimosService.buscarTodos());
     }
 }
