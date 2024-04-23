@@ -1,7 +1,9 @@
 import { ControllerSolicitarEmprestimo } from "./ControllerSolicitarEmprestimo";
 
-export function carregarPaginaDeSolicitarEmprestimo() {
+export async function carregarPaginaDeSolicitarEmprestimo(): Promise<ControllerSolicitarEmprestimo> {
     const controller = new ControllerSolicitarEmprestimo();
     
-    controller.init();
+    await controller.init();
+
+    return controller;
 }

@@ -1,7 +1,9 @@
 import { ControllerListarEmprestimos } from "./ControllerListarEmprestimos";
 
-export async function carregarPaginaDeListarEmprestimos() {
+export async function carregarPaginaDeListarEmprestimos(): Promise<ControllerListarEmprestimos> {
     const controller = new ControllerListarEmprestimos();
     
-    controller.init();
+    await controller.init();
+
+    return controller;
 }
