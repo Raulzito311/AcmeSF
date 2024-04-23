@@ -12,6 +12,7 @@ test.describe( 'validar cpf', () => {
         const cpfInput = await page.$('#cpf');
         await cpfInput!.fill("999.999.999-99");
         await page.keyboard.press('Tab');
+        await page.waitForTimeout(2000);
     
         const mensagem = await page.$('#invalidCpf');
 
@@ -152,6 +153,35 @@ test.describe( 'validar valor', () => {
         const text = await mensagem!.textContent();
 
         expect(text).toContain('Por favor, insira um valor entre R$ 500,00 e R$ 50.000,00');
+    });
+});
+
+test.describe( 'verifica parcelas', () => {
+    test( 'verifica se mostra as parcelas', async ({page}) => {
+        
+        await page.goto('http://localhost:5173/');
+    
+        await page.click('#solicitar');
+    
+        const cpfInput = await page.$('#cpf');
+        await cpfInput!.fill("063.556.107.74");
+        await page.keyboard.press('Tab');
+        await page.waitForTimeout(2000);
+
+        await page.fill('#valorEmprestimo', '1000');
+        await page.keyboard.press('Tab');
+    
+        await page.selectOption('#formaDePagamento', '1');
+        await page.keyboard.press('Tab');
+
+        const mensagem = await page.$('#parcelas');
+
+
+        expect(mensagem).not.toBeNull();
+
+        const text = await mensagem!.textContent();
+
+        expect(text).toContain('Parcelas:');
     });
 });
 
