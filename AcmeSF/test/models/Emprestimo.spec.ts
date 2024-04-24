@@ -22,7 +22,7 @@ describe('Emprestimo', () => {
             expect(emprestimo.valorFinal).toEqual(1200.00);
         });
     });
-    describe('gerarValorFinal', () => {
+    describe('gerarParcelas', () => {
 
         it('gera as parcelas corretamente', async () => {
             const cliente = new Cliente(1, '074.628.985-95', 'Álvaro Silva', new Date('1983-04-22'));
