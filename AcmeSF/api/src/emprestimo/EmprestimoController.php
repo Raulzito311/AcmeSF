@@ -8,4 +8,3 @@ class EmprestimoController extends Controller {
 }
 
 ?>
-

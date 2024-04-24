@@ -35,4 +35,3 @@ class ClienteController extends Controller {
 }
 
 ?>
-

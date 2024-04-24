@@ -2,7 +2,8 @@
     "name": "acmesf/api",
     "scripts": {
         "test": "kahlan --reporter=verbose",
-        "refresh": "composer dump-autoload"
+        "refresh": "composer dump-autoload",
+        "analyse": "phpstan analyse src"
     },
     "authors": [
         {
@@ -20,7 +21,8 @@
         }
     },
     "require-dev": {
-        "kahlan/kahlan": "^5.2"
+        "kahlan/kahlan": "^5.2",
+        "phpstan/phpstan": "^1.10"
     },
     "require": {
         "phputil/extenso": "^2.0",

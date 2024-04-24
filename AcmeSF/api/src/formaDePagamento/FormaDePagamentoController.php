@@ -8,4 +8,3 @@ class FormaDePagamentoController extends Controller {
 }
 
 ?>
-
