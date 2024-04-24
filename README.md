@@ -35,6 +35,12 @@ Programa para gerenciamento de empréstimos
 - [Rodrigo Jorge](https://gitlab.com/rodrigojorge12)
 
 ## References
+- [Playwright] (https://playwright.dev/)
+- [Vitest] (https://vitest.dev/)
+- [Vite] (https://vitejs.dev/)
+- [Bootstrap] (https://getbootstrap.com/)
+- [Composer] (https://getcomposer.org/)
+- [Kahlan] (https://kahlan.github.io/docs/)
 - [Validação de CPF](https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/)
 - [Validação de datas PHP](https://stackoverflow.com/questions/14504913/verify-valid-date-using-phps-datetime-class)
 
