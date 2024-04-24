@@ -6,8 +6,6 @@ test.describe( 'validar cpf', () => {
     test( 'cpf invalido', async ({page}) => {
 
         await page.goto('http://localhost:5173/');
-
-        await page.waitForTimeout(2000);
     
         await page.click('#solicitar');
 
@@ -30,8 +28,6 @@ test.describe( 'validar cpf', () => {
     test( 'cpf valido mas não pertence a nenhum cliente cadastrado', async ({page}) => {
 
         await page.goto('http://localhost:5173/');
-
-        await page.waitForTimeout(2000);
     
         await page.click('#solicitar');
 
@@ -54,8 +50,6 @@ test.describe( 'validar cpf', () => {
     test( 'Cpf vazio', async ({page}) => {
         
         await page.goto('http://localhost:5173/');
-
-        await page.waitForTimeout(2000);
     
         await page.click('#solicitar');
 

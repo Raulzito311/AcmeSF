@@ -6,10 +6,7 @@ test.describe( 'validar valor', () => {
         await page.goto('http://localhost:5173/');
     
         await page.click('#solicitar');
-    
-        const cpfInput = await page.$('#cpf');
-        await cpfInput!.fill("063.556.107.74");
-        await page.keyboard.press('Tab');
+
         await page.waitForTimeout(2000);
 
         await page.fill('#valorEmprestimo', '');
@@ -29,9 +26,6 @@ test.describe( 'validar valor', () => {
     
         await page.click('#solicitar');
     
-        const cpfInput = await page.$('#cpf');
-        await cpfInput!.fill("063.556.107.74");
-        await page.keyboard.press('Tab');
         await page.waitForTimeout(2000);
 
         await page.fill('#valorEmprestimo', '100');
@@ -52,9 +46,6 @@ test.describe( 'validar valor', () => {
     
         await page.click('#solicitar');
     
-        const cpfInput = await page.$('#cpf');
-        await cpfInput!.fill("063.556.107.74");
-        await page.keyboard.press('Tab');
         await page.waitForTimeout(2000);
 
         await page.fill('#valorEmprestimo', '-1');
@@ -75,9 +66,6 @@ test.describe( 'validar valor', () => {
     
         await page.click('#solicitar');
     
-        const cpfInput = await page.$('#cpf');
-        await cpfInput!.fill("063.556.107.74");
-        await page.keyboard.press('Tab');
         await page.waitForTimeout(2000);
 
         await page.fill('#valorEmprestimo', '100000');
