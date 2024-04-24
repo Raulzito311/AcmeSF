@@ -158,6 +158,7 @@ export class SolicitarEmprestimoView extends View {
                 inputCPF.classList.remove('is-invalid');
             } else {
                 dadosValidos = false;
+                document.getElementById('invalidCpf')!.innerText = 'Por favor, insira o cpf do cliente';
                 inputCPF.classList.remove('is-valid');
                 inputCPF.classList.add('is-invalid');
             }
@@ -189,6 +190,7 @@ export class SolicitarEmprestimoView extends View {
                 selectElement.classList.remove('is-invalid');
             } else {
                 dadosValidos = false;
+                document.getElementById('invalidFormaDePagamento')!.innerText = 'Por favor, selecione uma forma de pagamento';
                 selectElement.classList.remove('is-valid');
                 selectElement.classList.add('is-invalid');
             }
