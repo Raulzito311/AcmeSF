@@ -48,7 +48,6 @@ abstract class Controller {
 
         try {
             $dto = $this->view->read();
-            $dto->validarDados();
         } catch (DataException $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;

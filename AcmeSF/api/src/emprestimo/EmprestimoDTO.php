@@ -22,17 +22,6 @@ class EmprestimoDTO {
 	public readonly int $meses;
 	public readonly float $juros;
 
-	public function validarDados(): void {
-		if (!isset($this->clienteId))
-			throw new DataException('O cliente deve ser informado (cliente->id)');
-		if (!isset($this->formaDePagamentoId))
-			throw new DataException('A forma De pagamento deve ser informada (formaDePagamento->id)');
-		if (!isset($this->valorEmprestimo))
-			throw new DataException('O valor do emprestimo deve ser informado (valorEmprestimo)');
-		if (!isset($this->dataHora))
-			throw new DataException('A data e hora devem ser informadas (dataHora)');
-	}
-
 	public static function of(object $body): EmprestimoDTO {
 		$dto = new EmprestimoDTO();
 		
@@ -49,6 +38,8 @@ class EmprestimoDTO {
 			} catch (TypeError $ex) {
 				throw new DataException('O id do cliente deve ser um número inteiro (cliente->id)', $ex);
 			}
+		} else {
+			throw new DataException('O cliente deve ser informado (cliente->id)');
 		}
 		if (isset($body->formaDePagamento) && isset($body->formaDePagamento->id)) {
 			try {
@@ -56,6 +47,8 @@ class EmprestimoDTO {
 			} catch (TypeError $ex) {
 				throw new DataException('O id da forma de pagamento deve ser um número inteiro (formaDePagamento->id)', $ex);
 			}
+		} else {
+			throw new DataException('A forma De pagamento deve ser informada (formaDePagamento->id)');
 		}
 		if (isset($body->valorEmprestimo)) {
 			try {
@@ -65,6 +58,8 @@ class EmprestimoDTO {
 			} catch (TypeError | Exception $ex) {
 				throw new DataException('O valor do emprestimo deve ser um número decimal entre R$ 500,00 e R$ 50.000,00 (valorEmprestimo)', $ex);
 			}
+		} else {
+			throw new DataException('O valor do emprestimo deve ser informado (valorEmprestimo)');
 		}
 		if (isset($body->dataHora)) {
 			try {
@@ -74,6 +69,8 @@ class EmprestimoDTO {
 			} catch (TypeError | Exception $ex) {
 				throw new DataException('A data e hora deve ser uma string válida no formato "ano-mês-dia hora:minuto:segundo" (dataHora)', $ex);
 			}
+		} else {
+			throw new DataException('A data e hora devem ser informadas (dataHora)');
 		}
 
 		return $dto;
