@@ -14,12 +14,20 @@ describe('Emprestimo', () => {
             expect(emprestimo.valorFinal).toEqual(1100.00);
         });
 
-        it('gera o valor final corretamente', async () => {
+        it('gera o valor final corretamente 2', async () => {
             const cliente = new Cliente(1, '074.628.985-95', 'Álvaro Silva', new Date('1983-04-22'));
             const formaDePagamento = new FormaDePagamento(2, '4 vezes', 4, 0.2);
             const emprestimo = new Emprestimo(1, cliente, 1000.00, formaDePagamento, new Date());
 
             expect(emprestimo.valorFinal).toEqual(1200.00);
+        });
+
+        it('gera o valor final corretamente 3', async () => {
+            const cliente = new Cliente(1, '074.628.985-95', 'Álvaro Silva', new Date('1983-04-22'));
+            const formaDePagamento = new FormaDePagamento(2, '4 vezes', 4, 0.03);
+            const emprestimo = new Emprestimo(1, cliente, 1000.00, formaDePagamento, new Date());
+
+            expect(emprestimo.valorFinal).toEqual(1030.00);
         });
     });
     describe('gerarParcelas', () => {
@@ -34,7 +42,7 @@ describe('Emprestimo', () => {
             expect(emprestimo.parcelas[2]).toEqual(366.66);
         });
 
-        it('gera as parcelas corretamente', async () => {
+        it('gera as parcelas corretamente 2', async () => {
             const cliente = new Cliente(1, '074.628.985-95', 'Álvaro Silva', new Date('1983-04-22'));
             const formaDePagamento = new FormaDePagamento(3, '4 vezes', 4, 0.15);
             const emprestimo = new Emprestimo(1, cliente, 2000.00, formaDePagamento, new Date());
@@ -46,7 +54,19 @@ describe('Emprestimo', () => {
 
         });
 
-        it('gera as parcelas corretamente', async () => {
+        it('gera as parcelas corretamente 3', async () => {
+            const cliente = new Cliente(1, '074.628.985-95', 'Álvaro Silva', new Date('1983-04-22'));
+            const formaDePagamento = new FormaDePagamento(3, '3 vezes', 3, 0.00);
+            const emprestimo = new Emprestimo(1, cliente, 1000.00, formaDePagamento, new Date());
+
+            expect(emprestimo.parcelas[0]).toEqual(333.34);
+            expect(emprestimo.parcelas[1]).toEqual(333.33);
+            expect(emprestimo.parcelas[2]).toEqual(333.33);
+
+
+        });
+
+        it('gera as parcelas corretamente 4', async () => {
             const cliente = new Cliente(1, '074.628.985-95', 'Álvaro Silva', new Date('1983-04-22'));
             const formaDePagamento = new FormaDePagamento(3, '10 vezes', 10, 0.25);
             const emprestimo = new Emprestimo(1, cliente, 10000.00, formaDePagamento, new Date());
@@ -62,6 +82,28 @@ describe('Emprestimo', () => {
             expect(emprestimo.parcelas[8]).toEqual(1250.00);
             expect(emprestimo.parcelas[9]).toEqual(1250.00);
 
+        });
+
+    });
+
+    describe('Valida Valor pelo metodo statico validar valor da classe e,prestimo', () => {
+
+        it('Valor invalido', async () => {
+            const isValid = Emprestimo.validarValor(-50);
+
+            expect(isValid).toEqual(false);
+        });
+
+        it('Valor fora da margem permitida', async () => {
+            const isValid = Emprestimo.validarValor(500000);
+
+            expect(isValid).toEqual(false);
+        });
+
+        it('Valor valido', async () => {
+            const isValid = Emprestimo.validarValor(2000);
+
+            expect(isValid).toEqual(true);
         });
 
     });
