@@ -18,7 +18,7 @@ class ClienteController extends Controller {
     }
 
     private function buscarPeloCPF($cpf): void {
-        if ($this->repositoryError) return;
+        if (!isset($this->repository)) return;
         
         try {
             $cliente = $this->repository->buscarPeloCPF($cpf);

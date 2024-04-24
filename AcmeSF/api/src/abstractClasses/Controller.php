@@ -4,7 +4,6 @@ require_once "vendor/autoload.php";
 abstract class Controller {
     protected $view;
     protected $repository;
-    protected bool $repositoryError = false;
 
     function __construct($view, $repositoryClass) {
         $this->view = $view;
@@ -12,12 +11,11 @@ abstract class Controller {
             $this->repository = new $repositoryClass();
         } catch (RepositoryException $ex) {
             $this->view->error($ex->getCode());
-            $this->repositoryError = true;
         }
     }
 
     public function buscarPeloId(): void {
-        if ($this->repositoryError) return;
+        if (!isset($this->repository)) return;
 
         $id = $this->view->readId();
         try {
@@ -34,7 +32,7 @@ abstract class Controller {
     }
 
     public function buscarTodos(): void {
-        if ($this->repositoryError) return;
+        if (!isset($this->repository)) return;
         
         try {
             $objs = $this->repository->buscarTodos();
@@ -46,7 +44,8 @@ abstract class Controller {
     }
 
     public function adicionar(): void {
-        if ($this->repositoryError) return;
+        if (!isset($this->repository)) return;
+
         try {
             $dto = $this->view->read();
             $dto->validarDados();
