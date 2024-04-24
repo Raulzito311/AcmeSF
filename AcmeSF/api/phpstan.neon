@@ -1,4 +1,6 @@
 parameters:
-	level: 1
+	level: 5
 	ignoreErrors:
 		- '#has an uninitialized readonly property#'
+		- '#is assigned outside of the constructor#'
+		- '#TypeError is never thrown in the try block#'

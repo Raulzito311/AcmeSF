@@ -17,7 +17,7 @@ class ClienteController extends Controller {
         parent::buscarTodos();
     }
 
-    private function buscarPeloCPF($cpf): void {
+    private function buscarPeloCPF(string $cpf): void {
         if (!isset($this->repository)) return;
         
         try {

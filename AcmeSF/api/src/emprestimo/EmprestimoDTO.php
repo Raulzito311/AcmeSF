@@ -39,21 +39,21 @@ class EmprestimoDTO {
 		if (isset($body->id)) {
 			try {
 				$dto->id = $body->id;
-			} catch (\Throwable $ex) {
+			} catch (TypeError $ex) {
 				throw new DataException('O id deve ser um número inteiro (id)', $ex);
 			}
 		}
 		if (isset($body->cliente) && isset($body->cliente->id)) {
 			try {
 				$dto->clienteId = $body->cliente->id;
-			} catch (\Throwable $ex) {
+			} catch (TypeError $ex) {
 				throw new DataException('O id do cliente deve ser um número inteiro (cliente->id)', $ex);
 			}
 		}
 		if (isset($body->formaDePagamento) && isset($body->formaDePagamento->id)) {
 			try {
 				$dto->formaDePagamentoId = $body->formaDePagamento->id;
-			} catch (\Throwable $ex) {
+			} catch (TypeError $ex) {
 				throw new DataException('O id da forma de pagamento deve ser um número inteiro (formaDePagamento->id)', $ex);
 			}
 		}
@@ -62,7 +62,7 @@ class EmprestimoDTO {
 				$dto->valorEmprestimo = $body->valorEmprestimo;
 				if ($dto->valorEmprestimo < 500 || $dto->valorEmprestimo > 50000)
 					throw new Exception();
-			} catch (\Throwable $ex) {
+			} catch (TypeError | Exception $ex) {
 				throw new DataException('O valor do emprestimo deve ser um número decimal entre R$ 500,00 e R$ 50.000,00 (valorEmprestimo)', $ex);
 			}
 		}
@@ -71,7 +71,7 @@ class EmprestimoDTO {
 				$dto->dataHora = $body->dataHora;
 				if (!DateUtil::validateDate($dto->dataHora))
 					throw new Exception();
-			} catch (\Throwable $ex) {
+			} catch (TypeError | Exception $ex) {
 				throw new DataException('A data e hora deve ser uma string válida no formato "ano-mês-dia hora:minuto:segundo" (dataHora)', $ex);
 			}
 		}

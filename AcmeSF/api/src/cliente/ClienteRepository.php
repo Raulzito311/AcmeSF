@@ -1,7 +1,10 @@
 <?php
 interface ClienteRepository{
+    /**
+     * @return Cliente[]
+     */
     function buscarTodos(): array;
-    function buscarPeloId($id): Cliente|false;
-    function buscarPeloCPF($cpf): Cliente|false;
+    function buscarPeloId(string $id): Cliente|false;
+    function buscarPeloCPF(string $cpf): Cliente|false;
 }
 ?>

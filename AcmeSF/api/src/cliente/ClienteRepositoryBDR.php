@@ -7,6 +7,9 @@ class ClienteRepositoryBDR implements ClienteRepository {
         $this->pdo = Connection::get();
     }
 
+    /**
+     * @return Cliente[]
+     */
     public function buscarTodos(): array {
         try{
             $ps = $this->pdo->prepare('SELECT * FROM clientes');
@@ -19,7 +22,7 @@ class ClienteRepositoryBDR implements ClienteRepository {
         }
     }
 
-    public function buscarPeloId($id): Cliente|false {
+    public function buscarPeloId(string $id): Cliente|false {
         try{
             $ps = $this->pdo->prepare('SELECT * FROM clientes WHERE id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Cliente::class);
@@ -31,7 +34,7 @@ class ClienteRepositoryBDR implements ClienteRepository {
         }
     }
 
-    public function buscarPeloCPF($cpf): Cliente|false {
+    public function buscarPeloCPF(string $cpf): Cliente|false {
         try{
             $ps = $this->pdo->prepare('SELECT * FROM clientes WHERE cpf = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Cliente::class);

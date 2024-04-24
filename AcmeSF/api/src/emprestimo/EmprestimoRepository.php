@@ -1,8 +1,11 @@
 <?php
 
 interface EmprestimoRepository{
+    /**
+     * @return Emprestimo[]
+     */
     function buscarTodos(): array;
-    function buscarPeloId($id): Emprestimo|false;
+    function buscarPeloId(string $id): Emprestimo|false;
     function adicionar(EmprestimoDTO $emprestimo): Emprestimo|false;
 }
 

@@ -4,7 +4,7 @@ require_once "vendor/autoload.php";
 class Connection {
     private static ?PDO $pdo = null;
 
-    private static function start() {
+    private static function start(): void {
         try {
             self::$pdo = new PDO(
                 "mysql:dbname=acmesf;host=localhost;charset=utf8",
@@ -14,11 +14,10 @@ class Connection {
             );
         } catch (PDOException $e) {
             throw new RepositoryException("Erro ao conectar com o banco de dados: " . $e->getMessage());
-            die();
         }
     }
 
-    public static function get() {
+    public static function get(): PDO {
         if(self::$pdo == null){
             self::start();
         }

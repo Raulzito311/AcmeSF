@@ -5,7 +5,7 @@ abstract class Controller {
     protected $view;
     protected $repository;
 
-    function __construct($view, $repositoryClass) {
+    function __construct($view, string $repositoryClass) {
         $this->view = $view;
         try {
             $this->repository = new $repositoryClass();

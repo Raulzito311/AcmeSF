@@ -1,8 +1,11 @@
 <?php
 
 interface FormaDePagamentoRepository{
+    /**
+     * @return FormaDePagamento[]
+     */
     function buscarTodos(): array;
-    function buscarPeloId($id): FormaDePagamento|false;
+    function buscarPeloId(string $id): FormaDePagamento|false;
 }
 
 ?>
