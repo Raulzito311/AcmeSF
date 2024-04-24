@@ -85,7 +85,7 @@ describe('ClienteController', function() {
         expect($cliente->cpf)->toBe('063.556.107-74');
         expect($cliente->dataNascimento)->toBe('2003-02-12');
     });
-    it('returns status "404 - Not Found" for an inexistant Cliente CPf', function() {
+    it('returns status "404 - Not Found" for an inexistant Cliente CPF', function() {
         $req = new FakeHttpRequest();
         $req->withMethod('GET');
         $req->withUrl('/clientes?cpf=093.221.320-00');
