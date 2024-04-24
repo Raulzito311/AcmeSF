@@ -30,5 +30,22 @@ test.describe( 'realizar emprestimo', () => {
         const text = await alert!.textContent();
 
         expect(text).toContain('Empréstimo realizado com sucesso');
+
+        const firstRow = await page.locator('table tbody tr:nth-child(1) td').all();
+        
+        const nome = await firstRow[1].innerText();
+        expect(nome).toContain('Raul Fernandes');
+
+        const cpf = await firstRow[2].innerText();
+        expect(cpf).toContain('062.148.367-25');
+
+        const valorEmprestimo = await firstRow[3].innerText();
+        expect(valorEmprestimo).toContain('4499.99');
+
+        const formaDePagamento = await firstRow[4].innerText();
+        expect(formaDePagamento).toContain('5 vezes');
+
+        const valorFinal = await firstRow[5].innerText();
+        expect(valorFinal).toContain('4837.49');
     });
 });

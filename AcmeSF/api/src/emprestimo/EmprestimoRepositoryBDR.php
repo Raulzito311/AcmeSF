@@ -24,7 +24,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
 
     public function buscarTodos(): array {
         try{
-            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, f.descricao, f.meses, f.juros FROM emprestimos e JOIN clientes c ON (e.clienteId = c.id) JOIN formas_de_pagamento f ON (e.formaDePagamentoId = f.id)');
+            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, f.descricao, f.meses, f.juros FROM emprestimos e JOIN clientes c ON (e.clienteId = c.id) JOIN formas_de_pagamento f ON (e.formaDePagamentoId = f.id) ORDER BY dataHora DESC');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
             $ps->execute();
             
