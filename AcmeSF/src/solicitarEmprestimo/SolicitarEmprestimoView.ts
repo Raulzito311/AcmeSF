@@ -113,9 +113,9 @@ export class SolicitarEmprestimoView extends View {
         divParcelas.innerHTML = '';
 
         const formaDePagamentoId = Number(selectFormaDePagamento.value);
-        const valor = parseFloat(inputValor.value);
+        const valorEmprestimo = parseFloat(inputValor.value);
 
-        if (!formaDePagamentoId || !valor || !Emprestimo.validarValor(valor)) return;
+        if (!formaDePagamentoId || !valorEmprestimo || !Emprestimo.validarValor(valorEmprestimo)) return;
 
         const formaDePagamento = <FormaDePagamento> formasDePagamento.find(f => f.id === formaDePagamentoId);
 
@@ -123,7 +123,7 @@ export class SolicitarEmprestimoView extends View {
         title.innerText = 'Parcelas:';
         divParcelas.appendChild(title);
 
-        const parcelas = Emprestimo.calcularParcelas(valor, formaDePagamento.meses);
+        const parcelas = Emprestimo.calcularParcelas(valorEmprestimo, formaDePagamento);
 
         const ol = document.createElement('ol');
 

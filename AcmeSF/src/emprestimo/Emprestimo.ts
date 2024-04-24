@@ -21,7 +21,7 @@ export class Emprestimo {
 
 		this.valorFinal = this.valorEmprestimo + (this.valorEmprestimo * this.formaDePagamento.juros);
 
-		this.parcelas = Emprestimo.calcularParcelas(this.valorFinal, this.formaDePagamento.meses);
+		this.parcelas = Emprestimo.calcularParcelas(this.valorEmprestimo, this.formaDePagamento);
 	}
 
 	static of(json: EmprestimoJson): Emprestimo {
@@ -35,13 +35,14 @@ export class Emprestimo {
 		return valor >= 500 && valor <= 50000;
 	}
 
-	public static calcularParcelas(valorFinal: number, qtdMeses: number): number[] {
-		const valorParcela = Math.floor((valorFinal / qtdMeses) * 100) / 100;
-		let centavosSobrando = Math.round((valorFinal - (valorParcela * qtdMeses)) * 100);
+	public static calcularParcelas(valorEmprestimo: number, formaDePagamento: FormaDePagamento): number[] {
+		const valorFinal = valorEmprestimo + (valorEmprestimo * formaDePagamento.juros);
+		const valorParcela = Math.floor((valorFinal / formaDePagamento.meses) * 100) / 100;
+		let centavosSobrando = Math.round((valorFinal - (valorParcela * formaDePagamento.meses)) * 100);
 
 		const parcelas = [];
 
-		for (let i = 0; i < qtdMeses; i++) {
+		for (let i = 0; i < formaDePagamento.meses; i++) {
 			let valor = valorParcela;
 			if (centavosSobrando > 0) {
 				valor += 0.01;
