@@ -54,6 +54,7 @@ Programa para gerenciamento de empréstimos
 >/AcmeSF$ pnpm run dev
 #### Testing
 >/AcmeSF$ npx vitest
+>/AcmeSF$ npx playwright test
 
 ### Back-end
 >/AcmeSF/api$ php -S localhost:8080

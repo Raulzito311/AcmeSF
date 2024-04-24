@@ -7,11 +7,11 @@
     "authors": [
         {
             "name": "Raul Fernandes",
-            "email": "raulmff@gmail.com"
+            "email": "raul.fernandes@aluno.cefet-rj.br"
         },
         {
             "name": "Rodrigo Jorge",
-            "email": "rodrigozjorge@gmail.com"
+            "email": "rodrigo.zacharias@aluno.cefet-rj.br"
         }
     ],
     "autoload": {
