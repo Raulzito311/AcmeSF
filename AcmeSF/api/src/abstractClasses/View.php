@@ -14,6 +14,14 @@ abstract class View {
         $this->res = $res;
     }
 
+    // Input
+
+    public function readId(): string {
+        return $this->req->param('id');
+    }
+
+    // Output
+
     public function write($obj, int $status = 200): void {
         $this->res->status($status)->json($obj);
     }
@@ -22,8 +30,8 @@ abstract class View {
         $this->write($obj, 201);
     }
 
-    public function readId(): string {
-        return $this->req->param('id');
+    public function writeAll(array $objs): void {
+        $this->res->status(200)->json($objs);
     }
 
     public function notFound(): void {
@@ -37,10 +45,6 @@ abstract class View {
             return;
         }
         $this->res->end();
-    }
-
-    public function writeAll(array $objs): void {
-        $this->res->status(200)->json(json_encode($objs));
     }
 }
 

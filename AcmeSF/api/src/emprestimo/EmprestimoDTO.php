@@ -12,6 +12,16 @@ class EmprestimoDTO {
 	public readonly float $valorEmprestimo;
 	public readonly string $dataHora;
 
+	// Cliente
+	public readonly string $cpf;
+	public readonly string $nome;
+	public readonly string $dataNascimento;
+
+	// Forma de Pagamento
+	public readonly string $descricao;
+	public readonly int $meses;
+	public readonly float $juros;
+
 	public function validarDados(): void {
 		if (!isset($this->clienteId))
 			throw new DataException('O cliente deve ser informado (cliente->id)');
