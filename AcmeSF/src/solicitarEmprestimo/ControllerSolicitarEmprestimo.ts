@@ -25,6 +25,7 @@ export class ControllerSolicitarEmprestimo extends Controller {
                 await emprestimosService.adicionar(emprestimo);
             } catch (errorMessage) {
                 this.view.alert(<string> errorMessage, 'danger');
+                return;
             }
                     
             const controllerListar = await carregarPaginaDeListarEmprestimos();
