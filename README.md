@@ -1,5 +1,60 @@
 # 2024-1-pis-g9
 
+## Name
+Acme Serviços Financeiros
+
+## Description
+Programa para gerenciamento de empréstimos
+
+## Contributors
+- [Raul Martins Furtado Fernandes](https://gitlab.com/Raulzito311)
+- [Rodrigo Jorge](https://gitlab.com/rodrigojorge12)
+
+## References
+- [Vite](https://vitejs.dev/)
+- [Vitest](https://vitest.dev/)
+- [Playwright](https://playwright.dev/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Composer](https://getcomposer.org/)
+- [Kahlan](https://kahlan.github.io/docs/)
+- [PHPStan](https://phpstan.org/)
+- [Validação de CPF](https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/)
+- [Validação de datas PHP](https://stackoverflow.com/questions/14504913/verify-valid-date-using-phps-datetime-class)
+
+***
+
+## Front-end
+
+### Install
+>/AcmeSF$ pnpm i
+
+### Run
+>/AcmeSF$ pnpm run dev
+
+### Test
+>/AcmeSF$ npx vitest
+>/AcmeSF$ npx playwright test
+
+## Back-end
+
+### Install
+>/AcmeSF/api$ composer install
+
+### Run
+>/AcmeSF/api$ php -S localhost:8080
+
+### Test
+>/AcmeSF/api$ composer test
+
+### Analyse
+>/AcmeSF/api$ composer analyse
+
+***
+
+***
+
+***
+
 ## Integrate with your tools
 
 - [ ] [Set up project integrations](https://gitlab.com/thiagodp/2024-1-pis-g9/-/settings/integrations)
@@ -21,51 +76,3 @@ Use the built-in continuous integration in GitLab.
 - [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
 - [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
 - [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-## Name
-Acme Serviços Financeiros
-
-## Description
-Programa para gerenciamento de empréstimos
-
-## Contributors
-- [Raul Martins Furtado Fernandes](https://gitlab.com/Raulzito311)
-- [Rodrigo Jorge](https://gitlab.com/rodrigojorge12)
-
-## References
-- [Vite] (https://vitejs.dev/)
-- [Vitest] (https://vitest.dev/)
-- [Playwright] (https://playwright.dev/)
-- [Bootstrap] (https://getbootstrap.com/)
-- [Composer] (https://getcomposer.org/)
-- [Kahlan] (https://kahlan.github.io/docs/)
-- [PHPStan] (https://phpstan.org/)
-- [Validação de CPF](https://dicasdeprogramacao.com.br/algoritmo-para-validar-cpf/)
-- [Validação de datas PHP](https://stackoverflow.com/questions/14504913/verify-valid-date-using-phps-datetime-class)
-
-***
-
-## Installation
-
-### Front-ent
->/AcmeSF$ pnpm i
-
-### Back-end
->/AcmeSF/api$ composer install
-
-## Usage
-
-### Front-end
->/AcmeSF$ pnpm run dev
-#### Testing
->/AcmeSF$ npx vitest
->/AcmeSF$ npx playwright test
-
-### Back-end
->/AcmeSF/api$ php -S localhost:8080
-#### Testing
->/AcmeSF/api$ composer test
-#### Analyse
->/AcmeSF/api$ composer analyse
