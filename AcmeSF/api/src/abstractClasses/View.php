@@ -16,8 +16,12 @@ abstract class View {
 
     // Input
 
+    public function readParam(string $param): string|null {
+        return $this->req->param($param);
+    }
+
     public function readId(): string {
-        return $this->req->param('id');
+        return $this->readParam('id');
     }
 
     // Output
