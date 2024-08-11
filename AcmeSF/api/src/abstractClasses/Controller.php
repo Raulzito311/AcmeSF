@@ -51,6 +51,9 @@ abstract class Controller {
         } catch (DataException $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
+        } catch (TypeError $e) {
+            $this->view->error(400, 'You must provide a JSON body for this request.');
+            return;
         }
         try {
             $objAdded = $this->repository->adicionar($dto);
