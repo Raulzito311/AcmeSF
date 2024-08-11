@@ -45,5 +45,18 @@ class ClienteRepositoryBDR implements ClienteRepository {
             throw new RepositoryException('Erro ao consultar cliente' . $e->getMessage());
         }
     }
+    
+    function adicionar(Cliente $cliente): Cliente|false {
+        try{
+            $ps = $this->pdo->prepare('INSERT INTO cliente (cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito) VALUES (?, ?, ?, ?, ?, ?, ?)');
+            $ps->execute([$cliente->cpf, $cliente->nome, $cliente->dataNascimento, $cliente->telefone, $cliente->email, $cliente->endereco, $cliente->limiteCredito]);
+
+            return $this->buscarPeloId($this->pdo->lastInsertId());
+        }catch(PDOException $e){
+            if ($e->getCode() == 23000)
+                throw new DataException($e->errorInfo[2]);
+            throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
+        }
+    }
 }
 ?>

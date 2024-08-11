@@ -70,7 +70,7 @@ class App {
                         $controller = new EmprestimoController($view);
                         $controller->buscarPeloId();
                     })
-                    ->post( '/', $precisaEstarLogadoGerente, function(HttpRequest $req, HttpResponse $res) {
+                    ->post( '/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
                         $view = new EmprestimoView($req, $res);
                         $controller = new EmprestimoController($view);
                         $controller->adicionar();
@@ -86,6 +86,11 @@ class App {
                         $view = new ClienteView($req, $res);
                         $controller = new ClienteController($view);
                         $controller->buscarPeloId();
+                    })
+                    ->post( '/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
+                        $view = new ClienteView($req, $res);
+                        $controller = new ClienteController($view);
+                        $controller->adicionar();
                     })
                     ->end();
         return $app;

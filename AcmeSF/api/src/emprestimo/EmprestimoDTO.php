@@ -68,7 +68,7 @@ class EmprestimoDTO {
 		if (isset($body->dataHora)) {
 			try {
 				$dto->dataHora = $body->dataHora;
-				if (!DateUtil::validateDate($dto->dataHora))
+				if (!StringUtil::validateDateTime($dto->dataHora))
 					throw new Exception();
 			} catch (TypeError | Exception $ex) {
 				throw new DataException('A data e hora deve ser uma string válida no formato "ano-mês-dia hora:minuto:segundo" (dataHora)', $ex);
