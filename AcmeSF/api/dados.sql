@@ -31,3 +31,9 @@ INSERT INTO emprestimos
     VALUES
     (1, 3, 7, 2000.50, "2024-04-15 19:22:46"),
     (2, 1, 10, 7549.98, "2024-01-22 08:57:37");
+
+INSERT INTO usuarios 
+	(id, nome, username, email, senha, permissao) 
+    VALUES
+    (1, "Raul Fernandes", "raul", "raulmff@gmail.com", "123456", "P"),
+    (2, "Gerente", "admin", "admin@gmail.com", "admin#", "G");

@@ -25,3 +25,12 @@ CREATE TABLE emprestimos(
     CONSTRAINT fk__emprestimo_cliente FOREIGN KEY (clienteId) REFERENCES clientes(id),
     CONSTRAINT fk__emprestimo_formaDePagamento FOREIGN KEY (formaDePagamentoId) REFERENCES formas_de_pagamento(id)
 ) ENGINE=INNODB;
+
+CREATE TABLE usuarios(
+    id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nome varchar(255) NOT NULL,
+    username varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    senha varchar(255) NOT NULL,
+    permissao char(1) NOT NULL
+) ENGINE=INNODB;
