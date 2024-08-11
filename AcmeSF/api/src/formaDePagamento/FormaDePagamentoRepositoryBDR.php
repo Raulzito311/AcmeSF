@@ -10,7 +10,7 @@ class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
 
     public function buscarPeloId(string $id): FormaDePagamento|false {
         try{
-            $ps = $this->pdo->prepare('SELECT * FROM formas_de_pagamento WHERE id = ?');
+            $ps = $this->pdo->prepare('SELECT * FROM forma_de_pagamento WHERE id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, FormaDePagamento::class);
             $ps->execute([$id]);
     
@@ -25,7 +25,7 @@ class FormaDePagamentoRepositoryBDR implements FormaDePagamentoRepository {
      */
     public function buscarTodos(): array {
         try{
-            $ps = $this->pdo->prepare('SELECT * FROM formas_de_pagamento');
+            $ps = $this->pdo->prepare('SELECT * FROM forma_de_pagamento');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, FormaDePagamento::class);
             $ps->execute();
             

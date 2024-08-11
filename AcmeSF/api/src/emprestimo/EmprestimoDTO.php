@@ -7,17 +7,21 @@ class EmprestimoDTO {
 	use WithBuilder;
 
 	public readonly int $id;
-    public readonly int $clienteId;
-	public readonly int $formaDePagamentoId;
 	public readonly float $valorEmprestimo;
 	public readonly string $dataHora;
 
 	// Cliente
+    public readonly int $clienteId;
 	public readonly string $cpf;
 	public readonly string $nome;
 	public readonly string $dataNascimento;
+    public readonly string $telefone;
+    public readonly string $email;
+    public readonly string $endereco;
+    public readonly float $limiteCredito;
 
 	// Forma de Pagamento
+	public readonly int $formaDePagamentoId;
 	public readonly string $descricao;
 	public readonly int $meses;
 	public readonly float $juros;

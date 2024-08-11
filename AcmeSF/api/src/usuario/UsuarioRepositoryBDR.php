@@ -10,7 +10,7 @@ class UsuarioRepositoryBDR implements UsuarioRepository {
 
     public function buscarUsuarioPelasCredenciais(Credenciais $credenciais): Usuario|false {
         try{
-            $ps = $this->pdo->prepare('SELECT id, nome, username, email, senha, permissao FROM usuarios WHERE (username = :login OR email = :login) AND senha = :senha');
+            $ps = $this->pdo->prepare('SELECT id, nome, username, email, senha, permissao FROM usuario WHERE (username = :login OR email = :login) AND senha = :senha');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
             $ps->execute([':login' => $credenciais->login, ':senha' => $credenciais->senha]);
 

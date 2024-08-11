@@ -10,7 +10,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
 
     public function buscarPeloId(string $id): Emprestimo|false {
         try{
-            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, f.descricao, f.meses, f.juros FROM emprestimos e JOIN clientes c ON (e.clienteId = c.id) JOIN formas_de_pagamento f ON (e.formaDePagamentoId = f.id) WHERE e.id = ?');
+            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, f.descricao, f.meses, f.juros FROM emprestimo e JOIN cliente c ON (e.clienteId = c.id) JOIN forma_de_pagamento f ON (e.formaDePagamentoId = f.id) WHERE e.id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
             $ps->execute([$id]);
     
@@ -27,7 +27,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
      */
     public function buscarTodos(): array {
         try{
-            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, f.descricao, f.meses, f.juros FROM emprestimos e JOIN clientes c ON (e.clienteId = c.id) JOIN formas_de_pagamento f ON (e.formaDePagamentoId = f.id) ORDER BY dataHora DESC');
+            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, f.descricao, f.meses, f.juros FROM emprestimo e JOIN cliente c ON (e.clienteId = c.id) JOIN forma_de_pagamento f ON (e.formaDePagamentoId = f.id) ORDER BY dataHora DESC');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
             $ps->execute();
             
@@ -43,7 +43,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
 
     public function adicionar(EmprestimoDTO $emprestimo): Emprestimo|false {
         try{
-            $ps = $this->pdo->prepare('INSERT INTO emprestimos (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, ?)');
+            $ps = $this->pdo->prepare('INSERT INTO emprestimo (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, ?)');
             $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo, $emprestimo->dataHora]);
 
             return $this->buscarPeloId($this->pdo->lastInsertId());
