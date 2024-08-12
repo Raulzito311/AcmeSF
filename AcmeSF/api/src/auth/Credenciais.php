@@ -1,6 +1,11 @@
 <?php
 
+use phputil\traits\WithBuilder;
+
 class Credenciais {
+
+	use WithBuilder;
+
     public readonly string $login;
     public readonly string $senha;
 

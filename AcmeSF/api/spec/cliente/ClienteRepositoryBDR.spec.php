@@ -1,7 +1,7 @@
 <?php
 require_once "vendor/autoload.php";
 
-describe('ClienteBDR', function() {
+describe('ClienteRepositoryBDR', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);

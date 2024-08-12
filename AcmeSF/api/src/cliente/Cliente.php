@@ -77,9 +77,11 @@ class Cliente{
 		}
 		if (isset($body->email)) {
 			try {
+				if (!StringUtil::validateEmail($body->email))
+					throw new Exception();
 				$cliente->email = $body->email;
 			} catch (TypeError | Exception $ex) {
-				throw new DataException('O email deve ser uma string válida (email)', $ex);
+				throw new DataException('O email deve ser uma string válida no formato "****@***.**" (email)', $ex);
 			}
 		} else {
 			throw new DataException('O email deve ser informado (email)');

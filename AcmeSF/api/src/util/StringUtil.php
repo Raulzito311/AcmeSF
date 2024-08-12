@@ -26,7 +26,12 @@ class StringUtil {
     }
 
     public static function validateCpf(string $cpf): bool {
-        return preg_match('/\d{3}.\d{3}.\d{3}-\d{2}/', $cpf);
+        // TODO: validate if cpf is valid
+        return preg_match('/\d{3}\.\d{3}\.\d{3}\-\d{2}/', $cpf);
+    }
+
+    public static function validateEmail(string $email): bool {
+        return preg_match('/.+@.+\..+/', $email);
     }
 }
 ?>

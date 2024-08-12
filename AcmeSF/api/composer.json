@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "": ["src/", "src/cliente/", "src/emprestimo/", "src/formaDePagamento/", "src/util/", "src/exceptions/", "src/abstractClasses/", "src/authentication/", "src/usuario/"]
+            "": ["src/", "src/cliente/", "src/emprestimo/", "src/formaDePagamento/", "src/util/", "src/exceptions/", "src/abstractClasses/", "src/auth/", "src/usuario/"]
         }
     },
     "require-dev": {

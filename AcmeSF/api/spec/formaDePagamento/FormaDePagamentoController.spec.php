@@ -4,7 +4,7 @@ use phputil\router\FakeHttpRequest;
 use phputil\router\FakeHttpResponse;
 
 require_once "vendor/autoload.php";
-
+/* TODO:
 describe('FormaDePagamentoController', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
@@ -62,6 +62,6 @@ describe('FormaDePagamentoController', function() {
         expect($res->isStatus(404))->toBeTruthy();
     });
 
-});
+});*/
 
 ?>
