@@ -4,10 +4,10 @@ import { Service } from "../util/Service";
 
 class EmprestimosService implements Service<Emprestimo> {
     async buscarPeloId(id: number): Promise<Emprestimo> {
-        const res = await fetch(`${API}/emprestimos/${id}`);
+        const res = await fetch(`${API}/emprestimos/${id}`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const emprestimoJson: any = await res.json();
@@ -18,10 +18,10 @@ class EmprestimosService implements Service<Emprestimo> {
     }
 
     async buscarTodos(): Promise<Emprestimo[]> {
-        const res = await fetch(`${API}/emprestimos`);
+        const res = await fetch(`${API}/emprestimos`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const emprestimosJson: any[] = await res.json();
@@ -40,6 +40,7 @@ class EmprestimosService implements Service<Emprestimo> {
 
         const params = {
             method : "POST",
+            credentials: 'include' as RequestCredentials,
             headers: { 
                 'Content-Type': 'application/json' 
             },
@@ -49,7 +50,7 @@ class EmprestimosService implements Service<Emprestimo> {
         const res = await fetch(`${API}/emprestimos`, params);
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
     }
 }

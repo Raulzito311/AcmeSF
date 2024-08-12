@@ -4,10 +4,10 @@ import { Service } from "../util/Service";
 
 class FormasDePagamentoService implements Service<FormaDePagamento> {
     async buscarPeloId(id: number): Promise<FormaDePagamento> {
-        const res = await fetch(`${API}/formasDePagamento/${id}`);
+        const res = await fetch(`${API}/formasDePagamento/${id}`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const formaDePagamentoJson = await res.json();
@@ -18,10 +18,10 @@ class FormasDePagamentoService implements Service<FormaDePagamento> {
     }
 
     async buscarTodos(): Promise<FormaDePagamento[]> {
-        const res = await fetch(`${API}/formasDePagamento`);
+        const res = await fetch(`${API}/formasDePagamento`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const formasDePagamentoJson: any[] = await res.json();

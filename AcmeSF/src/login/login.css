@@ -1,0 +1,16 @@
+h1 {
+    text-align: center;
+    margin: 200px 0 50px 0;
+}
+
+.loginContainer {
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: 25px;
+    padding: 50px;
+    align-self: center;
+}
+
+#entrar {
+    width: 100%;
+}

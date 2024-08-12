@@ -34,7 +34,7 @@ class App {
         };
 
         $app
-            ->use( cors() )
+            ->use( cors(['allowedHeaders' => 'content-type']) )
                 ->route('/auth')
                     ->post('/login', function(HttpRequest $req, HttpResponse $res) {
                         $view = new AuthView($req, $res);

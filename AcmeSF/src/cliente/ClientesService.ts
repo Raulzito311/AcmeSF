@@ -4,10 +4,10 @@ import { Service } from "../util/Service";
 
 class ClientesService implements Service<Cliente> {
     async buscarPeloId(id: number): Promise<Cliente> {
-        const res = await fetch(`${API}/clientes/${id}`);
+        const res = await fetch(`${API}/clientes/${id}`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const clienteJson: any = await res.json();
@@ -18,10 +18,10 @@ class ClientesService implements Service<Cliente> {
     }
 
     async buscarTodos(): Promise<Cliente[]> {
-        const res = await fetch(`${API}/clientes`);
+        const res = await fetch(`${API}/clientes`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const clientesJson: any[] = await res.json();
@@ -32,10 +32,10 @@ class ClientesService implements Service<Cliente> {
     }
 
     async buscarPeloCPF(cpf: number): Promise<Cliente> {
-        const res = await fetch(`${API}/clientes?cpf=${cpf}`);
+        const res = await fetch(`${API}/clientes?cpf=${cpf}`, { credentials: 'include' });
         if (!res.ok) {
             const text = (await res.text()).trim();
-            throw `${res.status} ${res.statusText}${text.length > 0 ? ` - ${text}` : ''}`;
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
 
         const clienteJson: any = await res.json();
