@@ -1,16 +1,18 @@
 export class View {
     private id: string;
+    private parentTag: string;
 
-    constructor(id: string) {
+    constructor(id: string, parentTag: string = 'main') {
         this.id = id;
+        this.parentTag = parentTag;
     }
 
     public async load(): Promise<void> {
-        const main = <HTMLElement> document.querySelector('main');
+        const element = <HTMLElement> document.querySelector(this.parentTag);
 
         const html = await fetch(`/src/${this.id}/${this.id}.html`);
     
-        main.innerHTML = await html.text();
+        element.innerHTML = await html.text();
 
         await import(`../${this.id}/${this.id}.css`);
     }

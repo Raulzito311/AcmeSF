@@ -1,3 +1,5 @@
-import { carregarPaginaDeLogin } from './login/login.ts';
+import { carregarNav } from './nav/nav.ts';
+import { carregarPaginaDeListarEmprestimos } from './listarEmprestimos/listarEmprestimos.ts';
 
-carregarPaginaDeLogin();
+carregarNav();
+carregarPaginaDeListarEmprestimos();

@@ -7,9 +7,6 @@ use phputil\router\Router;
 
 use function phputil\cors\cors;
 
-
-
-
 class App {
 
     public static function getRouter(): Router {
@@ -34,14 +31,14 @@ class App {
         };
 
         $app
-            ->use( cors(['allowedHeaders' => 'content-type']) )
+            ->use( cors(['origin' => 'http://localhost:5173', 'allowedHeaders' => 'content-type']) )
                 ->route('/auth')
                     ->post('/login', function(HttpRequest $req, HttpResponse $res) {
                         $view = new AuthView($req, $res);
                         $controller = new AuthController($view);
                         $controller->login();
                     })
-                    ->post('/logout', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
+                    ->delete('/logout', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) { // TODO: Está dando erro de CORS
                         $view = new AuthView($req, $res);
                         $controller = new AuthController($view);
                         $controller->logout();

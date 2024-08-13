@@ -1,5 +1,4 @@
 import { API } from "../util/API";
-import { Cookie } from "./Cookie";
 import { Credenciais } from "./Credenciais";
 import { Usuario } from "./Usuario";
 
@@ -34,13 +33,11 @@ class AuthService {
         const usuario: Usuario = Usuario.of(usuarioJson);
 
         this.usuarioLogado = usuario;
-
-        Cookie.find('sid');
     }
 
     async logout(): Promise<void> {
         const params = {
-            method : 'POST',
+            method : 'DELETE',
             credentials: 'include' as RequestCredentials
         };
         

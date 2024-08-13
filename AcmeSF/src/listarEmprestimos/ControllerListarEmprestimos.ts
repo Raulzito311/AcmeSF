@@ -1,4 +1,6 @@
 import { emprestimosService } from "../emprestimo/EmprestimosService";
+import { carregarPaginaDeLogin } from "../login/login";
+import { showNav } from "../nav/nav";
 import { Controller } from "../util/Controller";
 import { ListarEmprestimosView } from "./ListarEmprestimosView";
 
@@ -12,13 +14,14 @@ export class ControllerListarEmprestimos extends Controller {
     }
 
     public async init(): Promise<void> {
-        await this.view.load();
-        
         try {
-            this.view.listarEmprestimos(await emprestimosService.buscarTodos());
+            const emprestimos = await emprestimosService.buscarTodos();
+
+            showNav();
+            await this.view.load();
+            this.view.listarEmprestimos(emprestimos);
         } catch (errorMessage) {
-            this.view.listarEmprestimos([]);
-            this.view.alert(<string> errorMessage, 'danger', false);
+            carregarPaginaDeLogin();
         }
     }
 }

@@ -3,10 +3,6 @@ h1 {
     margin: 200px 0 50px 0;
 }
 
-img.main-logo {
-    height: 150px;
-}
-
 .loginContainer {
     background-color: lightgray;
     border: 1px solid gray;
@@ -17,4 +13,16 @@ img.main-logo {
 
 #entrar {
     width: 100%;
+}
+
+img {
+    height: 60px;
+}
+
+.m5 {
+    margin: 5px;
+}
+
+nav {
+    padding: 11px 0;
 }

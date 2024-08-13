@@ -1,6 +1,7 @@
 import { authService } from "../auth/AuthService";
 import { Credenciais } from "../auth/Credenciais";
 import { carregarPaginaDeListarEmprestimos } from "../listarEmprestimos/listarEmprestimos";
+import { hideNav } from "../nav/nav";
 import { Controller } from "../util/Controller";
 import { LoginView } from "./LoginView";
 
@@ -14,13 +15,14 @@ export class ControllerLogin extends Controller {
     }
 
     public async init(): Promise<void> {
+        hideNav();
         await this.view.load();
 
         this.view.adicionarListenerParaLogin(async (credenciais: Credenciais) => {
             try {
                 await authService.login(credenciais);
             } catch (errorMessage) {
-                this.view.alert(<string> errorMessage, 'danger');
+                this.alert(<string> errorMessage, 'danger');
                 return;
             }
                     

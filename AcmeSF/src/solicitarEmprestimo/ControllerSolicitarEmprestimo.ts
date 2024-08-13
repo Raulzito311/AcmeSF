@@ -16,15 +16,18 @@ export class ControllerSolicitarEmprestimo extends Controller {
     }
     
     public async init(): Promise<void> {
+
+        const formasdePagamento = await formasDePagamentoService.buscarTodos();
+
         await this.view.load();
         
-        this.view.exibirSolicitacaoDeEmprestimo(await formasDePagamentoService.buscarTodos());
+        this.view.exibirSolicitacaoDeEmprestimo(formasdePagamento);
 
         this.view.adicionarListenerParaSolicitacao(async (emprestimo: EmprestimoJson) => {
             try {
                 await emprestimosService.adicionar(emprestimo);
             } catch (errorMessage) {
-                this.view.alert(<string> errorMessage, 'danger');
+                this.alert(<string> errorMessage, 'danger');
                 return;
             }
                     
