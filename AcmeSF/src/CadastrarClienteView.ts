@@ -1,12 +1,12 @@
-import { Emprestimo, EmprestimoJson } from "../emprestimo/Emprestimo";
-import { FormaDePagamento } from "../formaDePagamento/FormaDePagamento";
-import { View } from "../util/View";
-import { validarCPF } from "../util/cpfUtil";
+import { Emprestimo, EmprestimoJson } from "./emprestimo/Emprestimo.ts";
+import { FormaDePagamento } from "./formaDePagamento/FormaDePagamento.ts";
+import { View } from "./util/View.ts";
+import { validarCPF } from "./util/cpfUtil.ts";
 
-export class SolicitarEmprestimoView extends View {
+export class CadastrarClienteView extends View {
     private buscarPeloCPF: Function;
     constructor(buscarPeloCPF: Function) {
-        super('solicitarEmprestimo');
+        super('cadastrarCliente');
         this.buscarPeloCPF = buscarPeloCPF;
     }
 
