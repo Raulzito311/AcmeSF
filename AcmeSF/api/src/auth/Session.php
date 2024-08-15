@@ -1,9 +1,9 @@
 <?php
 
 interface Session {
-    public function registrarUsuario(UsuarioForSession $usuario);
+    public function registrarUsuario(Usuario $usuario);
 
-    public function buscarUsuarioRegistrado(): UsuarioForSession|bool;
+    public function buscarUsuarioRegistrado(): Usuario|bool;
 
     public function removerUsuario();
 }

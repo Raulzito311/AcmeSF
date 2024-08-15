@@ -31,6 +31,9 @@ class App {
         };
 
         $app
+            ->use(function (HttpRequest $req, HttpResponse $res, bool &$stop = false) {
+                SessionFILE::get();
+            })
             ->use( cors(['origin' => 'http://localhost:5173', 'allowedHeaders' => 'content-type']) )
                 ->route('/auth')
                     ->post('/login', function(HttpRequest $req, HttpResponse $res) {

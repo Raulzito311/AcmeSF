@@ -5,7 +5,7 @@ use phputil\router\FakeHttpResponse;
 
 require_once "vendor/autoload.php";
 
-/* TODO: describe('AuthController', function() {
+describe('AuthController', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);
@@ -30,5 +30,5 @@ require_once "vendor/autoload.php";
 
         expect(empty($resObj->body))->toBeFalsy();
     });
-});*/
+});
 ?>

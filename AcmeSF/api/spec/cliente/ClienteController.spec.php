@@ -5,7 +5,7 @@ use phputil\router\FakeHttpResponse;
 
 require_once "vendor/autoload.php";
 
-/* TODO: describe('ClienteController', function() {
+/* TODO describe('ClienteController', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);
@@ -61,12 +61,10 @@ require_once "vendor/autoload.php";
 
         expect($res->isStatus(404))->toBeTruthy();
     });
-    // The tests below will fail. FakeHttpRequest is not working for url with cpf.
-    /*it('retrieves one Cliente by CPF', function() {
+    it('retrieves one Cliente by CPF', function() {
         $req = new FakeHttpRequest();
         $req->withMethod('GET');
-        $req->withUrl('/clientes?cpf=063.556.107-74');
-        $req->withParams(['cpf' => '063.556.107-74']);
+        $req->withUrl(urlencode('/clientes?cpf=063.556.107-74'));
         $res = new FakeHttpResponse();
 
         $app = App::getRouter();
@@ -89,8 +87,8 @@ require_once "vendor/autoload.php";
     it('returns status "404 - Not Found" for an inexistant Cliente CPF', function() {
         $req = new FakeHttpRequest();
         $req->withMethod('GET');
-        $req->withUrl('/clientes?cpf=093.221.320-00');
-        $req->withParams(['cpf' => '093.221.320-00']);
+        $req->withUrl(urlencode('/clientes?cpf=093.221.320-00'));
+        // $req->withParams(['cpf' => '093.221.320-00']);
         $res = new FakeHttpResponse();
 
         $app = App::getRouter();

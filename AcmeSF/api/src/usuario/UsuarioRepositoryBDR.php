@@ -9,15 +9,25 @@ class UsuarioRepositoryBDR implements UsuarioRepository {
     }
 
     public function buscarUsuarioPelasCredenciais(Credenciais $credenciais): Usuario|false {
-        try{
-            $ps = $this->pdo->prepare('SELECT id, nome, username, email, senha, permissao FROM usuario WHERE (username = :login OR email = :login) AND senha = :senha');
-            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
-            $ps->execute([':login' => $credenciais->login, ':senha' => $credenciais->senha]);
+        try {
+            $ps = $this->pdo->prepare('SELECT sal FROM usuario WHERE (username = :login OR email = :login)');
+            $ps->setFetchMode(PDO::FETCH_ASSOC);
+            $ps->execute(['login' => $credenciais->login]);
+
+            $sal = $ps->fetchColumn();
+
+            if (!$sal) return false;
+
+            $senha = AuthUtil::gerarHash(AuthUtil::addPepper($credenciais->senha), $sal);
+
+            $ps = $this->pdo->prepare('SELECT nome, permissao FROM usuario WHERE (username = :login OR email = :login) AND senha = :senha');
+            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, UsuarioDTO::class);
+            $ps->execute(['login' => $credenciais->login, 'senha' => $senha]);
 
             $dto = $ps->fetchObject(UsuarioDTO::class);
             
             return $dto ? Usuario::of($dto) : $dto;
-        }catch(PDOException $e){
+        } catch(PDOException $e) {
             throw new RepositoryException("Erro ao consultar usuario pelas credenciais | " . $e->getMessage());
         }
     }

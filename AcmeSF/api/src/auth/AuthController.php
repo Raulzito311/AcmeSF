@@ -17,7 +17,6 @@ class AuthController {
         }
     }
 
-    // TODO: Implementar Hash SHA 256 com pepper e salt na senha
     public function login(): void {
         try {
             $credenciais = $this->view->read();
@@ -39,12 +38,10 @@ class AuthController {
             return;
         }
         
-        $usuarioForSession = new UsuarioForSession($usuario->nome, $usuario->permissao);
-        
-        $this->session->registrarUsuario($usuarioForSession);
+        $this->session->registrarUsuario($usuario);
 
         
-        $this->view->loginSuccess($usuarioForSession);
+        $this->view->loginSuccess($usuario);
     }
 
     public function logout(): void {

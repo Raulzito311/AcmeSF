@@ -36,5 +36,6 @@ CREATE TABLE usuario(
     username varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     senha varchar(255) NOT NULL,
+    sal varchar(255) NOT NULL,
     permissao char(1) NOT NULL
 ) ENGINE=INNODB;

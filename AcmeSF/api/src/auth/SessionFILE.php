@@ -17,19 +17,19 @@ class SessionFILE implements Session {
         return SessionFILE::$session;
     }
 
-    public function registrarUsuario(UsuarioForSession $usuario) {
+    public function registrarUsuario(Usuario $usuario) {
         session_regenerate_id(true);
 
         $_SESSION['nome'] = $usuario->nome;
         $_SESSION['permissao'] = $usuario->permissao;
     }
 
-    public function buscarUsuarioRegistrado(): UsuarioForSession|bool {
+    public function buscarUsuarioRegistrado(): Usuario|bool {
         if (!isset($_SESSION['nome'])) {
             return false;
         }
 
-        $usuario = new UsuarioForSession($_SESSION['nome'], $_SESSION['permissao']);
+        $usuario = new Usuario($_SESSION['nome'], $_SESSION['permissao']);
 
         return $usuario;
     }

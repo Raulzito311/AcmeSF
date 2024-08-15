@@ -10,9 +10,6 @@ class AuthService {
     }
 
     async login(credenciais: Credenciais): Promise<void> {
-
-        // TODO: Hash na senha
-
         const params = {
             method: 'POST',
             credentials: 'include' as RequestCredentials,

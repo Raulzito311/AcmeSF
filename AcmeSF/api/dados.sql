@@ -33,7 +33,7 @@ INSERT INTO emprestimo
     (2, 1, 10, 7549.98, "2024-01-22 08:57:37");
 
 INSERT INTO usuario 
-	(id, nome, username, email, senha, permissao) 
+	(id, nome, username, email, senha, sal, permissao) 
     VALUES
-    (1, "Raul Fernandes", "raul", "raulmff@gmail.com", "123456", "P"),
-    (2, "Gerente", "admin", "admin@gmail.com", "admin#", "G");
+    (1, "Raul Fernandes", "raul", "raulmff@gmail.com", "8f7ddbbd6cd52be44252d1d27470fcb8aa0e6bc492b311f23248c7d421c6ce06", "B#z7&bK5Vdk-zFVb_@+#", "P"),
+    (2, "Gerente", "admin", "admin@gmail.com", "be8b217cfcc99f6d0dd78e5c13f25b243bd4f2fa46392d09a9268b2f3573d5d0", "6-kQ3Q-&pw9Rc#WEnw4v", "G");
