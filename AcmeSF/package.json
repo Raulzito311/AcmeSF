@@ -1,13 +1,12 @@
 {
   "name": "acme-servicos-financeiros",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "server": "json-server ./db/db.json --watch"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",

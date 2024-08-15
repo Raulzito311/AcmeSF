@@ -1,43 +1,70 @@
 <div class="titulo">
-    <h3>Realizar Empréstimo</h3>
+    <h3>Cadastrar Cliente</h3>
 </div>
 <form id="formEmprestimo" class="needs-validation" novalidate>
     <input type="text" class="invisible" id="inputClienteId">
     
     <div class="row g-3 mb-3">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-floating">
-                <input type="text" class="form-control" id="cpf" placeholder="CPF do cliente" minlength="14" maxlength="14" required>
-                <label for="cpf">Cliente</label>
+                <input type="text" class="form-control" id="nome" placeholder="Nome" required>
+                <label for="nome">Nome</label>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="cpf" placeholder="CPF" minlength="14" maxlength="14" required>
+                <label for="cpf">CPF</label>
                 <div class="invalid-feedback" id="invalidCpf"></div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-floating">
-                <input type="number" class="form-control" id="valorEmprestimo" placeholder="Valor a ser emprestado"
-                    min="500" max="50000" step="0.01" required>
-                <label for="valorEmprestimo">Valor do Empréstimo</label>
-                <div class="invalid-feedback" id="invalidValor"></div>
+                <input type="date" class="form-control" id="dataNascimento" placeholder="Data de nascimento" required>
+                <label for="dataNascimento">Data de Nascimento</label>
+                <div class="invalid-feedback" id="invalidDataNascimento"></div>
             </div>
         </div>
     </div>
+    
     <div class="row g-3 mb-3">
         <div class="col-12 col-md-6">
             <div class="form-floating">
-                <select id="formaDePagamento" class="form-select" required>
-                    <option value="" selected disabled>Escolher...</option>
-                </select>
-                <label for="formaDePagamento">Forma de Pagamento</label>
-                <div class="invalid-feedback" id="invalidFormaDePagamento"></div>
+                <input type="text" class="form-control" id="telefone" placeholder="Telefone" maxlength="30" required>
+                <label for="telefone">Telefone</label>
             </div>
         </div>
-        <div class="col-12 col-md-6" id="parcelas">
-            
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="email" placeholder="Email" required>
+                <label for="email">Email</label>
+            </div>
         </div>
     </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="endereco" placeholder="Endereço" required>
+                <label for="endereco">Endereço</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-md-6">
+            <div class="form-floating">
+                <input type="number" class="form-control" id="limiteCredito" placeholder="Limite de Crédito"
+                    min="500" max="50000" step="0.01" required>
+                <label for="limiteCredito">Limite de Crédito</label>
+                <div class="invalid-feedback" id="invalidLimiteCredito"></div>
+            </div>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-12 col-md-3">
-            <button type="submit" class="btn btn-primary" id="realizarEmprestimo">Realizar Empréstimo</button>
+            <button type="submit" class="btn btn-primary" id="cadastrarCliente">Cadastrar</button>
         </div>
     </div>
 </form>

@@ -11,7 +11,7 @@ CREATE TABLE forma_de_pagamento(
 
 CREATE TABLE cliente(
     id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    cpf char(14) NOT NULL,
+    cpf char(14) NOT NULL UNIQUE,
     nome varchar(255) NOT NULL,
     dataNascimento date NOT NULL,
     telefone varchar(30) NOT NULL,
@@ -33,8 +33,8 @@ CREATE TABLE emprestimo(
 CREATE TABLE usuario(
     id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     nome varchar(255) NOT NULL,
-    username varchar(255) NOT NULL,
-    email varchar(255) NOT NULL,
+    username varchar(255) NOT NULL UNIQUE,
+    email varchar(255) NOT NULL UNIQUE,
     senha varchar(255) NOT NULL,
     sal varchar(255) NOT NULL,
     permissao char(1) NOT NULL

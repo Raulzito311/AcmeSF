@@ -1,12 +1,16 @@
 import { Credenciais } from "../auth/Credenciais.ts";
+import { carregarPaginaDeCadastrarCliente } from "../cadastrarCliente/cadastrarCliente.ts";
 import { Emprestimo } from "../emprestimo/Emprestimo.ts";
 import { carregarPaginaDeSolicitarEmprestimo } from "../solicitarEmprestimo/solicitarEmprestimo.ts";
 import { View } from "../util/View.ts";
 
 export class NavView extends View {
 
-    constructor() {
+    private podeAcessarRelatorioEmprestimos: boolean;
+
+    constructor(podeAcessarRelatorioEmprestimos: boolean) {
         super('nav', 'header');
+        this.podeAcessarRelatorioEmprestimos = podeAcessarRelatorioEmprestimos;
     }
 
     public adicionarListenerParaLogout(fazerLogout: Function): void {
@@ -22,6 +26,22 @@ export class NavView extends View {
 
     public hide(): void {
         document.querySelector('header')?.classList.add('hidden');
+    }
+    
+    public async load(): Promise<void> {
+        await super.load();
+
+        if (this.podeAcessarRelatorioEmprestimos) {
+            const relatorioEmprestimos = <HTMLAnchorElement> document.getElementById('relatorioEmprestimos');
+            relatorioEmprestimos.classList.remove('invisible');
+            relatorioEmprestimos.addEventListener('click', () => {
+                // carregarPaginaDeRelatorioDeEmprestimos();
+            });
+        }
+
+        document.getElementById('cadastrarCliente')?.addEventListener('click', () => {
+            carregarPaginaDeCadastrarCliente();
+        });
     }
     
 }
