@@ -20,16 +20,17 @@ class SessionFILE implements Session {
     public function registrarUsuario(Usuario $usuario) {
         session_regenerate_id(true);
 
+        $_SESSION['id'] = $usuario->id;
         $_SESSION['nome'] = $usuario->nome;
         $_SESSION['permissao'] = $usuario->permissao;
     }
 
     public function buscarUsuarioRegistrado(): Usuario|bool {
-        if (!isset($_SESSION['nome'])) {
+        if (!isset($_SESSION['id'])) {
             return false;
         }
 
-        $usuario = new Usuario($_SESSION['nome'], $_SESSION['permissao']);
+        $usuario = new Usuario($_SESSION['id'], $_SESSION['nome'], $_SESSION['permissao']);
 
         return $usuario;
     }

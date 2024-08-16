@@ -20,7 +20,7 @@ class UsuarioRepositoryBDR implements UsuarioRepository {
 
             $senha = AuthUtil::gerarHash(AuthUtil::addPepper($credenciais->senha), $sal);
 
-            $ps = $this->pdo->prepare('SELECT nome, permissao FROM usuario WHERE (username = :login OR email = :login) AND senha = :senha');
+            $ps = $this->pdo->prepare('SELECT id, nome, permissao FROM usuario WHERE (username = :login OR email = :login) AND senha = :senha');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, UsuarioDTO::class);
             $ps->execute(['login' => $credenciais->login, 'senha' => $senha]);
 

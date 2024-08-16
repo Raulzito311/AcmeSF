@@ -6,9 +6,9 @@ class AuthController {
     private UsuarioRepository $repository;
     private Session $session;
 
-    function __construct(AuthView $view) {
+    function __construct(AuthView $view, Session $session) {
         $this->view = $view;
-        $this->session = SessionFILE::get();
+        $this->session = $session;
         
         try {
             $this->repository = new UsuarioRepositoryBDR();

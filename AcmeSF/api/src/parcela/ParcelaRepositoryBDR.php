@@ -28,8 +28,16 @@ class ParcelaRepositoryBDR implements ParcelaRepository {
         }
     }
 
-    function pagarParcela(Parcela $parcela): Parcela|false {
+    function pagarParcela(int $usuarioPagamentoId, int $emprestimoId): bool {
+        try {
+            $ps = $this->pdo->prepare('UPDATE parcela SET paga = 1, dataHoraPagamento = NOW(), usuarioPagamentoId = ? WHERE id = (SELECT id FROM (SELECT id FROM parcela WHERE emprestimoId = ? AND paga = 0 ORDER BY dataVencimento ASC LIMIT 1) as subquery)');
+        
+            $ps->execute([$usuarioPagamentoId, $emprestimoId]);
 
+            return $ps->rowCount() > 0;
+        } catch (PDOException $e) {
+            throw new RepositoryException("Erro ao pagar parcelas do emprestimo com id $emprestimoId | " . $e->getMessage());
+        }
     }
     /**
      * @param Parcela[] $parcela

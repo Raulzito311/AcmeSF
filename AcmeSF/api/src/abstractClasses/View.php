@@ -37,6 +37,10 @@ abstract class View {
     public function writeAll(array $objs): void {
         $this->res->status(200)->json($objs);
     }
+    
+    public function noContent(): void {
+        $this->res->status(204)->end();
+    }
 
     public function notFound(): void {
         $this->error(404);

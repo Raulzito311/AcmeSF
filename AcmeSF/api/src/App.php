@@ -15,7 +15,7 @@ class App {
         // Middleware
         $precisaEstarLogado = function (HttpRequest $req, HttpResponse $res, bool &$stop = false) {
             $view = new AuthView($req, $res);
-            $controller = new AuthController($view);
+            $controller = new AuthController($view, SessionFILE::get());
             $estaLogado = $controller->estaLogado(true);
     
             if (!$estaLogado) $stop = true;
@@ -24,26 +24,23 @@ class App {
         // Middleware
         $precisaEstarLogadoGerente = function (HttpRequest $req, HttpResponse $res, bool &$stop = false) {
             $view = new AuthView($req, $res);
-            $controller = new AuthController($view);
+            $controller = new AuthController($view, SessionFILE::get());
             $estaLogadoGerente = $controller->estaLogadoGerente(true);
             
             if (!$estaLogadoGerente) $stop = true;
         };
 
         $app
-            ->use(function (HttpRequest $req, HttpResponse $res, bool &$stop = false) {
-                SessionFILE::get();
-            })
             ->use( cors(['origin' => 'http://localhost:5173', 'allowedHeaders' => 'content-type']) )
                 ->route('/auth')
                     ->post('/login', function(HttpRequest $req, HttpResponse $res) {
                         $view = new AuthView($req, $res);
-                        $controller = new AuthController($view);
+                        $controller = new AuthController($view, SessionFILE::get());
                         $controller->login();
                     })
                     ->delete('/logout', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) { // TODO: Está dando erro de CORS
                         $view = new AuthView($req, $res);
-                        $controller = new AuthController($view);
+                        $controller = new AuthController($view, SessionFILE::get());
                         $controller->logout();
                     })
                     ->end()
@@ -74,8 +71,13 @@ class App {
                         ->route('/parcelas')
                             ->get('/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
                                 $view = new ParcelaView($req, $res);
-                                $controller = new ParcelaController($view);
+                                $controller = new ParcelaController($view, SessionFILE::get());
                                 $controller->buscarParcelasDoEmprestimo();
+                            })
+                            ->put('/pagar', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
+                                $view = new ParcelaView($req, $res);
+                                $controller = new ParcelaController($view, SessionFILE::get());
+                                $controller->pagarParcela();
                             })
                             ->end()
                         ->end()
