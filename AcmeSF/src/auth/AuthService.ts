@@ -3,7 +3,7 @@ import { Credenciais } from "./Credenciais";
 import { Usuario } from "./Usuario";
 
 class AuthService {
-    private usuarioLogado: Usuario|null = null;
+    private usuarioLogado: Usuario|null = null; // Colocar em um cookie
 
     public getUsuarioLogado() {
         return this.usuarioLogado;
