@@ -22,7 +22,7 @@ class ClienteRepositoryBDR implements ClienteRepository {
         }
     }
 
-    public function buscarPeloId(string $id): Cliente|false {
+    public function buscarPeloId(int $id): Cliente|false {
         try{
             $ps = $this->pdo->prepare('SELECT * FROM cliente WHERE id = ?');
             $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Cliente::class);
@@ -56,6 +56,17 @@ class ClienteRepositoryBDR implements ClienteRepository {
             if ($e->getCode() == 23000)
                 throw new DataException($e->errorInfo[2]);
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
+        }
+    }
+
+    function aumentarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): bool {
+        try{
+            $ps = $this->pdo->prepare('UPDATE cliente SET limiteCredito = limiteCredito + ? WHERE id = (SELECT clienteId FROM emprestimo WHERE id = ?)');
+            $ps->execute([$valor, $emprestimoId]);
+    
+            return $ps->rowCount() > 0;
+        }catch(Exception $e){
+            throw new RepositoryException('Erro ao aumentar limite do cliente' . $e->getMessage());
         }
     }
 }

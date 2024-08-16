@@ -1,6 +1,7 @@
 <?php
 
 interface ParcelaRepository{
+    function buscarParcelaParaPagar(int $emprestimoId): ParcelaDTO|false;
     /**
      * @return Parcela[]
      */

@@ -8,6 +8,18 @@ class ParcelaRepositoryBDR implements ParcelaRepository {
         $this->pdo = Connection::get();
     }
 
+    public function buscarParcelaParaPagar(int $emprestimoId): ParcelaDTO|false {
+        try{
+            $ps = $this->pdo->prepare('SELECT id, valor FROM parcela WHERE emprestimoId = ? AND paga = 0 ORDER BY dataVencimento ASC LIMIT 1');
+            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, ParcelaDTO::class);
+            $ps->execute([$emprestimoId]);
+    
+            return $ps->fetchObject(ParcelaDTO::class);
+        }catch(PDOException $e){
+            throw new RepositoryException("Erro ao consultar parcela para pagar do emprestimo com id $emprestimoId | " . $e->getMessage());
+        }
+    }
+
     /**
      * @return Parcela[]
      */
@@ -28,15 +40,15 @@ class ParcelaRepositoryBDR implements ParcelaRepository {
         }
     }
 
-    function pagarParcela(int $usuarioPagamentoId, int $emprestimoId): bool {
+    function pagarParcela(int $usuarioPagamentoId, int $parcelaId): bool {
         try {
-            $ps = $this->pdo->prepare('UPDATE parcela SET paga = 1, dataHoraPagamento = NOW(), usuarioPagamentoId = ? WHERE id = (SELECT id FROM (SELECT id FROM parcela WHERE emprestimoId = ? AND paga = 0 ORDER BY dataVencimento ASC LIMIT 1) as subquery)');
+            $ps = $this->pdo->prepare('UPDATE parcela SET paga = 1, dataHoraPagamento = NOW(), usuarioPagamentoId = ? WHERE id = ?');
         
-            $ps->execute([$usuarioPagamentoId, $emprestimoId]);
+            $ps->execute([$usuarioPagamentoId, $parcelaId]);
 
             return $ps->rowCount() > 0;
         } catch (PDOException $e) {
-            throw new RepositoryException("Erro ao pagar parcelas do emprestimo com id $emprestimoId | " . $e->getMessage());
+            throw new RepositoryException("Erro ao pagar parcela com id $parcelaId | " . $e->getMessage());
         }
     }
     /**
@@ -46,52 +58,6 @@ class ParcelaRepositoryBDR implements ParcelaRepository {
      */
     function adicionarParcelas(array $parcelas): array|false {
 
-    }
-
-    public function buscarPeloId(string $id): Emprestimo|false {
-        try{
-            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, c.telefone, c.email, c.endereco, c.limiteCredito, f.descricao, f.meses, f.juros FROM emprestimo e JOIN cliente c ON (e.clienteId = c.id) JOIN forma_de_pagamento f ON (e.formaDePagamentoId = f.id) WHERE e.id = ?');
-            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
-            $ps->execute([$id]);
-    
-            $dto = $ps->fetchObject(EmprestimoDTO::class);
-            
-            return $dto ? Emprestimo::of($dto) : $dto;
-        }catch(PDOException $e){
-            throw new RepositoryException("Erro ao consultar emprestimo com id $id | " . $e->getMessage());
-        }
-    }
-
-    /**
-     * @return Emprestimo[]
-     */
-    public function buscarTodos(): array {
-        try{
-            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, c.telefone, c.email, c.endereco, c.limiteCredito, f.descricao, f.meses, f.juros FROM emprestimo e JOIN cliente c ON (e.clienteId = c.id) JOIN forma_de_pagamento f ON (e.formaDePagamentoId = f.id) ORDER BY dataHora DESC');
-            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
-            $ps->execute();
-            
-            $dtos = $ps->fetchAll();
-
-            return array_map(function($dto) {
-                return Emprestimo::of($dto);
-            }, $dtos);
-        }catch(PDOException $e){
-            throw new RepositoryException('Erro ao consultar emprestimos | ' . $e->getMessage());
-        }
-    }
-
-    public function adicionar(EmprestimoDTO $emprestimo): Emprestimo|false {
-        try{
-            $ps = $this->pdo->prepare('INSERT INTO emprestimo (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, ?)');
-            $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo, $emprestimo->dataHora]);
-
-            return $this->buscarPeloId($this->pdo->lastInsertId());
-        }catch(PDOException $e){
-            if ($e->getCode() == 23000)
-                throw new DataException($e->errorInfo[2]);
-            throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
-        }
     }
 }
 ?>

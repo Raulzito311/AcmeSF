@@ -24,14 +24,14 @@ INSERT INTO forma_de_pagamento
 INSERT INTO cliente 
 	(id, cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito) 
     VALUES
-    (1, "062.148.367-25", "Raul Fernandes", "2003-03-06", "(22) 99717-3345", "raulmff@gmail.com", "Rua dos Amigos, 123 | Nova Friburgo - RJ", 50000.00),
-    (2, "182.198.228-21", "Jheniffer Fournier", "1999-06-24", "(21) 99834-0276", "jhey@gmail.com", "Rua da Família, 321 | Ubatuba - SP", 100000.00);
+    (1, "062.148.367-25", "Raul Fernandes", "2003-03-06", "(22) 99717-3345", "raulmff@gmail.com", "Rua dos Amigos, 123 | Nova Friburgo - RJ", 43333.34),
+    (2, "182.198.228-21", "Jheniffer Fournier", "1999-06-24", "(21) 99834-0276", "jhey@gmail.com", "Rua da Família, 321 | Ubatuba - SP", 38999.75);
 
 INSERT INTO emprestimo 
 	(id, clienteId, formaDePagamentoId, valorEmprestimo, dataHora) 
     VALUES
     (1, 2, 2, 2000.50, "2024-07-15 19:22:46"),
-    (2, 1, 3, 9999.99, "2024-07-22 08:57:37");
+    (2, 1, 3, 10000.00, "2024-07-22 08:57:37");
 
 INSERT INTO usuario 
 	(id, nome, username, email, senha, sal, permissao) 
@@ -50,4 +50,4 @@ INSERT INTO parcela
 	(id, emprestimoId, valor, paga, dataVencimento, dataHoraPagamento, usuarioPagamentoId) 
     VALUES
     (1, 1, 1000.25, 1, "2024-08-15", "2024-08-07 22:15:07", 1),
-    (3, 2, 3333.33, 1, "2024-08-22", "2024-08-15 10:07:00", 2);
+    (3, 2, 3333.34, 1, "2024-08-22", "2024-08-15 10:07:00", 2);

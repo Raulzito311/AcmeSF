@@ -42,8 +42,8 @@ abstract class View {
         $this->res->status(204)->end();
     }
 
-    public function notFound(): void {
-        $this->error(404);
+    public function notFound(string $message = null): void {
+        $this->error(404, $message);
     }
 
     public function error(int $errorCode, string $message = null): void {

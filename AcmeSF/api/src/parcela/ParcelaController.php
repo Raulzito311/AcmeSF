@@ -38,18 +38,30 @@ class ParcelaController {
     public function pagarParcela(): void {
         if (!isset($this->repository)) return;
 
-        $usuarioLogado = $this->session->buscarUsuarioRegistrado();
-
-        $emprestimoId = $this->view->readId();
         try {
-            $res = $this->repository->pagarParcela($usuarioLogado->id, $emprestimoId);
+            $usuarioLogado = $this->session->buscarUsuarioRegistrado();
+    
+            $emprestimoId = $this->view->readId();
 
-            if (!$res) {
-                $this->view->error(400, "Não há parcelas em aberto para o empréstimo com id $emprestimoId");
+            $parcela = $this->repository->buscarParcelaParaPagar($emprestimoId);
+
+            if (!$parcela) {
+                $this->view->notFound("Não há parcelas em aberto para o empréstimo com id $emprestimoId");
                 return;
             }
+
+            ControleDeTransacaoBDR::executar(function() use ($usuarioLogado, $parcela, $emprestimoId) {
+                $res = $this->repository->pagarParcela($usuarioLogado->id, $parcela->id);
+
+                if (!$res) throw new RepositoryException("Parcela inexistente");
+                
+                $clienteRepository = new ClienteRepositoryBDR();
+                $res = $clienteRepository->aumentarLimiteDoClienteDoEmprestimo($parcela->valor, $emprestimoId);
+
+                if (!$res) throw new RepositoryException("Erro ao aumentar limite");
+            });
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
 

@@ -17,7 +17,7 @@ CREATE TABLE cliente(
     telefone varchar(30) NOT NULL,
     email varchar(255) NOT NULL,
     endereco varchar(255) NOT NULL,
-    limiteCredito varchar(255) NOT NULL
+    limiteCredito decimal(10,2) NOT NULL
 ) ENGINE=INNODB;
 
 CREATE TABLE emprestimo(
