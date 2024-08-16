@@ -65,11 +65,20 @@ class App {
                         $controller = new EmprestimoController($view);
                         $controller->buscarTodos();
                     })
-                    ->get( '/:id', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
-                        $view = new EmprestimoView($req, $res);
-                        $controller = new EmprestimoController($view);
-                        $controller->buscarPeloId();
-                    })
+                    ->route('/:id')
+                        ->get( '/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
+                            $view = new EmprestimoView($req, $res);
+                            $controller = new EmprestimoController($view);
+                            $controller->buscarPeloId();
+                        })
+                        ->route('/parcelas')
+                            ->get('/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
+                                $view = new ParcelaView($req, $res);
+                                $controller = new ParcelaController($view);
+                                $controller->buscarParcelasDoEmprestimo();
+                            })
+                            ->end()
+                        ->end()
                     ->post( '/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
                         $view = new EmprestimoView($req, $res);
                         $controller = new EmprestimoController($view);
