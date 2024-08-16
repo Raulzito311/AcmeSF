@@ -1,4 +1,4 @@
-import { Cliente } from "./Cliente";
+import { Cliente, ClienteJson } from "./Cliente";
 import { API } from "../util/API";
 import { Service } from "../util/Service";
 
@@ -43,6 +43,23 @@ class ClientesService implements Service<Cliente> {
         const cliente: Cliente = Cliente.of(clienteJson);
 
         return cliente;
+    }
+
+    async adicionar(cliente: ClienteJson): Promise<void> {
+        const params = {
+            method : "POST",
+            credentials: 'include' as RequestCredentials,
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(cliente)
+        };
+        
+        const res = await fetch(`${API}/clientes`, params);
+        if (!res.ok) {
+            const text = (await res.text()).trim();
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
+        }
     }
 }
 

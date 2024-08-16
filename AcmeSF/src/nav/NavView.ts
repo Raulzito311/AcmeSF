@@ -1,6 +1,7 @@
 import { Credenciais } from "../auth/Credenciais.ts";
 import { carregarPaginaDeCadastrarCliente } from "../cadastrarCliente/cadastrarCliente.ts";
 import { Emprestimo } from "../emprestimo/Emprestimo.ts";
+import { carregarPaginaDeListarEmprestimos } from "../listarEmprestimos/listarEmprestimos.ts";
 import { carregarPaginaDeSolicitarEmprestimo } from "../solicitarEmprestimo/solicitarEmprestimo.ts";
 import { View } from "../util/View.ts";
 
@@ -38,6 +39,10 @@ export class NavView extends View {
                 // carregarPaginaDeRelatorioDeEmprestimos();
             });
         }
+
+        document.getElementById('listarEmprestimos')?.addEventListener('click', () => {
+            carregarPaginaDeListarEmprestimos();
+        });
 
         document.getElementById('cadastrarCliente')?.addEventListener('click', () => {
             carregarPaginaDeCadastrarCliente();

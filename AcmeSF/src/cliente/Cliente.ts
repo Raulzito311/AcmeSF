@@ -3,6 +3,10 @@ export class Cliente {
     readonly cpf: string;
     readonly nome: string;
     readonly dataNascimento: Date;
+    readonly telefone: string;
+    readonly email: string;
+    readonly endereco: string;
+    readonly limiteCredito: number;
 
     constructor(id: number, cpf: string, nome: string, dataNascimento: Date) {
         this.id = id;
@@ -12,13 +16,17 @@ export class Cliente {
     }
 
     static of(json: ClienteJson) {
-        return new this(json.id, <string>json.cpf, <string>json.nome, new Date(<string>json.dataNascimento));
+        return new this(<number>json.id, <string>json.cpf, <string>json.nome, new Date(<string>json.dataNascimento));
     }
 }
 
 export type ClienteJson = {
-	id: number;
+	id?: number;
     cpf?: string;
     nome?: string;
     dataNascimento?: string;
+    telefone?: string;
+    email?: string;
+    endereco?: string;
+	limiteCredito?: number;
 }

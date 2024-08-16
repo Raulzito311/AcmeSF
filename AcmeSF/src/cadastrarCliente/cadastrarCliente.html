@@ -1,7 +1,7 @@
 <div class="titulo">
     <h3>Cadastrar Cliente</h3>
 </div>
-<form id="formEmprestimo" class="needs-validation" novalidate>
+<form id="formCadastroCliente" class="needs-validation">
     <input type="text" class="invisible" id="inputClienteId">
     
     <div class="row g-3 mb-3">
@@ -20,7 +20,7 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="form-floating">
-                <input type="date" class="form-control" id="dataNascimento" placeholder="Data de nascimento" required>
+                <input type="date" class="form-control" id="dataNascimento" pattern="dd-mm-yyyy" required>
                 <label for="dataNascimento">Data de Nascimento</label>
                 <div class="invalid-feedback" id="invalidDataNascimento"></div>
             </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="form-floating">
-                <input type="text" class="form-control" id="email" placeholder="Email" required>
+                <input type="email" class="form-control" id="email" placeholder="Email" required>
                 <label for="email">Email</label>
             </div>
         </div>
