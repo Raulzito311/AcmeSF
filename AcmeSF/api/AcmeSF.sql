@@ -39,3 +39,15 @@ CREATE TABLE usuario(
     sal varchar(255) NOT NULL,
     permissao char(1) NOT NULL
 ) ENGINE=INNODB;
+
+CREATE TABLE parcela(
+    id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    emprestimoId int NOT NULL,
+    valor decimal(10,2) NOT NULL,
+    paga tinyint(1) NOT NULL,
+    dataVencimento date NOT NULL,
+    dataHoraPagamento datetime,
+    usuarioPagamentoId int,
+    CONSTRAINT fk__parcela_emprestimo FOREIGN KEY (emprestimoId) REFERENCES emprestimo(id),
+    CONSTRAINT fk__parcela_usuario FOREIGN KEY (usuarioPagamentoId) REFERENCES usuario(id)
+) ENGINE=INNODB;

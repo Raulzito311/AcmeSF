@@ -29,11 +29,24 @@ INSERT INTO cliente
 INSERT INTO emprestimo 
 	(id, clienteId, formaDePagamentoId, valorEmprestimo, dataHora) 
     VALUES
-    (1, 2, 7, 2000.50, "2024-04-15 19:22:46"),
-    (2, 1, 10, 7549.98, "2024-01-22 08:57:37");
+    (1, 2, 2, 2000.50, "2024-07-15 19:22:46"),
+    (2, 1, 3, 9999.99, "2024-07-22 08:57:37");
 
 INSERT INTO usuario 
 	(id, nome, username, email, senha, sal, permissao) 
     VALUES
     (1, "Raul Fernandes", "raul", "raulmff@gmail.com", "8f7ddbbd6cd52be44252d1d27470fcb8aa0e6bc492b311f23248c7d421c6ce06", "B#z7&bK5Vdk-zFVb_@+#", "P"),
     (2, "Gerente", "admin", "admin@gmail.com", "be8b217cfcc99f6d0dd78e5c13f25b243bd4f2fa46392d09a9268b2f3573d5d0", "6-kQ3Q-&pw9Rc#WEnw4v", "G");
+
+INSERT INTO parcela 
+	(id, emprestimoId, valor, paga, dataVencimento) 
+    VALUES
+    (2, 1, 1000.25, 0, "2024-09-15"),
+    (4, 2, 3333.33, 0, "2024-09-22"),
+    (5, 2, 3333.33, 0, "2024-10-22");
+
+INSERT INTO parcela 
+	(id, emprestimoId, valor, paga, dataVencimento, dataHoraPagamento, usuarioPagamentoId) 
+    VALUES
+    (1, 1, 1000.25, 1, "2024-08-15", "2024-08-07 22:15:07", 1),
+    (3, 2, 3333.33, 1, "2024-08-22", "2024-08-15 10:07:00", 2);
