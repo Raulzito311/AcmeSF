@@ -36,18 +36,18 @@ INSERT INTO cliente
 INSERT INTO emprestimo 
 	(id, clienteId, formaDePagamentoId, valorEmprestimo, dataHora) 
     VALUES
-    (1, 2, 2, 2000.50, "2024-07-15 19:22:46"),
+    (1, 2, 2, 3000.00, "2024-07-15 19:22:46"),
     (2, 1, 3, 10000.00, "2024-07-22 08:57:37");
 
 INSERT INTO parcela 
 	(id, emprestimoId, valor, paga, dataVencimento) 
     VALUES
-    (2, 1, 1000.25, 0, "2024-09-15"),
-    (4, 2, 3333.33, 0, "2024-09-22"),
-    (5, 2, 3333.33, 0, "2024-10-22");
+    (2, 1, 1537.50, 0, "2024-09-15"),
+    (4, 2, 3500.00, 0, "2024-09-22"),
+    (5, 2, 3500.00, 0, "2024-10-22");
 
 INSERT INTO parcela 
 	(id, emprestimoId, valor, paga, dataVencimento, dataHoraPagamento, usuarioPagamentoId) 
     VALUES
-    (1, 1, 1000.25, 1, "2024-08-15", "2024-08-07 22:15:07", 1),
-    (3, 2, 3333.34, 1, "2024-08-22", "2024-08-15 10:07:00", 2);
+    (1, 1, 1537.50, 1, "2024-08-15", "2024-08-07 22:15:07", 1),
+    (3, 2, 3500.00, 1, "2024-08-22", "2024-08-15 10:07:00", 2);
