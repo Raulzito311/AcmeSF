@@ -48,8 +48,8 @@ class ClienteRepositoryBDR implements ClienteRepository {
     
     function adicionar(Cliente $cliente): void {
         try{
-            $ps = $this->pdo->prepare('INSERT INTO cliente (cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito) VALUES (?, ?, ?, ?, ?, ?, ?)');
-            $ps->execute([$cliente->cpf, $cliente->nome, $cliente->dataNascimento, $cliente->telefone, $cliente->email, $cliente->endereco, $cliente->limiteCredito]);
+            $ps = $this->pdo->prepare('INSERT INTO cliente (cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito, limiteCreditoMaximo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+            $ps->execute([$cliente->cpf, $cliente->nome, $cliente->dataNascimento, $cliente->telefone, $cliente->email, $cliente->endereco, $cliente->limiteCredito, $cliente->limiteCreditoMaximo]);
 
             if ($ps->rowCount() <= 0) throw new RepositoryException('Erro ao adicionar cliente');
         } catch (PDOException $e) {

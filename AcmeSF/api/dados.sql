@@ -28,10 +28,10 @@ INSERT INTO forma_de_pagamento
     (12, "12 vezes", 12, 0.15);
 
 INSERT INTO cliente 
-	(id, cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito) 
+	(id, cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito, limiteCreditoMaximo) 
     VALUES
-    (1, "062.148.367-25", "Raul Fernandes", "2003-03-06", "(22) 99717-3345", "raulmff@gmail.com", "Rua dos Amigos, 123 | Nova Friburgo - RJ", 43333.34),
-    (2, "182.198.228-21", "Jheniffer Fournier", "1999-06-24", "(21) 99834-0276", "jhey@gmail.com", "Rua da Família, 321 | Ubatuba - SP", 38999.75);
+    (1, "062.148.367-25", "Raul Fernandes", "2003-03-06", "(22) 99717-3345", "raulmff@gmail.com", "Rua dos Amigos, 123 | Nova Friburgo - RJ", 33333.34, 40000.00),
+    (2, "182.198.228-21", "Jheniffer Fournier", "1999-06-24", "(21) 99834-0276", "jhey@gmail.com", "Rua da Família, 321 | Ubatuba - SP", 48999.75, 50000.00);
 
 INSERT INTO emprestimo 
 	(id, clienteId, formaDePagamentoId, valorEmprestimo, dataHora) 

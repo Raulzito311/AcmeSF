@@ -9,6 +9,7 @@ class Cliente{
     public readonly string $email;
     public readonly string $endereco;
     public readonly float $limiteCredito;
+    public readonly float $limiteCreditoMaximo;
 
     public static function of(EmprestimoDTO $body): Cliente {
 		$cliente = new Cliente();
@@ -21,6 +22,7 @@ class Cliente{
         $cliente->email = $body->email;
         $cliente->endereco = $body->endereco;
         $cliente->limiteCredito = $body->limiteCredito;
+        $cliente->limiteCreditoMaximo = $body->limiteCredito;
 
 		return $cliente;
 	}
