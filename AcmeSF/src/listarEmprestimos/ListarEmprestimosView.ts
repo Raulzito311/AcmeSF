@@ -50,7 +50,7 @@ export class ListarEmprestimosView extends View {
 
             const tdValorFinal = document.createElement('td');
             tdValorFinal.className = 'col';
-            tdValorFinal.innerText = emprestimo.valorFinal.toFixed(2);
+            tdValorFinal.innerText = (emprestimo.valorComJuros ?? 0).toFixed(2);
 
             tr.append(tdData, tdCliente, tdCPF, tdValorEmprestimo, tdFormaDePagamento, tdValorFinal);
             tbody?.appendChild(tr);

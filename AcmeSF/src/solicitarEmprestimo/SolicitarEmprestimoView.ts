@@ -2,6 +2,7 @@ import { Emprestimo, EmprestimoJson } from "../emprestimo/Emprestimo";
 import { FormaDePagamento } from "../formaDePagamento/FormaDePagamento";
 import { View } from "../util/View";
 import { validarCPF } from "../util/cpfUtil";
+import { Parcela } from "../parcela/Parcela";
 
 export class SolicitarEmprestimoView extends View {
     private buscarPeloCPF: Function;
@@ -10,7 +11,7 @@ export class SolicitarEmprestimoView extends View {
         this.buscarPeloCPF = buscarPeloCPF;
     }
 
-    public async exibirSolicitacaoDeEmprestimo(formasDePagamento: FormaDePagamento[]): Promise<void> {
+    public async exibirSolicitacaoDeEmprestimo(formasDePagamento: FormaDePagamento[], simularEmprestimo: Function): Promise<void> {
         const inputCPF = <HTMLInputElement> document.getElementById('cpf');
         const inputValor = <HTMLInputElement> document.getElementById('valorEmprestimo');
 
@@ -84,11 +85,11 @@ export class SolicitarEmprestimoView extends View {
         }
 
         select.addEventListener('change', (ev) => {
-            this.atualizarParcelas(formasDePagamento);
+            this.atualizarParcelas(simularEmprestimo);
         });
 
         inputValor.addEventListener('blur', (ev) => {
-            this.atualizarParcelas(formasDePagamento);
+            this.atualizarParcelas(simularEmprestimo);
 
             const invalidValor = document.getElementById('invalidValor');
             const valor = parseFloat(inputValor.value);
@@ -104,7 +105,7 @@ export class SolicitarEmprestimoView extends View {
         });
     }
 
-    private atualizarParcelas(formasDePagamento: FormaDePagamento[]) {
+    private async atualizarParcelas(simularEmprestimo: Function) {
         const inputValor = <HTMLInputElement> document.getElementById('valorEmprestimo');
         const selectFormaDePagamento = <HTMLSelectElement>document.getElementById('formaDePagamento');
 
@@ -115,27 +116,29 @@ export class SolicitarEmprestimoView extends View {
         const valorEmprestimo = parseFloat(inputValor.value);
 
         if (!formaDePagamentoId || !valorEmprestimo || !Emprestimo.validarValor(valorEmprestimo)) return;
-
-        const formaDePagamento = <FormaDePagamento> formasDePagamento.find(f => f.id === formaDePagamentoId);
+        
+        const parcelas = await simularEmprestimo(valorEmprestimo, formaDePagamentoId);
 
         const title = document.createElement('h3');
         title.innerText = 'Parcelas:';
         divParcelas.appendChild(title);
 
-        const parcelas = Emprestimo.calcularParcelas(valorEmprestimo, formaDePagamento);
-
         const ol = document.createElement('ol');
-
-        const date = new Date();
 
         for (const parcela of parcelas) {
             const li = document.createElement('li');
-            date.setDate(date.getDate() + 30);
-            li.innerText = `R$${parcela} | Vencimento: ${date.toLocaleDateString()}`;
+            li.innerText = `R$${parcela.valor.toFixed(2)} | Vencimento: ${(new Date(parcela.dataVencimento)).toLocaleDateString()}`;
             ol.appendChild(li);
         }
 
         divParcelas.appendChild(ol);
+
+        const valorFinal = parcelas.map((parcela: Parcela) => parcela.valor).reduce((a: number, b: number) => a + b);
+
+        const p = document.createElement('p');
+        p.innerHTML = `<i>Valor Final: R$${valorFinal.toFixed(2)}</i>`;
+
+        divParcelas.appendChild(p);
     }
 
     /**

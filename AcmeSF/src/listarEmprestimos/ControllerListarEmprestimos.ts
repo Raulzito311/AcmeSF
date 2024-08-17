@@ -21,6 +21,8 @@ export class ControllerListarEmprestimos extends Controller {
             await this.view.load();
             this.view.listarEmprestimos(emprestimos);
         } catch (errorMessage) {
+            console.log(errorMessage);
+            
             carregarPaginaDeLogin();
         }
     }

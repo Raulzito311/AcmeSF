@@ -21,7 +21,14 @@ export class ControllerSolicitarEmprestimo extends Controller {
 
         await this.view.load();
         
-        this.view.exibirSolicitacaoDeEmprestimo(formasdePagamento);
+        this.view.exibirSolicitacaoDeEmprestimo(formasdePagamento, async (valorEmprestimo: number, formaDePagamentoId: number) => {
+            try {
+                return await emprestimosService.simularEmprestimo(valorEmprestimo, formaDePagamentoId);
+            } catch (errorMessage) {
+                this.alert(<string> errorMessage, 'danger');
+                return [];
+            }
+        });
 
         this.view.adicionarListenerParaSolicitacao(async (emprestimo: EmprestimoJson) => {
             try {

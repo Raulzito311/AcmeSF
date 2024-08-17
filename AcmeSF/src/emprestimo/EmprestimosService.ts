@@ -1,6 +1,7 @@
 import { Emprestimo, EmprestimoJson } from "./Emprestimo";
 import { API } from "../util/API";
 import { Service } from "../util/Service";
+import { Parcela } from "../parcela/Parcela";
 
 class EmprestimosService implements Service<Emprestimo> {
     async buscarPeloId(id: number): Promise<Emprestimo> {
@@ -52,6 +53,28 @@ class EmprestimosService implements Service<Emprestimo> {
             const text = (await res.text()).trim();
             throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
         }
+    }
+
+    async simularEmprestimo(valorEmprestimo: number, formaDePagamentoId: number): Promise<Parcela[]> {
+        const params = {
+            method : 'PUT',
+            credentials: 'include' as RequestCredentials,
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                valorEmprestimo,
+                formaDePagamentoId
+            })
+        };
+        
+        const res = await fetch(`${API}/emprestimos/simular`, params);
+        if (!res.ok) {
+            const text = (await res.text()).trim();
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
+        }
+
+        return await res.json();
     }
 }
 
