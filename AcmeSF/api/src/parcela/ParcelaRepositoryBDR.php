@@ -56,14 +56,14 @@ class ParcelaRepositoryBDR implements ParcelaRepository {
      * 
      * @return Parcela[]
      */
-    function adicionarParcelas(array $parcelas): bool {
+    function adicionarParcelas(array $parcelas): void {
         try{
             $ps = $this->pdo->prepare('INSERT INTO parcela (emprestimoId, valor, paga, dataVencimento)  VALUES (?, ?, ?, ?)');
             foreach ($parcelas as $parcela) {
                 $ps->execute([$parcela->emprestimoId, $parcela->valor, $parcela->paga, $parcela->dataVencimento]);
             }
 
-            return $ps->rowCount() > 0;
+            if ($ps->rowCount() <= 0) throw new RepositoryException('Erro ao adicionar parcelas');
         }catch(PDOException $e){
             if ($e->getCode() == 23000) throw new DataException($e->errorInfo[2]); // SQL data validation error
             throw new RepositoryException('Erro ao adicionar parcelas | ' . $e->getMessage());

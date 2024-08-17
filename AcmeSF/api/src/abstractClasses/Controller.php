@@ -56,9 +56,7 @@ abstract class Controller {
             return;
         }
         try {
-            $res = $this->repository->adicionar($dto);
-            if (!$res) throw new RepositoryException('Erro ao adicionar');
-            
+            $this->repository->adicionar($dto);
         } catch (DataException $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;

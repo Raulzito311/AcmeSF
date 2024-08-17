@@ -12,7 +12,7 @@ interface ParcelaRepository{
      * 
      * @return Parcela[]
      */
-    function adicionarParcelas(array $parcelas): bool;
+    function adicionarParcelas(array $parcelas): void;
 }
 
 ?>

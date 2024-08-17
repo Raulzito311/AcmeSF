@@ -46,24 +46,25 @@ class ClienteRepositoryBDR implements ClienteRepository {
         }
     }
     
-    function adicionar(Cliente $cliente): bool {
+    function adicionar(Cliente $cliente): void {
         try{
             $ps = $this->pdo->prepare('INSERT INTO cliente (cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito) VALUES (?, ?, ?, ?, ?, ?, ?)');
             $ps->execute([$cliente->cpf, $cliente->nome, $cliente->dataNascimento, $cliente->telefone, $cliente->email, $cliente->endereco, $cliente->limiteCredito]);
 
-            return $ps->rowCount() > 0;
+            if ($ps->rowCount() <= 0) throw new RepositoryException('Erro ao adicionar cliente');
         }catch(PDOException $e){
             if ($e->getCode() == 23000) throw new DataException($e->errorInfo[2]); // SQL data validation error
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
         }
     }
 
-    function ajustarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): bool {
+    function ajustarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): void {
         try{
             $ps = $this->pdo->prepare('UPDATE cliente SET limiteCredito = limiteCredito + :valor WHERE id = (SELECT clienteId FROM emprestimo WHERE id = :emprestimoId) AND (limiteCredito + :valor) >= 0');
             $ps->execute(['valor' => $valor, 'emprestimoId' => $emprestimoId]);
     
-            return $ps->rowCount() > 0;
+            if ($ps->rowCount() <= 0)
+                throw new DataException("Empréstimo acima do limite de crédito do cliente");
         }catch(Exception $e){
             throw new RepositoryException('Erro ao aumentar limite do cliente' . $e->getMessage());
         }

@@ -22,25 +22,21 @@ class EmprestimoController extends Controller {
         try {
             ControleDeTransacaoBDR::executar(function() use ($dto) {
                 $emprestimo = $this->repository->adicionar($dto);
-
-                if (!$emprestimo) throw new RepositoryException("Erro ao adicionar emprestimo");
                 
                 $parcelas = Emprestimo::calcularParcelas($emprestimo->valorEmprestimo, $emprestimo->formaDePagamento, $emprestimo->id);
 
-                $parcelaRepository = new ParcelaRepositoryBDR();
-                $res = $parcelaRepository->adicionarParcelas($parcelas);
+                if(empty($parcelas)) throw new Exception('Erro ao calcular parcelas', 500);
 
-                if (!$res) throw new RepositoryException("Erro ao criar parcelas");
+                $parcelaRepository = new ParcelaRepositoryBDR();
+                $parcelaRepository->adicionarParcelas($parcelas);
 
                 $clienteRepository = new ClienteRepositoryBDR();
-                $res = $clienteRepository->ajustarLimiteDoClienteDoEmprestimo(-$emprestimo->valorComJuros, $emprestimo->id);
-
-                if (!$res) throw new DataException("Empréstimo acima do limite de crédito do cliente");
+                $clienteRepository->ajustarLimiteDoClienteDoEmprestimo(-$emprestimo->valorComJuros, $emprestimo->id);
             });
         } catch (DataException $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
-        } catch (RepositoryException $ex) {
+        } catch (Exception $ex) {
             $this->view->error($ex->getCode());
             return;
         }
@@ -65,7 +61,7 @@ class EmprestimoController extends Controller {
             $formaDePagamentoRepository = new FormaDePagamentoRepositoryBDR();
             $formaDePagamento = $formaDePagamentoRepository->buscarPeloId($dto->formaDePagamentoId);
 
-            if (!$formaDePagamento) throw new DataException("A Forma de Pagamento fornecida não existe");
+            if (!$formaDePagamento) throw new DataException('A Forma de Pagamento fornecida não existe');
 
             $parcelas = Emprestimo::calcularParcelas($dto->valorEmprestimo, $formaDePagamento);
         } catch (DataException $ex) {
