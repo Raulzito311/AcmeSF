@@ -48,8 +48,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
 
             return $this->buscarPeloId($this->pdo->lastInsertId());
         }catch(PDOException $e){
-            if ($e->getCode() == 23000)
-                throw new DataException($e->errorInfo[2]);
+            if ($e->getCode() == 23000) throw new DataException($e->errorInfo[2]); // SQL data validation error
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
         }
     }

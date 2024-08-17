@@ -32,7 +32,7 @@ class EmprestimoController extends Controller {
                 if (!$res) throw new RepositoryException("Erro ao criar parcelas");
 
                 $clienteRepository = new ClienteRepositoryBDR();
-                $res = $clienteRepository->ajustarLimiteDoClienteDoEmprestimo(-$emprestimo->calcularValorComJuros(), $emprestimo->id);
+                $res = $clienteRepository->ajustarLimiteDoClienteDoEmprestimo(-$emprestimo->valorComJuros, $emprestimo->id);
 
                 if (!$res) throw new RepositoryException("Erro ao aumentar limite");
             });

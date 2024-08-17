@@ -1,20 +1,36 @@
 <?php
 
 class Emprestimo {
-	public function __construct(public readonly int $id, 
-								public readonly Cliente $cliente, 
-								public readonly FormaDePagamento $formaDePagamento, 
-								public readonly float $valorEmprestimo, 
-								public readonly string $dataHora) { }
+	public readonly int $id;
+	public readonly Cliente $cliente;
+	public readonly FormaDePagamento $formaDePagamento;
+	public readonly string $dataHora;
+	public readonly float $valorEmprestimo;
+	public readonly float $valorComJuros;
+	
+	public function __construct(int $id, 
+								Cliente $cliente, 
+								FormaDePagamento $formaDePagamento, 
+								string $dataHora, 
+								float $valorEmprestimo) {
+		$this->id = $id;
+		$this->cliente = $cliente;
+		$this->formaDePagamento = $formaDePagamento;
+		$this->valorEmprestimo = $valorEmprestimo;
+		$this->dataHora = $dataHora;
+		$this->calcularValorComJuros();
+	}
 
     public static function of(EmprestimoDTO $body): Emprestimo {
-		$emprestimo = new Emprestimo($body->id, Cliente::of($body), FormaDePagamento::of($body), $body->valorEmprestimo, $body->dataHora);
+		$cliente = Cliente::of($body);
+		$formaDePagamento = FormaDePagamento::of($body);
+		$emprestimo = new Emprestimo($body->id, $cliente, $formaDePagamento, $body->dataHora, $body->valorEmprestimo);
 
 		return $emprestimo;
 	}
 
-	public function calcularValorComJuros() {
-		return $this->valorEmprestimo + ($this->valorEmprestimo * $this->formaDePagamento->juros);
+	private function calcularValorComJuros() {
+		$this->valorComJuros = $this->valorEmprestimo + ($this->valorEmprestimo * $this->formaDePagamento->juros);
 	}
 
 	public static function calcularParcelas(float $valorEmprestimo, FormaDePagamento $formaDePagamento, ?int $emprestimoId = null): array {

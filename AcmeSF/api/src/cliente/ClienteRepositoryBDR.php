@@ -53,8 +53,7 @@ class ClienteRepositoryBDR implements ClienteRepository {
 
             return $ps->rowCount() > 0;
         }catch(PDOException $e){
-            if ($e->getCode() == 23000)
-                throw new DataException($e->errorInfo[2]);
+            if ($e->getCode() == 23000) throw new DataException($e->errorInfo[2]); // SQL data validation error
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
         }
     }
