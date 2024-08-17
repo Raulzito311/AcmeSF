@@ -35,7 +35,7 @@ class EmprestimoController extends Controller {
                 $clienteRepository = new ClienteRepositoryBDR();
                 $res = $clienteRepository->ajustarLimiteDoClienteDoEmprestimo(-$emprestimo->valorComJuros, $emprestimo->id);
 
-                if (!$res) throw new RepositoryException("Erro ao aumentar limite");
+                if (!$res) throw new DataException("Empréstimo acima do limite de crédito do cliente");
             });
         } catch (DataException $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
