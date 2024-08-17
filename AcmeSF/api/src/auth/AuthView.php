@@ -13,7 +13,7 @@ class AuthView extends View {
     // Output
 
     public function loginSuccess(Usuario $usuario): void {
-        $this->writeAdded($usuario);
+        $this->write($usuario, 201);
     }
 
     public function unauthorized(): void {

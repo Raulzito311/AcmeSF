@@ -1,7 +1,7 @@
 <?php
 
 interface ParcelaRepository{
-    function buscarParcelaParaPagar(int $emprestimoId): ParcelaDTO|false;
+    function buscarParcelaParaPagar(int $emprestimoId): Parcela|false;
     /**
      * @return Parcela[]
      */
@@ -12,7 +12,7 @@ interface ParcelaRepository{
      * 
      * @return Parcela[]
      */
-    function adicionarParcelas(array $parcelas): array|false;
+    function adicionarParcelas(array $parcelas): bool;
 }
 
 ?>

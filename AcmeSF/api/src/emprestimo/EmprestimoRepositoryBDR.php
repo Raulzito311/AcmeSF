@@ -43,8 +43,8 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
 
     public function adicionar(EmprestimoDTO $emprestimo): Emprestimo|false {
         try{
-            $ps = $this->pdo->prepare('INSERT INTO emprestimo (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, ?)');
-            $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo, $emprestimo->dataHora]);
+            $ps = $this->pdo->prepare('INSERT INTO emprestimo (clienteId, formaDePagamentoId, valorEmprestimo, dataHora) VALUES (?, ?, ?, NOW())');
+            $ps->execute([$emprestimo->clienteId, $emprestimo->formaDePagamentoId, $emprestimo->valorEmprestimo]);
 
             return $this->buscarPeloId($this->pdo->lastInsertId());
         }catch(PDOException $e){

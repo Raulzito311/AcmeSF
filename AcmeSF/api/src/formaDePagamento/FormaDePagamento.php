@@ -1,5 +1,10 @@
 <?php
+use phputil\traits\WithBuilder;
+
 class FormaDePagamento {
+
+	use WithBuilder;
+
     public readonly int $id;
     public readonly string $descricao;
     public readonly int $meses;

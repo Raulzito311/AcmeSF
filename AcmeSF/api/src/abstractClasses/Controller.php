@@ -56,7 +56,9 @@ abstract class Controller {
             return;
         }
         try {
-            $objAdded = $this->repository->adicionar($dto);
+            $res = $this->repository->adicionar($dto);
+            if (!$res) throw new RepositoryException('Erro ao adicionar');
+            
         } catch (DataException $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
@@ -64,7 +66,7 @@ abstract class Controller {
             $this->view->error($ex->getCode());
             return;
         }
-        $this->view->writeAdded($objAdded);
+        $this->view->created();
     }
 }
 

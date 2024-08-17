@@ -30,12 +30,12 @@ abstract class View {
         $this->res->status($status)->json($obj);
     }
 
-    public function writeAdded($obj): void {
-        $this->write($obj, 201);
-    }
-
     public function writeAll(array $objs): void {
         $this->res->status(200)->json($objs);
+    }
+
+    public function created(): void {
+        $this->res->status(201)->end();
     }
     
     public function noContent(): void {

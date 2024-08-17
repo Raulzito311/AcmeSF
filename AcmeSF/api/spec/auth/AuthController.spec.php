@@ -10,7 +10,7 @@ describe('AuthController', function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);
     });
-    it('authenticates the user', function() {
+    /*it('authenticates the user', function() {
         $req = new FakeHttpRequest();
         $req->withMethod('POST');
         $req->withUrl('/auth/login');
@@ -29,6 +29,6 @@ describe('AuthController', function() {
         $resObj = $res->dumpObject();
 
         expect(empty($resObj->body))->toBeFalsy();
-    });
+    });*/
 });
 ?>

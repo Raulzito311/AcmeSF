@@ -65,17 +65,6 @@ class EmprestimoDTO {
 		} else {
 			throw new DataException('O valor do emprestimo deve ser informado (valorEmprestimo)');
 		}
-		if (isset($body->dataHora)) {
-			try {
-				$dto->dataHora = $body->dataHora;
-				if (!StringUtil::validateDateTime($dto->dataHora))
-					throw new Exception();
-			} catch (TypeError | Exception $ex) {
-				throw new DataException('A data e hora deve ser uma string válida no formato "ano-mês-dia hora:minuto:segundo" (dataHora)', $ex);
-			}
-		} else {
-			throw new DataException('A data e hora devem ser informadas (dataHora)');
-		}
 
 		return $dto;
 	}

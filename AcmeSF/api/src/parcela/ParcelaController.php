@@ -56,7 +56,7 @@ class ParcelaController {
                 if (!$res) throw new RepositoryException("Parcela inexistente");
                 
                 $clienteRepository = new ClienteRepositoryBDR();
-                $res = $clienteRepository->aumentarLimiteDoClienteDoEmprestimo($parcela->valor, $emprestimoId);
+                $res = $clienteRepository->ajustarLimiteDoClienteDoEmprestimo($parcela->valor, $emprestimoId);
 
                 if (!$res) throw new RepositoryException("Erro ao aumentar limite");
             });

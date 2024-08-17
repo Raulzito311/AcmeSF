@@ -189,45 +189,6 @@ describe('EmprestimoDTO', function() {
         
         expect($func)->toThrow(new DataException(''));
     });
-    it("throws exception on missing dataHora", function() {
-
-        $func = function() {
-            $cliente = new stdClass();
-            $cliente->id = 2;
-    
-            $formaDePagamento = new stdClass();
-            $formaDePagamento->id = 7;
-    
-            $emprestimo = new stdClass();
-            $emprestimo->cliente = $cliente;
-            $emprestimo->formaDePagamento = $formaDePagamento;
-            $emprestimo->valorEmprestimo = 5999.99;
-
-            EmprestimoDTO::of($emprestimo);
-        };
-        
-        expect($func)->toThrow(new DataException(''));
-    });
-    it("throws exception on invalid dataHora", function() {
-
-        $func = function() {
-            $cliente = new stdClass();
-            $cliente->id = 2;
-    
-            $formaDePagamento = new stdClass();
-            $formaDePagamento->id = 7;
-    
-            $emprestimo = new stdClass();
-            $emprestimo->cliente = $cliente;
-            $emprestimo->formaDePagamento = $formaDePagamento;
-            $emprestimo->valorEmprestimo = 5999.99;
-            $emprestimo->dataHora = '2024/4/15 19:77:46';
-
-            EmprestimoDTO::of($emprestimo);
-        };
-        
-        expect($func)->toThrow(new DataException(''));
-    });
     it("doesn't throw exception on valid data", function() {
 
         $func = function() {

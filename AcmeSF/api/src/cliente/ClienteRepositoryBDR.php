@@ -46,12 +46,12 @@ class ClienteRepositoryBDR implements ClienteRepository {
         }
     }
     
-    function adicionar(Cliente $cliente): Cliente|false {
+    function adicionar(Cliente $cliente): bool {
         try{
             $ps = $this->pdo->prepare('INSERT INTO cliente (cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito) VALUES (?, ?, ?, ?, ?, ?, ?)');
             $ps->execute([$cliente->cpf, $cliente->nome, $cliente->dataNascimento, $cliente->telefone, $cliente->email, $cliente->endereco, $cliente->limiteCredito]);
 
-            return $this->buscarPeloId($this->pdo->lastInsertId());
+            return $ps->rowCount() > 0;
         }catch(PDOException $e){
             if ($e->getCode() == 23000)
                 throw new DataException($e->errorInfo[2]);
@@ -59,7 +59,7 @@ class ClienteRepositoryBDR implements ClienteRepository {
         }
     }
 
-    function aumentarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): bool {
+    function ajustarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): bool {
         try{
             $ps = $this->pdo->prepare('UPDATE cliente SET limiteCredito = limiteCredito + ? WHERE id = (SELECT clienteId FROM emprestimo WHERE id = ?)');
             $ps->execute([$valor, $emprestimoId]);
