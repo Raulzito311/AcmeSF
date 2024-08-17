@@ -13,7 +13,7 @@ class ParcelaController {
         try {
             $this->repository = new ParcelaRepositoryBDR();
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
         }
     }
 
@@ -28,7 +28,7 @@ class ParcelaController {
                 return;
             }
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
 
@@ -59,7 +59,7 @@ class ParcelaController {
                 $clienteRepository->ajustarLimiteDoClienteDoEmprestimo($parcela->valor, $emprestimoId);
             });
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
 

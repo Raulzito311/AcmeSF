@@ -27,7 +27,7 @@ class ClienteController extends Controller {
                 return;
             }
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
         $this->view->write($cliente);

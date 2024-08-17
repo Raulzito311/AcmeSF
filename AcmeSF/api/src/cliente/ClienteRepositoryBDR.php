@@ -52,20 +52,20 @@ class ClienteRepositoryBDR implements ClienteRepository {
             $ps->execute([$cliente->cpf, $cliente->nome, $cliente->dataNascimento, $cliente->telefone, $cliente->email, $cliente->endereco, $cliente->limiteCredito]);
 
             if ($ps->rowCount() <= 0) throw new RepositoryException('Erro ao adicionar cliente');
-        }catch(PDOException $e){
+        } catch (PDOException $e) {
             if ($e->getCode() == 23000) throw new DataException($e->errorInfo[2]); // SQL data validation error
             throw new RepositoryException('Erro ao adicionar emprestimo | ' . $e->getMessage());
         }
     }
 
     function ajustarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): void {
-        try{
+        try {
             $ps = $this->pdo->prepare('UPDATE cliente SET limiteCredito = limiteCredito + :valor WHERE id = (SELECT clienteId FROM emprestimo WHERE id = :emprestimoId) AND (limiteCredito + :valor) >= 0');
             $ps->execute(['valor' => $valor, 'emprestimoId' => $emprestimoId]);
     
             if ($ps->rowCount() <= 0)
                 throw new DataException("Empréstimo acima do limite de crédito do cliente");
-        }catch(Exception $e){
+        } catch (PDOException $e) {
             throw new RepositoryException('Erro ao aumentar limite do cliente' . $e->getMessage());
         }
     }

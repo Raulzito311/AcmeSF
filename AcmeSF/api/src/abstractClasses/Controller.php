@@ -10,7 +10,7 @@ abstract class Controller {
         try {
             $this->repository = new $repositoryClass();
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
         }
     }
 
@@ -25,7 +25,7 @@ abstract class Controller {
                 return;
             }
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
         $this->view->write($obj);
@@ -37,7 +37,7 @@ abstract class Controller {
         try {
             $objs = $this->repository->buscarTodos();
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
         $this->view->writeAll($objs);
@@ -61,7 +61,7 @@ abstract class Controller {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
         $this->view->created();

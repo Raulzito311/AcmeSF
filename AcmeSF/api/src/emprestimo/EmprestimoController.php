@@ -37,7 +37,7 @@ class EmprestimoController extends Controller {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         } catch (Exception $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
 
@@ -68,7 +68,7 @@ class EmprestimoController extends Controller {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
             

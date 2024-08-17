@@ -13,7 +13,7 @@ class AuthController {
         try {
             $this->repository = new UsuarioRepositoryBDR();
         } catch (RepositoryException $ex) {
-            $this->view->error($ex->getCode());
+            $this->view->error($ex->getCode(), $ex->getMessage());
         }
     }
 
