@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as cpfUtil from '../../../src/util/cpfUtil';
+import * as cpfUtil from '../../src/util/cpfUtil';
 
 describe('cpfUtil', () => {
     describe('validarCPF', () => {
