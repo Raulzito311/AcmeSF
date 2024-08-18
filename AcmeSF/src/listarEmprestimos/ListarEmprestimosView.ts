@@ -42,7 +42,7 @@ export class ListarEmprestimosView extends View {
 
             const tdValorEmprestimo = document.createElement('td');
             tdValorEmprestimo.className = 'col';
-            tdValorEmprestimo.innerText = emprestimo.valorEmprestimo.toFixed(2);
+            tdValorEmprestimo.innerText = emprestimo.valorEmprestimo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
             const tdFormaDePagamento = document.createElement('td');
             tdFormaDePagamento.className = 'col';
@@ -50,7 +50,7 @@ export class ListarEmprestimosView extends View {
 
             const tdValorFinal = document.createElement('td');
             tdValorFinal.className = 'col';
-            tdValorFinal.innerText = (emprestimo.valorComJuros ?? 0).toFixed(2);
+            tdValorFinal.innerText = (emprestimo.valorComJuros ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
             tr.append(tdData, tdCliente, tdCPF, tdValorEmprestimo, tdFormaDePagamento, tdValorFinal);
             tbody?.appendChild(tr);

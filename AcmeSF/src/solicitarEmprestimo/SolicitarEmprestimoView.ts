@@ -12,8 +12,19 @@ export class SolicitarEmprestimoView extends View {
     }
 
     public async exibirSolicitacaoDeEmprestimo(formasDePagamento: FormaDePagamento[], simularEmprestimo: Function): Promise<void> {
+        const select = <HTMLSelectElement>document.getElementById('formaDePagamento');
+        
+        // Preenche as opções de formas de pagamento
+        for (const formaDePagamento of formasDePagamento) {
+            const option = document.createElement('option');
+            option.innerText = formaDePagamento.descricao;
+            option.value = formaDePagamento.id.toString();
+            select.appendChild(option);
+        }
+
         const inputCPF = <HTMLInputElement> document.getElementById('cpf');
         const inputValor = <HTMLInputElement> document.getElementById('valorEmprestimo');
+        const inputLimiteCredito = <HTMLInputElement> document.getElementById('inputLimiteCredito');
 
         // Formata o cpf digitado
         inputCPF.addEventListener('input', function(event) {
@@ -37,10 +48,12 @@ export class SolicitarEmprestimoView extends View {
         // Valida o cliente
         inputCPF.addEventListener('blur', async (event) => {
             const target: HTMLInputElement = <HTMLInputElement> event.target;
-            const invalidCpf = document.getElementById('invalidCpf');
+            const invalidCpf = <HTMLInputElement> document.getElementById('invalidCpf');
             const inputClienteId = <HTMLInputElement> document.getElementById('inputClienteId');
 
             if (!target.value) {
+                inputClienteId.value = '';
+                inputLimiteCredito.value = '';
                 invalidCpf!.innerText = 'Por favor, insira o cpf do cliente';
                 target.classList.remove('is-valid');
                 target.classList.add('is-invalid');
@@ -51,7 +64,10 @@ export class SolicitarEmprestimoView extends View {
                     target.classList.remove('is-invalid');
                     target.classList.add('is-valid');
 
-                    inputClienteId.innerText = cliente.id.toString();
+                    inputClienteId.value = cliente.id.toString();
+                    inputLimiteCredito.value = cliente.limiteCredito;
+
+                    this.atualizarParcelas(simularEmprestimo);
     
                     const today = new Date();
                     const nascimento = new Date(cliente.dataNascimento);
@@ -61,44 +77,58 @@ export class SolicitarEmprestimoView extends View {
                         idade--;
     
                     inputCPF.value = `${inputCPF.value} | ${cliente.nome}, ${idade} anos`;
+
+                    const divLimiteCredito = <HTMLInputElement> document.getElementById('divLimiteCredito');
+                    const limiteCredito = <HTMLInputElement> document.getElementById('limiteCredito');
+                    const limiteCreditoMaximo = <HTMLInputElement> document.getElementById('limiteCreditoMaximo');
+                    const porcentagemLimiteCredito = <HTMLInputElement> document.getElementById('porcentagemLimiteCredito');
+
+                    limiteCredito.innerText = cliente.limiteCredito.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    limiteCreditoMaximo.innerText = cliente.limiteCreditoMaximo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                    porcentagemLimiteCredito.innerText = parseFloat((cliente.limiteCredito / cliente.limiteCreditoMaximo * 100).toFixed(1)).toString();
+
+                    if (Emprestimo.validarValor(cliente.limiteCredito)) {
+                        divLimiteCredito.classList.add('valid');
+                        divLimiteCredito.classList.remove('invalid');
+                    } else {
+                        divLimiteCredito.classList.add('invalid');
+                        divLimiteCredito.classList.remove('valid');
+                    }
+                    
+                    divLimiteCredito.classList.remove('invisible');
                 } catch (error) {
-                    inputClienteId.innerText = '';
+                    inputClienteId.value = '';
+                    inputLimiteCredito.value = '';
                     invalidCpf!.innerText = 'Por favor, insira o CPF de um cliente já cadastrado';
                     target.classList.remove('is-valid');
                     target.classList.add('is-invalid');
                 }
             } else {
+                inputClienteId.value = '';
+                inputLimiteCredito.value = '';
                 invalidCpf!.innerText = 'Por favor, insira um CPF válido';
                 target.classList.remove('is-valid');
                 target.classList.add('is-invalid');
             }
         });
 
-        const select = <HTMLSelectElement>document.getElementById('formaDePagamento');
-        
-        // Preenche as opções de formas de pagamento
-        for (const formaDePagamento of formasDePagamento) {
-            const option = document.createElement('option');
-            option.innerText = formaDePagamento.descricao;
-            option.value = formaDePagamento.id.toString();
-            select.appendChild(option);
-        }
-
         select.addEventListener('change', (ev) => {
             this.atualizarParcelas(simularEmprestimo);
         });
 
-        inputValor.addEventListener('blur', (ev) => {
-            this.atualizarParcelas(simularEmprestimo);
+        inputValor.addEventListener('blur', async (ev) => {
+            await this.atualizarParcelas(simularEmprestimo);
 
-            const invalidValor = document.getElementById('invalidValor');
+            const invalidValor = <HTMLInputElement> document.getElementById('invalidValor');
             const valor = parseFloat(inputValor.value);
+            const limiteCredito = (Number(inputLimiteCredito.value) || 50000);
+            
 
-            if(Emprestimo.validarValor(valor)){
+            if (Emprestimo.validarValor(valor)) {
                 inputValor.classList.add('is-valid');
                 inputValor.classList.remove('is-invalid');
             } else {
-                invalidValor!.innerText = valor ? 'Por favor, insira um valor entre R$ 500,00 e R$ 50.000,00' : 'Por favor, insira o valor do emprestimo';
+                invalidValor.innerText = valor ? 'Por favor, insira um valor entre R$ 500,00 e ' + limiteCredito.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'Por favor, insira o valor do emprestimo';
                 inputValor.classList.remove('is-valid');
                 inputValor.classList.add('is-invalid');
             }
@@ -114,6 +144,10 @@ export class SolicitarEmprestimoView extends View {
 
         const formaDePagamentoId = Number(selectFormaDePagamento.value);
         const valorEmprestimo = parseFloat(inputValor.value);
+        
+        const inputValorFinal = <HTMLInputElement> document.getElementById('inputValorFinal');
+
+        inputValorFinal.value = '';
 
         if (!formaDePagamentoId || !valorEmprestimo || !Emprestimo.validarValor(valorEmprestimo)) return;
         
@@ -127,7 +161,7 @@ export class SolicitarEmprestimoView extends View {
 
         for (const parcela of parcelas) {
             const li = document.createElement('li');
-            li.innerText = `R$${parcela.valor.toFixed(2)} | Vencimento: ${(new Date(parcela.dataVencimento)).toLocaleDateString()}`;
+            li.innerText = `${parcela.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} | Vencimento: ${(new Date(parcela.dataVencimento)).toLocaleDateString()}`;
             ol.appendChild(li);
         }
 
@@ -135,8 +169,13 @@ export class SolicitarEmprestimoView extends View {
 
         const valorFinal = parcelas.map((parcela: Parcela) => parcela.valor).reduce((a: number, b: number) => a + b);
 
+        inputValorFinal.value = valorFinal;
+
+        const inputLimiteCredito = <HTMLInputElement> document.getElementById('inputLimiteCredito');
+        const limiteCredito = (Number(inputLimiteCredito.value) || 50000);
+
         const p = document.createElement('p');
-        p.innerHTML = `<i>Valor Final: R$${valorFinal.toFixed(2)}</i>`;
+        p.innerHTML = `<i style="color: ${valorFinal > limiteCredito ? 'red' : 'green'}">Valor Final: ${valorFinal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</i>`;
 
         divParcelas.appendChild(p);
     }
@@ -153,7 +192,8 @@ export class SolicitarEmprestimoView extends View {
             /* CLIENTE - start */
             const inputCPF = <HTMLInputElement> document.getElementById('cpf');
             const inputClienteId = document.getElementById('inputClienteId') as HTMLInputElement;
-            const clienteId = Number(inputClienteId.textContent);
+            const inputLimiteCredito = document.getElementById('inputLimiteCredito') as HTMLInputElement;
+            const clienteId = Number(inputClienteId.value);
 
             if (clienteId) {
                 inputCPF.classList.add('is-valid');
@@ -168,16 +208,19 @@ export class SolicitarEmprestimoView extends View {
 
             /* VALOR EMPRESTIMO - start */
             const valorEmprestimoInput = <HTMLInputElement> document.getElementById('valorEmprestimo');
+            const inputValorFinal = <HTMLInputElement> document.getElementById('inputValorFinal');
             const invalidValor = document.getElementById('invalidValor');
 
             const valor = parseFloat(valorEmprestimoInput.value);
+            const valorFinal = (Number(inputValorFinal.value) || valor);
+            const limiteCredito = (Number(inputLimiteCredito.value) || 50000);
             
-            if(Emprestimo.validarValor(valor)){
+            if(Emprestimo.validarValor(valor) && valorFinal <= limiteCredito){
                 valorEmprestimoInput.classList.add('is-valid');
                 valorEmprestimoInput.classList.remove('is-invalid');
             } else {
                 dadosValidos = false;
-                invalidValor!.innerText = valor ? 'Por favor, insira um valor entre R$ 500,00 e R$ 50.000,00' : 'Por favor, insira o valor do emprestimo';
+                invalidValor!.innerText = valor ? (valor <= limiteCredito ? 'O valor do empréstimo com juros deve ser menor ou igual ao limite de crédito do cliente.' : 'Por favor, insira um valor entre R$ 500,00 e ' + limiteCredito.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })) : 'Por favor, insira o valor do emprestimo';
                 valorEmprestimoInput.classList.remove('is-valid');
                 valorEmprestimoInput.classList.add('is-invalid');
             }

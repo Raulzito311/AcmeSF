@@ -1,8 +1,13 @@
 <div class="titulo">
     <h3>Realizar Empréstimo</h3>
+    <div id="divLimiteCredito" class="invisible">
+        <i>Limite de Crédito: <span id="limiteCredito"></span> (<span id="porcentagemLimiteCredito"></span>%) / <span id="limiteCreditoMaximo"></span></i>
+    </div>
 </div>
 <form id="formEmprestimo" class="needs-validation" novalidate>
     <input type="text" class="invisible" id="inputClienteId">
+    <input type="number" class="invisible" id="inputLimiteCredito">
+    <input type="number" class="invisible" id="inputValorFinal">
     
     <div class="row g-3 mb-3">
         <div class="col-12 col-md-6">

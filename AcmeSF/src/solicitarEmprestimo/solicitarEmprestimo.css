@@ -1,3 +1,18 @@
 .invisible {
     display: none;
 }
+
+#divLimiteCredito {
+    border-radius: 25px;
+    padding: 5px 15px;
+}
+
+#divLimiteCredito.valid {
+    background-color: #beb;
+    border: solid 1px #040;
+}
+
+#divLimiteCredito.invalid {
+    background-color: #ebb;
+    border: solid 1px #400;
+}

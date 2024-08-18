@@ -8,8 +8,8 @@ img.main-logo {
 }
 
 .loginContainer {
-    background-color: lightgray;
-    border: 1px solid gray;
+    background-color: #d3d3d3;
+    border: 3px solid #808080;
     border-radius: 25px;
     padding: 50px;
     align-self: center;
