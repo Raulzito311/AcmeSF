@@ -8,6 +8,7 @@ export class Cliente {
     readonly endereco: string;
     readonly limiteCredito: number;
     readonly limiteCreditoMaximo: number;
+    readonly idade: number;
 
     constructor(id: number, cpf: string, nome: string, dataNascimento: Date, telefone: string, email: string, endereco: string, limiteCredito: number, limiteCreditoMaximo: number) {
         this.id = id;
@@ -19,6 +20,14 @@ export class Cliente {
         this.endereco = endereco;
         this.limiteCredito = limiteCredito;
         this.limiteCreditoMaximo = limiteCreditoMaximo;
+
+        const today = new Date();
+
+        let idade = today.getFullYear() - this.dataNascimento.getFullYear();
+        if (new Date(today.getFullYear(), today.getMonth(), today.getDate()) < new Date(today.getFullYear(), this.dataNascimento.getMonth(), this.dataNascimento.getDate()))
+            idade--;
+
+        this.idade = idade;
     }
 
     static of(clienteJson: ClienteJson): Cliente {

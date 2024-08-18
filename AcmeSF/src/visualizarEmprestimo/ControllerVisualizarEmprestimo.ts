@@ -13,20 +13,26 @@ export class ControllerVisualizarEmprestimo extends Controller {
     constructor(emprestimo: Emprestimo) {
         super();
         this.emprestimo = emprestimo;
-        this.view = new VisualizarEmprestimoView();
+        this.view = new VisualizarEmprestimoView(emprestimo);
     }
 
     public async init(): Promise<void> {
         try {
-            const emprestimos = await emprestimosService.buscarTodos();
+            const parcelas = await emprestimosService.buscarParcelasDoEmprestimo(this.emprestimo.id);
 
             showNav();
             await this.view.load();
-            this.view.listarEmprestimos(emprestimos);
+            this.view.listarParcelas(parcelas, async () => {
+                try {
+                    await emprestimosService.pagarParcelaDoEmprestimo(this.emprestimo.id);
+                    await this.init();
+                    this.alert('Parcela paga com sucesso', 'success');
+                } catch (errorMessage) {
+                    this.alert(<string> errorMessage, 'danger');
+                }
+            });
         } catch (errorMessage) {
-            console.log(errorMessage);
-            
-            carregarPaginaDeLogin();
+            this.alert(<string> errorMessage, 'danger');
         }
     }
 }

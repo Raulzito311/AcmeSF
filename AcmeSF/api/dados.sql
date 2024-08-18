@@ -30,24 +30,27 @@ INSERT INTO forma_de_pagamento
 INSERT INTO cliente 
 	(id, cpf, nome, dataNascimento, telefone, email, endereco, limiteCredito, limiteCreditoMaximo) 
     VALUES
-    (1, "062.148.367-25", "Raul Fernandes", "2003-03-06", "(22) 99717-3345", "raulmff@gmail.com", "Rua dos Amigos, 123 | Nova Friburgo - RJ", 33333.34, 40000.00),
-    (2, "182.198.228-21", "Jheniffer Fournier", "1999-06-24", "(21) 99834-0276", "jhey@gmail.com", "Rua da Família, 321 | Ubatuba - SP", 48999.75, 50000.00);
+    (1, "062.148.367-25", "Raul Fernandes", "2003-03-06", "(22) 99717-3345", "raulmff@gmail.com", "Rua dos Amigos, 123 | Nova Friburgo - RJ", 33550.00, 40000.00),
+    (2, "155.884.897-56", "Jheniffer Fournier", "1999-06-24", "(21) 99834-0276", "jhey@gmail.com", "Rua da Família, 321 | Ubatuba - SP", 46500.00, 50000.00);
 
 INSERT INTO emprestimo 
 	(id, clienteId, formaDePagamentoId, valorEmprestimo, dataHora) 
     VALUES
-    (1, 2, 2, 3000.00, "2024-07-15 19:22:46"),
-    (2, 1, 3, 10000.00, "2024-07-22 08:57:37");
+    (1, 1, 5, 10000.00, "2024-06-22 08:57:37"),
+    (2, 2, 3, 5000.00, "2024-07-15 19:22:46");
 
 INSERT INTO parcela 
 	(id, emprestimoId, valor, paga, dataVencimento) 
     VALUES
-    (2, 1, 1537.50, 0, "2024-09-15"),
-    (4, 2, 3500.00, 0, "2024-09-22"),
-    (5, 2, 3500.00, 0, "2024-10-22");
+    (3, 1, 2150.00, 0, "2024-09-22"),
+    (4, 1, 2150.00, 0, "2024-10-22"),
+    (5, 1, 2150.00, 0, "2024-10-22"),
+    (7, 2, 1750.00, 0, "2024-09-15"),
+    (8, 2, 1750.00, 0, "2024-10-15");
 
 INSERT INTO parcela 
 	(id, emprestimoId, valor, paga, dataVencimento, dataHoraPagamento, usuarioPagamentoId) 
     VALUES
-    (1, 1, 1537.50, 1, "2024-08-15", "2024-08-07 22:15:07", 1),
-    (3, 2, 3500.00, 1, "2024-08-22", "2024-08-15 10:07:00", 2);
+    (1, 1, 2150.00, 1, "2024-07-22", "2024-08-10 10:07:00", 1),
+    (2, 1, 2150.00, 1, "2024-08-22", "2024-08-20 17:55:22", 2),
+    (6, 2, 1750.00, 1, "2024-08-15", "2024-08-15 22:15:07", 1);

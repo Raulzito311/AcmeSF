@@ -1,6 +1,7 @@
 import { Emprestimo } from "../emprestimo/Emprestimo.ts";
 import { carregarPaginaDeSolicitarEmprestimo } from "../solicitarEmprestimo/solicitarEmprestimo.ts";
 import { View } from "../util/View.ts";
+import { carregarPaginaDeVisualizarEmprestimo } from "../visualizarEmprestimo/visualizarEmprestimo.ts";
 
 export class ListarEmprestimosView extends View {
 
@@ -26,7 +27,11 @@ export class ListarEmprestimosView extends View {
 
         for (const emprestimo of emprestimos) {
             const tr = document.createElement('tr');
-            tr.className = 'row';
+            tr.classList.add('row', 'clicable-row');
+
+            tr.addEventListener('click', () => {
+                carregarPaginaDeVisualizarEmprestimo(emprestimo);
+            });
 
             const tdData = document.createElement('td');
             tdData.className = 'col';

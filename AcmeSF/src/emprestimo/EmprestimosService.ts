@@ -55,6 +55,24 @@ class EmprestimosService implements Service<Emprestimo> {
         }
     }
 
+    async buscarParcelasDoEmprestimo(id: number): Promise<Parcela[]> {
+        const res = await fetch(`${API}/emprestimos/${id}/parcelas`, { credentials: 'include' });
+        if (!res.ok) {
+            const text = (await res.text()).trim();
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
+        }
+
+        return await res.json();
+    }
+
+    async pagarParcelaDoEmprestimo(id: number): Promise<void> {
+        const res = await fetch(`${API}/emprestimos/${id}/parcelas/pagar`, { method : 'PUT', credentials: 'include' });
+        if (!res.ok) {
+            const text = (await res.text()).trim();
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
+        }
+    }
+
     async simularEmprestimo(valorEmprestimo: number, formaDePagamentoId: number): Promise<Parcela[]> {
         const params = {
             method : 'PUT',

@@ -1,58 +1,71 @@
 import { Emprestimo } from "../emprestimo/Emprestimo.ts";
+import { Parcela } from "../parcela/Parcela.ts";
 import { carregarPaginaDeSolicitarEmprestimo } from "../solicitarEmprestimo/solicitarEmprestimo.ts";
 import { View } from "../util/View.ts";
 
 export class VisualizarEmprestimoView extends View {
 
-    constructor() {
+    private emprestimo: Emprestimo;
+
+    constructor(emprestimo: Emprestimo) {
         super('visualizarEmprestimo');
+        this.emprestimo = emprestimo;
     }
 
-    public listarEmprestimos(emprestimos: Emprestimo[]): void {
+    public listarParcelas(parcelas: Parcela[], pagarParcela: Function): void {
         const tbody = document.querySelector('tbody');
 
-        if (emprestimos.length == 0) {
+        let id = 1;
+        let primeiraParcelaEmAberto = true;
+        for (const parcela of parcelas) {
+            let parcelaEmAberto = parcela.paga === 0;
             const tr = document.createElement('tr');
             tr.className = 'row';
 
-            const td = document.createElement('td');
-            td.innerText = 'Não há empréstimos';
-            td.classList.add('col', 'semEmprestimos');
+            const tdId = document.createElement('td');
+            tdId.className = 'col-1';
+            tdId.innerText = (id++).toString();
 
-            tr.appendChild(td);
-            tbody?.appendChild(tr);
-            return;
-        }
+            const tdValor = document.createElement('td');
+            tdValor.className = 'col';
+            tdValor.innerText = parcela.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        for (const emprestimo of emprestimos) {
-            const tr = document.createElement('tr');
-            tr.className = 'row';
+            const tdPaga = document.createElement('td');
+            tdPaga.className = 'col';
 
-            const tdData = document.createElement('td');
-            tdData.className = 'col';
-            tdData.innerText = emprestimo.dataHora.toLocaleString(new Intl.Locale('pt-BR'));
+            if (parcelaEmAberto) {
+                const btnPagar = document.createElement('button');
+                btnPagar.classList.add('btn', 'btn-outline-success');
+                btnPagar.innerText = 'Pagar';
+                
+                if (parcelaEmAberto && primeiraParcelaEmAberto) {
+                    primeiraParcelaEmAberto = false;
+                    btnPagar.addEventListener('click', () => {
+                        pagarParcela();
+                    });
+                } else {
+                    btnPagar.addEventListener('click', () => {
+                        this.alert('Outra(s) parcela(s) em aberto deve(m) ser paga(s) antes', 'danger');
+                    });
+                }
+                tdPaga.appendChild(btnPagar);
+            } else {
+                tdPaga.innerText = 'Paga';
+            }
 
-            const tdCliente = document.createElement('td');
-            tdCliente.className = 'col';
-            tdCliente.innerText = emprestimo.cliente.nome;
+            const tdDataVencimento = document.createElement('td');
+            tdDataVencimento.className = 'col';
+            tdDataVencimento.innerText = new Date(parcela.dataVencimento).toLocaleDateString(new Intl.Locale('pt-BR'));
 
-            const tdCPF = document.createElement('td');
-            tdCPF.className = 'col';
-            tdCPF.innerText = emprestimo.cliente.cpf;
+            const tdUsuario = document.createElement('td');
+            tdUsuario.className = 'col';
+            tdUsuario.innerText = parcela.usuarioPagamento || '-';
 
-            const tdValorEmprestimo = document.createElement('td');
-            tdValorEmprestimo.className = 'col';
-            tdValorEmprestimo.innerText = emprestimo.valorEmprestimo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            const tdDataHoraPagamento = document.createElement('td');
+            tdDataHoraPagamento.className = 'col';
+            tdDataHoraPagamento.innerText = parcela.dataHoraPagamento ? new Date(parcela.dataHoraPagamento).toLocaleString(new Intl.Locale('pt-BR')) : '-';
 
-            const tdFormaDePagamento = document.createElement('td');
-            tdFormaDePagamento.className = 'col';
-            tdFormaDePagamento.innerText = emprestimo.formaDePagamento.descricao;
-
-            const tdValorFinal = document.createElement('td');
-            tdValorFinal.className = 'col';
-            tdValorFinal.innerText = (emprestimo.valorComJuros ?? 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-            tr.append(tdData, tdCliente, tdCPF, tdValorEmprestimo, tdFormaDePagamento, tdValorFinal);
+            tr.append(tdId, tdValor, tdDataVencimento, tdPaga, tdUsuario, tdDataHoraPagamento);
             tbody?.appendChild(tr);
         }
     }
@@ -60,9 +73,11 @@ export class VisualizarEmprestimoView extends View {
     public async load(): Promise<void> {
         await super.load();
 
-        document.getElementById('solicitar')?.addEventListener('click', () => {
-            carregarPaginaDeSolicitarEmprestimo();
-        });
+        document.getElementById('valorEmprestimo')!.innerText = this.emprestimo.valorEmprestimo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        document.getElementById('valorComJuros')!.innerText = this.emprestimo.valorComJuros!.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        document.getElementById('dataEmprestimo')!.innerText = this.emprestimo.dataHora.toLocaleDateString(new Intl.Locale('pt-BR'));
+        document.getElementById('cliente')!.innerText = `${this.emprestimo.cliente.nome}, ${this.emprestimo.cliente.idade}`;
+        document.getElementById('formaDePagamento')!.innerText = `${this.emprestimo.formaDePagamento.descricao} | ${100 * this.emprestimo.formaDePagamento.juros}% de juros`;
     }
     
 }

@@ -40,6 +40,10 @@ export class NavView extends View {
             });
         }
 
+        document.getElementById('logo')?.addEventListener('click', () => {
+            carregarPaginaDeListarEmprestimos();
+        });
+        
         document.getElementById('listarEmprestimos')?.addEventListener('click', () => {
             carregarPaginaDeListarEmprestimos();
         });

@@ -1,3 +1,15 @@
 .semEmprestimos {
     text-align: center;
 }
+
+.clicable-row {
+    cursor: pointer;
+}
+
+.clicable-row:hover {
+    background-color: #ccc;
+}
+
+.clicable-row:hover > td {
+    background-color: #eee;
+}

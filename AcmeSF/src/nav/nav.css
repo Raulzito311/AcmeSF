@@ -19,8 +19,9 @@ h1 {
     width: 100%;
 }
 
-img {
+img#logo {
     height: 60px;
+    cursor: pointer;
 }
 
 .m5 {

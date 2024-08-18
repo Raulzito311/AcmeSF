@@ -4,4 +4,5 @@ export type Parcela = {
 	paga: number;
 	dataVencimento: string|Date;
 	dataHoraPagamento: string|Date;
+	usuarioPagamento: string;
 }

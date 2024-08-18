@@ -3,6 +3,7 @@ import { FormaDePagamento } from "../formaDePagamento/FormaDePagamento";
 import { View } from "../util/View";
 import { validarCPF } from "../util/cpfUtil";
 import { Parcela } from "../parcela/Parcela";
+import { Cliente } from "../cliente/Cliente";
 
 export class SolicitarEmprestimoView extends View {
     private buscarPeloCPF: Function;
@@ -59,24 +60,17 @@ export class SolicitarEmprestimoView extends View {
                 target.classList.add('is-invalid');
             } else if (validarCPF(target.value)) {
                 try {
-                    const cliente = await this.buscarPeloCPF(target.value);
+                    const cliente: Cliente = await this.buscarPeloCPF(target.value);
     
                     target.classList.remove('is-invalid');
                     target.classList.add('is-valid');
 
                     inputClienteId.value = cliente.id.toString();
-                    inputLimiteCredito.value = cliente.limiteCredito;
+                    inputLimiteCredito.value = cliente.limiteCredito.toString();
 
                     this.atualizarParcelas(simularEmprestimo);
     
-                    const today = new Date();
-                    const nascimento = new Date(cliente.dataNascimento);
-    
-                    let idade = today.getFullYear() - nascimento.getFullYear();
-                    if (new Date(today.getFullYear(), today.getMonth(), today.getDate()) < new Date(today.getFullYear(), nascimento.getMonth(), nascimento.getDate()))
-                        idade--;
-    
-                    inputCPF.value = `${inputCPF.value} | ${cliente.nome}, ${idade} anos`;
+                    inputCPF.value = `${inputCPF.value} | ${cliente.nome}, ${cliente.idade} anos`;
 
                     const divLimiteCredito = <HTMLInputElement> document.getElementById('divLimiteCredito');
                     const limiteCredito = <HTMLInputElement> document.getElementById('limiteCredito');

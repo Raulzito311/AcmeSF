@@ -1,16 +1,43 @@
 <div class="titulo">
-    <h3>Listagem de Empréstimos</h3>
-    <button type="button" class="btn btn-outline-success" id="solicitar">Realizar Novo Empréstimo</button>
+    <h3>Visualizar Empréstimo</h3>
+    <!-- <button type="button" class="btn btn-outline-success" id="pagar">Pagar Parcela</button> -->
 </div>
+<div class="row mb-4">
+    <div class="col-12 col-md-6">
+        <div class="mb-3">
+            <strong>Valor do Empréstimo:</strong>
+            <span id="valorEmprestimo">R$ 0,00</span>
+        </div>
+        <div class="mb-3">
+            <strong>Valor com Juros:</strong>
+            <span id="valorComJuros">R$ 0,00</span>
+        </div>
+        <div class="mb-3">
+            <strong>Data do Emprestimo:</strong>
+            <span id="dataEmprestimo">R$ 0,00</span>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="mb-3">
+            <strong>Cliente:</strong>
+            <span id="cliente">Cliente</span>
+        </div>
+        <div class="mb-3">
+            <strong>Forma de Pagamento:</strong>
+            <span id="formaDePagamento">Forma de Pagamento</span>
+        </div>
+    </div>
+</div>
+<h4>Parcelas</h4>
 <table class="table">
     <thead>
         <tr class="row">
-            <th class="col">Data e Hora</th>
-            <th class="col">Cliente</th>
-            <th class="col">CPF</th>
-            <th class="col">Valor Empréstimo (R$)</th>
-            <th class="col">Forma de Pagamento</th>
-            <th class="col">Valor Final (R$)</th>
+            <th class="col-1">#</th>
+            <th class="col">Valor</th>
+            <th class="col">Data de Vencimento</th>
+            <th class="col">Status</th>
+            <th class="col">Usuário do Pagamento</th>
+            <th class="col">Horário do Pagamento</th>
         </tr>
     </thead>
     <tbody>
