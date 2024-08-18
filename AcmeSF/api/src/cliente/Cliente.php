@@ -100,6 +100,7 @@ class Cliente{
 		if (isset($body->limiteCredito)) {
 			try {
 				$cliente->limiteCredito = $body->limiteCredito;
+				$cliente->limiteCreditoMaximo = $body->limiteCredito;
 			} catch (TypeError | Exception $ex) {
 				throw new DataException('O limite de crédito deve ser um número decimal (limiteCredito)', $ex);
 			}
