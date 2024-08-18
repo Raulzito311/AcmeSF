@@ -76,7 +76,7 @@ export class VisualizarEmprestimoView extends View {
         document.getElementById('valorEmprestimo')!.innerText = this.emprestimo.valorEmprestimo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         document.getElementById('valorComJuros')!.innerText = this.emprestimo.valorComJuros!.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         document.getElementById('dataEmprestimo')!.innerText = this.emprestimo.dataHora.toLocaleDateString(new Intl.Locale('pt-BR'));
-        document.getElementById('cliente')!.innerText = `${this.emprestimo.cliente.nome}, ${this.emprestimo.cliente.idade}`;
+        document.getElementById('cliente')!.innerText = `${this.emprestimo.cliente.nome}, ${this.emprestimo.cliente.idade} anos`;
         document.getElementById('formaDePagamento')!.innerText = `${this.emprestimo.formaDePagamento.descricao} | ${100 * this.emprestimo.formaDePagamento.juros}% de juros`;
     }
     
