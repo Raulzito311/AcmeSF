@@ -12,7 +12,7 @@ class AuthView extends View {
 
     // Output
 
-    public function loginSuccess(Usuario $usuario): void {
+    public function loginSuccess($usuario): void {
         $this->write($usuario, 201);
     }
 

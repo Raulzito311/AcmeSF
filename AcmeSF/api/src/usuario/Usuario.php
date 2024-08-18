@@ -9,6 +9,10 @@ class Usuario {
     public static function of(UsuarioDTO $dto): Usuario {
         return new Usuario($dto->id, $dto->nome, Permissao::from($dto->permissao));
     }
+
+    public function withoutId() {
+        return [ 'nome' => $this->nome, 'permissao' => $this->permissao ];
+    }
 }
 
 ?>

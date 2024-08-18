@@ -41,11 +41,23 @@ class AuthController {
         $this->session->registrarUsuario($usuario);
 
         
-        $this->view->loginSuccess($usuario);
+        $this->view->loginSuccess($usuario->withoutId());
     }
 
     public function logout(): void {
         $this->session->removerUsuario();
+        $this->view->noContent();
+    }
+
+    public function buscarUsuarioRegistrado(): void {
+        $usuario = $this->session->buscarUsuarioRegistrado();
+
+        if (!$usuario) {
+            $this->view->unauthorized();
+            return;
+        }
+
+        $this->view->write($usuario->withoutId());
     }
 
     public function estaLogado(bool $retornarErro = false): bool {
