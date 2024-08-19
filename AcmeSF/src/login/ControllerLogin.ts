@@ -22,6 +22,9 @@ export class ControllerLogin extends Controller {
             try {
                 await authService.login(credenciais);
             } catch (errorMessage) {
+                if ((<string> errorMessage).includes('401'))
+                    errorMessage = 'Login ou senha inválidos';
+                
                 this.alert(<string> errorMessage, 'danger');
                 return;
             }
