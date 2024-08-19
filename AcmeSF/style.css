@@ -1,6 +1,9 @@
-.alert {
-    position: absolute;
+#alert-container {
     margin-top: 20px;
+}
+
+#alert-container > .alert {
+    width: fit-content;
 }
 
 .hidden {

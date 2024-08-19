@@ -18,7 +18,7 @@ export class View {
     }
 
     public alert(message: string, type: string, shouldDisapear: boolean = true): void {
-        const main = <HTMLElement> document.querySelector('main');
+        const alertContainer = <HTMLElement> document.querySelector('#alert-container');
         
         const alert = document.createElement('div');
         alert.classList.add('alert');
@@ -26,8 +26,7 @@ export class View {
 
         alert.innerText = message;
 
-        main.appendChild(alert);
-
+        alertContainer.appendChild(alert);
         
         if (shouldDisapear) {
             setTimeout(() => {
@@ -41,8 +40,8 @@ export class View {
                 }, 50);
                 setTimeout(() => {
                     alert.remove();
-                }, 600);
-            }, 2500);
+                }, 550);
+            }, 1500);
         }
     }
     
