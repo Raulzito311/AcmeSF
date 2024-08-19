@@ -1,24 +1,20 @@
 import { expect, test } from '@playwright/test';
+import { logarNoSistema } from '../util';
 
 test.describe( 'verifica parcelas', () => {
     test( 'verifica se mostra as parcelas', async ({page}) => {
-        
-        await page.goto('http://localhost:5173/');
+        await logarNoSistema(page);
     
         await page.click('#solicitar');
 
         await page.fill('#valorEmprestimo', '1000');
         await page.keyboard.press('Tab');
     
-        await page.selectOption('#formaDePagamento', '1');
+        await page.selectOption('#formaDePagamento', '5');
 
-        const mensagem = await page.$('#parcelas');
+        await page.waitForTimeout(1000);
 
-        expect(mensagem).not.toBeNull();
-
-        const text = await mensagem!.textContent();
-
-        expect(text).toContain('Parcelas:');
+        expect(page.locator('#parcelas')).toContainText('Parcelas:');
     });
 });
 

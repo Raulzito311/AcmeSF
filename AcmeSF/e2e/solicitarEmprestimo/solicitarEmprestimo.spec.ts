@@ -1,35 +1,33 @@
 import { expect, test } from '@playwright/test';
+import { logarNoSistema } from '../util';
 
 
-test.describe( 'realizar emprestimo', () => {
+test.describe( 'solicitar emprestimo', () => {
 
-    test( 'realizar emprestimo', async ({page}) => {
-
-        await page.goto('http://localhost:5173/');
-
-        await page.waitForTimeout(2000);
+    test( 'solicitar emprestimo', async ({page}) => {
+        await logarNoSistema(page);
     
         await page.click('#solicitar');
 
         await page.waitForTimeout(2000);
     
         await page.fill('#cpf', '06214836725');
-        await page.fill('#valorEmprestimo', '4499.99');
-        await page.selectOption('#formaDePagamento', '5');
 
         await page.waitForTimeout(1000);
+
+        await page.fill('#valorEmprestimo', '4499.99');
+
+        await page.waitForTimeout(1000);
+
+        await page.selectOption('#formaDePagamento', '1');
+
+        await page.waitForTimeout(3000);
     
-        await page.click('#realizarEmprestimo');
+        await page.locator('#realizarEmprestimo').click(); // Aparentemente não está clicando no botão...
 
-        await page.waitForTimeout(1500);
-    
-        const alert = await page.$('.alert');
+        await page.waitForTimeout(2000);
 
-        expect(alert).not.toBeNull();
-
-        const text = await alert!.textContent();
-
-        expect(text).toContain('Empréstimo realizado com sucesso');
+        expect(page.locator('.alert-success')).toContainText('Empréstimo realizado com sucesso');
 
         const firstRow = await page.locator('table tbody tr:nth-child(1) td').all();
         

@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { logarNoSistema } from '../util';
 
 test.describe( 'verificar tela de listagem', () => {
 
     test( 'verifica se cai na tela de listagem', async ({page}) => {
-
-        await page.goto('http://localhost:5173/');
+        await logarNoSistema(page);
     
         const mensagem = await page.$('h3');
         const botao = await page.$('#solicitar');
@@ -20,8 +20,7 @@ test.describe( 'verificar tela de listagem', () => {
     });
 
     test( 'verifica se a tabela esta visisvel', async ({page}) => {
-
-        await page.goto('http://localhost:5173/');
+        await logarNoSistema(page);
     
         const tabela = await page.$('.table');
 

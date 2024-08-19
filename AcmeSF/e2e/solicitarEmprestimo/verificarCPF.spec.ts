@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
+import { logarNoSistema } from '../util';
 
 
 test.describe( 'validar cpf', () => {
 
     test( 'cpf invalido', async ({page}) => {
-
-        await page.goto('http://localhost:5173/');
+        await logarNoSistema(page);
     
         await page.click('#solicitar');
 
@@ -26,8 +26,7 @@ test.describe( 'validar cpf', () => {
     });
 
     test( 'cpf valido mas não pertence a nenhum cliente cadastrado', async ({page}) => {
-
-        await page.goto('http://localhost:5173/');
+        await logarNoSistema(page);
     
         await page.click('#solicitar');
 
@@ -48,8 +47,7 @@ test.describe( 'validar cpf', () => {
     });
 
     test( 'Cpf vazio', async ({page}) => {
-        
-        await page.goto('http://localhost:5173/');
+        await logarNoSistema(page);
     
         await page.click('#solicitar');
 
