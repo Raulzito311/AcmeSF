@@ -33,7 +33,7 @@ class App {
         $app
             ->use(cors(['origin' => 'http://localhost:5173', 'allowedHeaders' => 'content-type']))
                 ->route('/auth')
-                    ->get('/', function(HttpRequest $req, HttpResponse $res) {
+                    ->get('/', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
                         $view = new AuthView($req, $res);
                         $controller = new AuthController($view, SessionFILE::get());
                         $controller->buscarUsuarioRegistrado();
