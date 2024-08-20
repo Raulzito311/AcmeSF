@@ -67,6 +67,11 @@ class App {
                         $controller = new EmprestimoController($view);
                         $controller->buscarTodos();
                     })
+                    ->get( '/relatorio', $precisaEstarLogadoGerente, function(HttpRequest $req, HttpResponse $res) {
+                        $view = new EmprestimoView($req, $res);
+                        $controller = new EmprestimoController($view);
+                        $controller->buscarRelatorio();
+                    })
                     ->put( '/simular', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
                         $view = new EmprestimoView($req, $res);
                         $controller = new EmprestimoController($view);

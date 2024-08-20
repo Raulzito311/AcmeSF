@@ -44,6 +44,20 @@ class EmprestimoController extends Controller {
         $this->view->created();
     }
 
+    public function buscarRelatorio(): void {
+        if (!isset($this->repository)) return;
+
+        try {
+            $periodo = $this->view->readPeriodo();
+
+            $objs = $this->repository->buscarRelatorio($periodo);
+        } catch (Exception $ex) {
+            $this->view->error($ex->getCode(), $ex->getMessage());
+            return;
+        }
+        $this->view->writeAll($objs);
+    }
+
     public function simular(): void {
         if (!isset($this->repository)) return;
 

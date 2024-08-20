@@ -8,20 +8,6 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
         $this->pdo = Connection::get();
     }
 
-    public function buscarPeloId(string $id): Emprestimo|false {
-        try{
-            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, c.telefone, c.email, c.endereco, c.limiteCredito, f.descricao, f.meses, f.juros FROM emprestimo e JOIN cliente c ON (e.clienteId = c.id) JOIN forma_de_pagamento f ON (e.formaDePagamentoId = f.id) WHERE e.id = ?');
-            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
-            $ps->execute([$id]);
-    
-            $dto = $ps->fetchObject(EmprestimoDTO::class);
-            
-            return $dto ? Emprestimo::of($dto) : $dto;
-        }catch(PDOException $e){
-            throw new RepositoryException("Erro ao consultar emprestimo com id $id | " . $e->getMessage());
-        }
-    }
-
     /**
      * @return Emprestimo[]
      */
@@ -38,6 +24,35 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
             }, $dtos);
         }catch(PDOException $e){
             throw new RepositoryException('Erro ao consultar emprestimos | ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * @return Emprestimo[]
+     */
+    public function buscarRelatorio(array $periodo): array {
+        try{
+            $ps = $this->pdo->prepare('SELECT DATE(e.dataHora) AS data, COUNT(*) AS totalEmprestimos, SUM(e.valorEmprestimo) AS valorTotalEmprestimos, SUM(e.valorEmprestimo * (1 + f.juros)) AS valorTotalComJuros FROM emprestimo e JOIN forma_de_pagamento f ON e.formaDePagamentoId = f.id WHERE DATE(e.dataHora) BETWEEN :dataInicio AND :dataFim GROUP BY DATE(e.dataHora) ORDER BY DATE(e.dataHora) ASC;');
+            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, RelatorioEmprestimos::class);
+            $ps->execute($periodo);
+
+            return $ps->fetchAll();
+        }catch(PDOException $e){
+            throw new RepositoryException('Erro ao consultar emprestimos | ' . $e->getMessage());
+        }
+    }
+
+    public function buscarPeloId(string $id): Emprestimo|false {
+        try{
+            $ps = $this->pdo->prepare('SELECT e.id, e.clienteId, e.formaDePagamentoId, e.valorEmprestimo, e.dataHora, c.cpf, c.nome, c.dataNascimento, c.telefone, c.email, c.endereco, c.limiteCredito, f.descricao, f.meses, f.juros FROM emprestimo e JOIN cliente c ON (e.clienteId = c.id) JOIN forma_de_pagamento f ON (e.formaDePagamentoId = f.id) WHERE e.id = ?');
+            $ps->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, EmprestimoDTO::class);
+            $ps->execute([$id]);
+    
+            $dto = $ps->fetchObject(EmprestimoDTO::class);
+            
+            return $dto ? Emprestimo::of($dto) : $dto;
+        }catch(PDOException $e){
+            throw new RepositoryException("Erro ao consultar emprestimo com id $id | " . $e->getMessage());
         }
     }
 
