@@ -1,0 +1,24 @@
+<div class="titulo">
+    <h3>Relatório de Empréstimos</h3>
+</div>
+<form id="formEmprestimo" class="needs-validation" novalidate>
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-md-5">
+            <div class="form-floating">
+                <input type="date" class="form-control" id="dataInicio" pattern="dd-mm-yyyy" required>
+                <label for="dataInicio">Inicio</label>
+                <div class="invalid-feedback" id="invalidDataInicio"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div class="form-floating">
+                <input type="date" class="form-control" id="dataFim" pattern="dd-mm-yyyy" required>
+                <label for="dataFim">Fim</label>
+                <div class="invalid-feedback" id="invalidDataFim"></div>
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <button type="submit" class="btn btn-outline-success" id="gerarRelatorio">Gerar Relatório</button>
+        </div>
+    </div>
+</form>

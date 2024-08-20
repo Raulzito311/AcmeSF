@@ -1,4 +1,5 @@
 import { authService } from "../auth/AuthService";
+import { Permissao } from "../auth/Permissao";
 import { carregarPaginaDeLogin } from "../login/login";
 import { Controller } from "../util/Controller";
 import { NavView } from "./NavView";
@@ -9,11 +10,22 @@ export class ControllerNav extends Controller {
 
     constructor() {
         super();
-        this.view = new NavView(false); // TODO: Checar se user tá logado
+        this.view = new NavView(); // TODO: Checar se user tá logado
     }
 
     public async init(): Promise<void> {
         await this.view.load();
+
+        try {
+            const usuarioLogado = await authService.getUsuarioLogado();
+    
+            if (usuarioLogado.permissao === Permissao.GERENTE)
+                this.view.liberarAcessoAoRelatorioDeEmprestimos();
+        } catch (errorMessage) {
+            console.log(errorMessage);
+            
+            carregarPaginaDeLogin();
+        }
 
         this.view.adicionarListenerParaLogout(async () => {
             try {
@@ -25,9 +37,7 @@ export class ControllerNav extends Controller {
                     
             await carregarPaginaDeLogin();
         });
-    }
 
-    public show(): void {
         this.view.show();
     }
 

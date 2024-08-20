@@ -1,7 +1,7 @@
 import { Emprestimo } from "../emprestimo/Emprestimo";
 import { emprestimosService } from "../emprestimo/EmprestimosService";
 import { carregarPaginaDeLogin } from "../login/login";
-import { showNav } from "../nav/nav";
+import { carregarNav } from "../nav/nav";
 import { Controller } from "../util/Controller";
 import { VisualizarEmprestimoView } from "./VisualizarEmprestimoView";
 
@@ -20,7 +20,7 @@ export class ControllerVisualizarEmprestimo extends Controller {
         try {
             const parcelas = await emprestimosService.buscarParcelasDoEmprestimo(this.emprestimo.id);
 
-            showNav();
+            await carregarNav();
             await this.view.load();
             this.view.listarParcelas(parcelas, async () => {
                 try {

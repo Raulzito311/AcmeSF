@@ -8,12 +8,6 @@ export async function carregarNav(): Promise<ControllerNav> {
     return controller;
 }
 
-export function showNav(): void {
-    const controller = new ControllerNav();
-    
-    controller.show();
-}
-
 export function hideNav(): void {
     const controller = new ControllerNav();
     

@@ -1,6 +1,6 @@
 import { emprestimosService } from "../emprestimo/EmprestimosService";
 import { carregarPaginaDeLogin } from "../login/login";
-import { showNav } from "../nav/nav";
+import { carregarNav } from "../nav/nav";
 import { Controller } from "../util/Controller";
 import { ListarEmprestimosView } from "./ListarEmprestimosView";
 
@@ -17,7 +17,7 @@ export class ControllerListarEmprestimos extends Controller {
         try {
             const emprestimos = await emprestimosService.buscarTodos();
 
-            showNav();
+            await carregarNav();
             await this.view.load();
             this.view.listarEmprestimos(emprestimos);
         } catch (errorMessage) {
