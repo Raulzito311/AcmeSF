@@ -4,6 +4,6 @@
     font-size: 1.2rem;
 }
 
-canvas {
-    max-height: 500px;
+#graficoRelatorio {
+    max-height: 450px;
 }

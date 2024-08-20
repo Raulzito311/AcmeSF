@@ -22,3 +22,32 @@
         </div>
     </div>
 </form>
+
+<div id="graficoRelatorio" class="row justify-content-center mb-4"></div>
+
+<div id="resumo" class="row justify-content-center mb-4 hidden">
+    <div class="col-5 col-md-3">
+        <strong>Total do Período:</strong>
+        <span id="totalPeriodo">R$ 0,00</span>
+    </div>
+    <div class="col-5 col-md-3">
+        <strong>Média do Período:</strong>
+        <span id="mediaPeriodo">R$ 0,00</span>
+    </div>
+    <div class="col-3">
+        <button id="mostrarDados" class="btn btn-outline-success" type="button">Mostrar Dados</button>
+    </div>
+</div>
+
+<table id="dados" class="table hidden">
+    <thead>
+        <tr class="row justify-content-center">
+            <th class="col-1">#</th>
+            <th class="col-2">Data</th>
+            <th class="col-2">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>

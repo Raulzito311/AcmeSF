@@ -6,8 +6,6 @@ class AuthService {
     private usuarioLogado: Usuario|null = null; // Colocar em um cookie
 
     public async getUsuarioLogado(): Promise<Usuario> {
-        console.log('Buscar usuário logado: ', this.usuarioLogado);
-        
         if (this.usuarioLogado != null) return this.usuarioLogado;
 
         const res = await fetch(`${API}/auth`, { credentials: 'include' });
@@ -19,8 +17,6 @@ class AuthService {
         const usuarioJson: any = await res.json();
 
         this.usuarioLogado = Usuario.of(usuarioJson);
-
-        console.log('Usuário logado: ', this.usuarioLogado);
 
         return this.usuarioLogado;
     }

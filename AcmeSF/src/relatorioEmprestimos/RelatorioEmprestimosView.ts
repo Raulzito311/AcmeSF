@@ -11,24 +11,30 @@ export class RelatorioEmprestimosView extends View {
     public adicionarListenerParaGerarRelatorio(buscarRelatorio: Function) {
         document.getElementById('formRelatorio')?.addEventListener('submit', async (event) => {
             event.preventDefault();
+            document.getElementById('dados')?.classList.add('hidden');
 
             const inputInicio = <HTMLInputElement> document.getElementById('dataInicio');
             const inputFim = <HTMLInputElement> document.getElementById('dataFim');
 
-            const main = <HTMLElement> document.querySelector('main');
-
             const relatorios: RelatorioEmprestimo[] = await buscarRelatorio(inputInicio.value, inputFim.value);
 
-            document.querySelector('canvas')?.remove();
+            const graficoRelatorio = <HTMLDivElement> document.getElementById('graficoRelatorio');
+            graficoRelatorio.innerHTML = '';
+
+            const resizeChart = () => {
+                graficoRelatorio.style.height = `${(graficoRelatorio.clientWidth) / 2}px`;
+            };
 
             const canvas = <HTMLCanvasElement> document.createElement('canvas');
 
-            main.appendChild(canvas);
+            resizeChart();
+            window.addEventListener('resize', () => { resizeChart(); });
+            graficoRelatorio.appendChild(canvas);
 
             new Chart(canvas, {
                 type: 'bar',
                 data: {
-                    labels: relatorios.map(relatorio => relatorio.data),
+                    labels: relatorios.map(relatorio => new Date(`${relatorio.data} 00:00:00-0300`).toLocaleDateString()),
                     datasets: [{
                         label: 'Valor Total de Empréstimos',
                         data: relatorios.map(relatorio => relatorio.valorTotalComJuros),
@@ -48,15 +54,6 @@ export class RelatorioEmprestimosView extends View {
                 }
             });
 
-            document.getElementById('resumo')?.remove();
-            document.getElementById('dados')?.remove();
-            const resumoRelatorioHTML = await (await fetch('/src/relatorioEmprestimos/resumoRelatorio.html')).text();
-            const div = document.createElement('div');
-            div.id = 'resumo';
-            div.classList.add('row', 'justify-content-center', 'mt-4', 'mb-4');
-            div.innerHTML = resumoRelatorioHTML;
-            main.append(div);
-
             const valorTotalComJuros = relatorios.map(relatorio => relatorio.valorTotalComJuros).reduce((a, b) => a + b);
             const mediaPeriodo = valorTotalComJuros / relatorios.map(relatorios => relatorios.totalEmprestimos).reduce((a, b) => a + b);
 
@@ -65,13 +62,11 @@ export class RelatorioEmprestimosView extends View {
             document.getElementById('mediaPeriodo')!.innerText = mediaPeriodo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
             document.getElementById('mostrarDados')?.addEventListener('click', async (event) => {
-                const dadosRelatorioHTML = await (await fetch('/src/relatorioEmprestimos/dadosRelatorio.html')).text();
-                const div = document.createElement('div');
-                div.id = 'dados';
-                div.innerHTML = dadosRelatorioHTML;
-                main.append(div);
+                document.getElementById('dados')?.classList.add('hidden');
 
                 const tbody = <HTMLTableSectionElement> document.querySelector('tbody');
+
+                tbody.innerHTML = '';
 
                 let id = 1;
                 for (const relatorio of relatorios) {
@@ -93,7 +88,11 @@ export class RelatorioEmprestimosView extends View {
                     tr.append(tdId, tdData, tdTotal);
                     tbody.appendChild(tr);
                 }
+
+                document.getElementById('dados')?.classList.remove('hidden');
             });
+
+            document.getElementById('resumo')?.classList.remove('hidden');
             
         });
     }
