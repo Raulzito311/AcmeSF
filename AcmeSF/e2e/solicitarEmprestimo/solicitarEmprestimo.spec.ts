@@ -19,15 +19,17 @@ test.describe( 'solicitar emprestimo', () => {
 
         await page.waitForTimeout(1000);
 
-        await page.selectOption('#formaDePagamento', '1');
+        await page.focus('#formaDePagamento');
 
-        await page.waitForTimeout(3000);
+        await page.selectOption('#formaDePagamento', '5');
+
+        await page.waitForTimeout(1000);
     
-        await page.locator('#realizarEmprestimo').click(); // Aparentemente não está clicando no botão...
+        await page.click('#realizarEmprestimo'); // Aparentemente não está clicando no botão...
 
         await page.waitForTimeout(2000);
 
-        expect(page.locator('.alert-success')).toContainText('Empréstimo realizado com sucesso');
+        await expect(page.locator('.alert-success')).toContainText('Empréstimo realizado com sucesso');
 
         const firstRow = await page.locator('table tbody tr:nth-child(1) td').all();
         
@@ -38,12 +40,12 @@ test.describe( 'solicitar emprestimo', () => {
         expect(cpf).toContain('062.148.367-25');
 
         const valorEmprestimo = await firstRow[3].innerText();
-        expect(valorEmprestimo).toContain('4499.99');
+        expect(valorEmprestimo).toContain('4.499,99');
 
         const formaDePagamento = await firstRow[4].innerText();
         expect(formaDePagamento).toContain('5 vezes');
 
         const valorFinal = await firstRow[5].innerText();
-        expect(valorFinal).toContain('4837.49');
+        expect(valorFinal).toContain('4.837,49');
     });
 });

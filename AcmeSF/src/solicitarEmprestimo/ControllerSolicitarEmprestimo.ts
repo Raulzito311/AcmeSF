@@ -20,15 +20,6 @@ export class ControllerSolicitarEmprestimo extends Controller {
         const formasdePagamento = await formasDePagamentoService.buscarTodos();
 
         await this.view.load();
-        
-        this.view.exibirSolicitacaoDeEmprestimo(formasdePagamento, async (valorEmprestimo: number, formaDePagamentoId: number) => {
-            try {
-                return await emprestimosService.simularEmprestimo(valorEmprestimo, formaDePagamentoId);
-            } catch (errorMessage) {
-                this.alert(<string> errorMessage, 'danger');
-                return [];
-            }
-        });
 
         this.view.adicionarListenerParaSolicitacao(async (emprestimo: EmprestimoJson) => {
             try {
@@ -41,6 +32,15 @@ export class ControllerSolicitarEmprestimo extends Controller {
             const controllerListar = await carregarPaginaDeListarEmprestimos();
 
             controllerListar.alert('Empréstimo realizado com sucesso', 'success');
+        });
+        
+        this.view.exibirSolicitacaoDeEmprestimo(formasdePagamento, async (valorEmprestimo: number, formaDePagamentoId: number) => {
+            try {
+                return await emprestimosService.simularEmprestimo(valorEmprestimo, formaDePagamentoId);
+            } catch (errorMessage) {
+                this.alert(<string> errorMessage, 'danger');
+                return [];
+            }
         });
     }
 }

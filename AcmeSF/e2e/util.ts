@@ -10,5 +10,5 @@ export async function logarNoSistema(page: Page) {
 
     await page.click('#entrar');
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 }
