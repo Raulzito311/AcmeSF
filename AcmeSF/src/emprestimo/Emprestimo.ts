@@ -38,3 +38,10 @@ export type EmprestimoJson = {
 	dataHora: string | Date;
 	valorComJuros?: number;
 }
+
+export type RelatorioEmprestimo = {
+	data: string;
+	totalEmprestimos: number;
+	valorTotalEmprestimos: number;
+	valorTotalComJuros: number;
+}

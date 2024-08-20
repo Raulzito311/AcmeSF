@@ -15,6 +15,9 @@ export class ControllerRelatorioEmprestimos extends Controller {
         try {
             await this.view.load();
 
+            this.view.adicionarListenerParaGerarRelatorio(async (dataInicio: string, dataFim: string) => {
+                return await emprestimosService.buscarRelatorio(dataInicio, dataFim);
+            })
             // TODO: Adicionar listener para buscar emprestimos do período
         } catch (errorMessage) {
             this.alert(<string> errorMessage, 'danger');

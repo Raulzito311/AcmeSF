@@ -1,4 +1,4 @@
-import { Emprestimo, EmprestimoJson } from "./Emprestimo";
+import { Emprestimo, EmprestimoJson, RelatorioEmprestimo } from "./Emprestimo";
 import { API } from "../util/API";
 import { Service } from "../util/Service";
 import { Parcela } from "../parcela/Parcela";
@@ -34,6 +34,16 @@ class EmprestimosService implements Service<Emprestimo> {
         }
 
         return emprestimos;
+    }
+
+    async buscarRelatorio(dataInicio: string, dataFim: string): Promise<RelatorioEmprestimo[]> {
+        const res = await fetch(`${API}/emprestimos/relatorio?dataInicio=${dataInicio}&dataFim=${dataFim}`, { credentials: 'include' });
+        if (!res.ok) {
+            const text = (await res.text()).trim();
+            throw `${text.length > 0 ? text : `${res.status} ${res.statusText}`}`;
+        }
+
+        return await res.json();
     }
 
     async adicionar(emprestimo: EmprestimoJson): Promise<void> {

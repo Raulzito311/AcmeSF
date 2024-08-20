@@ -45,7 +45,7 @@ export class NavView extends View {
 
     public liberarAcessoAoRelatorioDeEmprestimos() {
         const relatorioEmprestimos = <HTMLAnchorElement> document.getElementById('relatorioEmprestimos');
-        relatorioEmprestimos.classList.remove('invisible');
+        relatorioEmprestimos.classList.remove('hidden');
         relatorioEmprestimos.addEventListener('click', () => {
             carregarPaginaDeRelatorioDeEmprestimos();
         });

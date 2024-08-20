@@ -1,13 +1,13 @@
 <div class="titulo">
     <h3>Realizar Empréstimo</h3>
-    <div id="divLimiteCredito" class="invisible">
+    <div id="divLimiteCredito" class="hidden">
         <i>Limite de Crédito: <span id="limiteCredito"></span> (<span id="porcentagemLimiteCredito"></span>%) / <span id="limiteCreditoMaximo"></span></i>
     </div>
 </div>
 <form id="formEmprestimo" class="needs-validation" novalidate>
-    <input type="text" class="invisible" id="inputClienteId">
-    <input type="number" class="invisible" id="inputLimiteCredito">
-    <input type="number" class="invisible" id="inputValorFinal">
+    <input type="text" class="hidden" id="inputClienteId">
+    <input type="number" class="hidden" id="inputLimiteCredito">
+    <input type="number" class="hidden" id="inputValorFinal">
     
     <div class="row g-3 mb-3">
         <div class="col-12 col-md-6">
@@ -42,7 +42,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-md-3">
-            <button type="submit" class="btn btn-primary" id="realizarEmprestimo">Realizar Empréstimo</button>
+            <button type="submit" class="btn btn-outline-success" id="realizarEmprestimo">Realizar Empréstimo</button>
         </div>
     </div>
 </form>

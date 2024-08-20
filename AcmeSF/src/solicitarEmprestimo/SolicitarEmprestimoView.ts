@@ -89,7 +89,7 @@ export class SolicitarEmprestimoView extends View {
                         divLimiteCredito.classList.remove('valid');
                     }
                     
-                    divLimiteCredito.classList.remove('invisible');
+                    divLimiteCredito.classList.remove('hidden');
                 } catch (error) {
                     inputClienteId.value = '';
                     inputLimiteCredito.value = '';
