@@ -58,7 +58,7 @@ class ParcelaController {
                 $clienteRepository = new ClienteRepositoryBDR();
                 $clienteRepository->ajustarLimiteDoClienteDoEmprestimo($parcela->valor, $emprestimoId);
             });
-        } catch (RepositoryException $ex) {
+        } catch (Exception $ex) {
             $this->view->error($ex->getCode(), $ex->getMessage());
             return;
         }
