@@ -6,7 +6,7 @@ interface ParcelaRepository{
      * @return Parcela[]
      */
     function buscarParcelasDoEmprestimo(int $emprestimoId): array;
-    function pagarParcela(int $usuarioPagamentoId, int $emprestimoId): bool;
+    function pagarParcela(int $usuarioPagamentoId, int $parcelaId): bool;
     /**
      * @param Parcela[] $parcela
      * 

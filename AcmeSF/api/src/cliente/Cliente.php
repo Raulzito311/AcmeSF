@@ -1,6 +1,12 @@
 <?php
 
-class Cliente{
+
+use phputil\traits\WithBuilder;
+
+class Cliente {
+
+	use WithBuilder;
+	
     public readonly int $id;
     public readonly string $cpf;
     public readonly string $nome;

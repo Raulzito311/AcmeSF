@@ -5,7 +5,8 @@ use phputil\router\FakeHttpResponse;
 
 require_once "vendor/autoload.php";
 
-/* TODO describe('ClienteController', function() {
+/* Estes testes começaram a dar erro por conta da autenticação
+describe('ClienteController', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);

@@ -43,7 +43,7 @@ class App {
                         $controller = new AuthController($view, SessionFILE::get());
                         $controller->login();
                     })
-                    ->delete('/logout', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) { // TODO: Está dando erro de CORS
+                    ->delete('/logout', $precisaEstarLogado, function(HttpRequest $req, HttpResponse $res) {
                         $view = new AuthView($req, $res);
                         $controller = new AuthController($view, SessionFILE::get());
                         $controller->logout();

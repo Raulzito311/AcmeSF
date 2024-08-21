@@ -28,7 +28,7 @@ class EmprestimoRepositoryBDR implements EmprestimoRepository {
     }
 
     /**
-     * @return Emprestimo[]
+     * @return RelatorioEmprestimos[]
      */
     public function buscarRelatorio(array $periodo): array {
         try{

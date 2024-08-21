@@ -6,7 +6,7 @@ describe('EmprestimoRepositoryBDR', function() {
         $sql = file_get_contents('dados.sql');
         Connection::get()->exec($sql);
     });
-    it('retrieves an Empresstimo by id', function() {
+    it('retrieves an Emprestimo by id', function() {
         $repo = new EmprestimoRepositoryBDR();
         $emprestimo = $repo->buscarPeloId(1);
         expect($emprestimo)->toBeAnInstanceOf(Emprestimo::class);
@@ -45,6 +45,17 @@ describe('EmprestimoRepositoryBDR', function() {
         };
         
         expect($func)->toThrow(new DataException(''));
+    });
+    it('retrieves Relatorios de Emprestimos', function() {
+        $repo = new EmprestimoRepositoryBDR();
+        $relatorios = $repo->buscarRelatorio([
+            'dataInicio' => '2024-06-01',
+            'dataFim' => '2024-07-31'
+        ]);
+        
+        expect($relatorios)->toBeAn('array');
+        expect($relatorios)->not->toHaveLength(0);
+        expect($relatorios[0])->toBeAnInstanceOf(RelatorioEmprestimos::class);
     });
 });
 ?>

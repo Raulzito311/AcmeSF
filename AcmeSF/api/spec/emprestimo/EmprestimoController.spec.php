@@ -4,7 +4,7 @@ use phputil\router\FakeHttpRequest;
 use phputil\router\FakeHttpResponse;
 
 require_once "vendor/autoload.php";
-/* TODO:
+/* Estes testes começaram a dar erro por conta da autenticação
 describe('EmprestimoController', function() {
     beforeAll(function() {
         $sql = file_get_contents('dados.sql');
