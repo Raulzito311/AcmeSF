@@ -37,7 +37,7 @@ export class RelatorioEmprestimosView extends View {
                     labels: relatorios.map(relatorio => new Date(`${relatorio.data} 00:00:00-0300`).toLocaleDateString()),
                     datasets: [{
                         label: 'Valor Total de Empréstimos',
-                        data: relatorios.map(relatorio => relatorio.valorTotalComJuros),
+                        data: relatorios.map(relatorio => Number(relatorio.valorTotalComJuros.toFixed(2))),
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
