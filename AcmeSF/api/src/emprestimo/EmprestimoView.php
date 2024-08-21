@@ -24,10 +24,6 @@ class EmprestimoView extends View {
             'dataFim' => $dataFim
         ];
     }
-
-    public function readId(): string {
-        return $this->readParam('id');
-    }
 }
 
 ?>
