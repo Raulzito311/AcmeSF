@@ -10,7 +10,7 @@ export class ControllerNav extends Controller {
 
     constructor() {
         super();
-        this.view = new NavView(); // TODO: Checar se user tá logado
+        this.view = new NavView();
     }
 
     public async init(): Promise<void> {
