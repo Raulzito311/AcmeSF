@@ -54,8 +54,9 @@ export class RelatorioEmprestimosView extends View {
                 }
             });
 
-            const valorTotalComJuros = relatorios.map(relatorio => relatorio.valorTotalComJuros).reduce((a, b) => a + b);
-            const mediaPeriodo = valorTotalComJuros / relatorios.map(relatorios => relatorios.totalEmprestimos).reduce((a, b) => a + b);
+            const valorTotalComJuros = relatorios.map(relatorio => relatorio.valorTotalComJuros).reduce((a, b) => a + b, 0);
+            const totalEmprestimos = relatorios.map(relatorios => relatorios.totalEmprestimos).reduce((a, b) => a + b, 0);
+            const mediaPeriodo = valorTotalComJuros / (totalEmprestimos || 1);
 
             document.getElementById('totalPeriodo')!.innerText = valorTotalComJuros.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
