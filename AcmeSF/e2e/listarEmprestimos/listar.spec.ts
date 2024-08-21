@@ -1,9 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { logarNoSistema } from '../util';
 
-test.describe( 'verificar tela de listagem', () => {
-
-    test( 'verifica se cai na tela de listagem', async ({page}) => {
+test.describe( 'verificar tela de listagem de emprestimos', () => {
+    test( 'verifica se cai na tela de listagem de emprestimos', async ({page}) => {
         await logarNoSistema(page);
     
         const mensagem = await page.$('h3');

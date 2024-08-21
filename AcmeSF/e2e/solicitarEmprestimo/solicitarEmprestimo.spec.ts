@@ -25,7 +25,7 @@ test.describe( 'solicitar emprestimo', () => {
 
         await page.waitForTimeout(1000);
     
-        await page.click('#realizarEmprestimo'); // Aparentemente não está clicando no botão...
+        await page.click('#realizarEmprestimo');
 
         await page.waitForTimeout(2000);
 

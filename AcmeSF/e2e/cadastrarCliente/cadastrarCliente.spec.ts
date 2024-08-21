@@ -32,7 +32,7 @@ test.describe( 'cadastrar cliente', () => {
         await page.fill('#limiteCredito', '50000');
         await page.keyboard.press('Tab');
     
-        await page.click('#cadastrar'); // Aparentemente não está clicando no botão...
+        await page.click('#cadastrar');
 
         await page.waitForTimeout(2000);
 
