@@ -2,9 +2,10 @@ import { expect, test } from '@playwright/test';
 import { logarNoSistema } from '../util';
 
 test.describe( 'verificar tela de listagem de emprestimos', () => {
-    test( 'verifica se cai na tela de listagem de emprestimos', async ({page}) => {
+    test.beforeEach('vai para a página de listar empréstimos', async ({page}) => {
         await logarNoSistema(page);
-    
+    });
+    test( 'verifica se cai na tela de listagem de emprestimos', async ({page}) => {
         const mensagem = await page.$('h3');
         const botao = await page.$('#solicitar');
 
@@ -19,8 +20,6 @@ test.describe( 'verificar tela de listagem de emprestimos', () => {
     });
 
     test( 'verifica se a tabela esta visisvel', async ({page}) => {
-        await logarNoSistema(page);
-    
         const tabela = await page.$('.table');
 
         expect(tabela).not.toBeNull();

@@ -1,16 +1,16 @@
 import { expect, test } from '@playwright/test';
 import { logarNoSistema } from '../util';
 
+test.beforeEach('vai para a página de solicitar emprestimo', async ({page}) => {
+    await logarNoSistema(page);
+
+    await page.click('#solicitar');
+
+    await page.waitForTimeout(2000);
+});
 
 test.describe( 'solicitar emprestimo', () => {
-
     test( 'solicitar emprestimo', async ({page}) => {
-        await logarNoSistema(page);
-    
-        await page.click('#solicitar');
-
-        await page.waitForTimeout(2000);
-    
         await page.fill('#cpf', '06214836725');
 
         await page.waitForTimeout(1000);
@@ -27,7 +27,7 @@ test.describe( 'solicitar emprestimo', () => {
     
         await page.click('#realizarEmprestimo');
 
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(1000);
 
         await expect(page.locator('.alert-success')).toContainText('Empréstimo realizado com sucesso');
 

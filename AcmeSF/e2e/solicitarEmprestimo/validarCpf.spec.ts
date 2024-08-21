@@ -1,16 +1,16 @@
 import { expect, test } from '@playwright/test';
 import { logarNoSistema } from '../util';
 
+test.beforeEach('vai para a página de solicitar emprestimo', async ({page}) => {
+    await logarNoSistema(page);
+
+    await page.click('#solicitar');
+
+    await page.waitForTimeout(2000);
+});
 
 test.describe( 'validar cpf', () => {
-
     test( 'cpf invalido', async ({page}) => {
-        await logarNoSistema(page);
-    
-        await page.click('#solicitar');
-
-        await page.waitForTimeout(2000);
-    
         await page.fill('#cpf', '99999999999');
         await page.keyboard.press('Tab');
 
@@ -26,12 +26,6 @@ test.describe( 'validar cpf', () => {
     });
 
     test( 'cpf valido mas não pertence a nenhum cliente cadastrado', async ({page}) => {
-        await logarNoSistema(page);
-    
-        await page.click('#solicitar');
-
-        await page.waitForTimeout(2000);
-
         await page.fill('#cpf', '987.084.260-74');
         await page.keyboard.press('Tab');
 
@@ -47,12 +41,6 @@ test.describe( 'validar cpf', () => {
     });
 
     test( 'Cpf vazio', async ({page}) => {
-        await logarNoSistema(page);
-    
-        await page.click('#solicitar');
-
-        await page.waitForTimeout(2000);
-    
         const cpfInput = await page.$('#cpf');
         await cpfInput!.fill("");
         await page.keyboard.press('Tab');
