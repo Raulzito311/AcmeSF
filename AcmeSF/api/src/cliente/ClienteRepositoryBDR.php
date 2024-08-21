@@ -60,7 +60,7 @@ class ClienteRepositoryBDR implements ClienteRepository {
 
     function ajustarLimiteDoClienteDoEmprestimo(float $valor, int $emprestimoId): void {
         try {
-            $ps = $this->pdo->prepare('UPDATE cliente SET limiteCredito = limiteCredito + :valor WHERE id = (SELECT clienteId FROM emprestimo WHERE id = :emprestimoId) AND (limiteCredito + :valor) >= 0');
+            $ps = $this->pdo->prepare('UPDATE cliente SET limiteCredito = LEAST(limiteCredito + :valor, limiteCreditoMaximo) WHERE id = (SELECT clienteId FROM emprestimo WHERE id = :emprestimoId) AND (limiteCredito + :valor) >= 0');
             $ps->execute(['valor' => $valor, 'emprestimoId' => $emprestimoId]);
     
             if ($ps->rowCount() <= 0)
