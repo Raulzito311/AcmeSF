@@ -1,4 +1,3 @@
-import { Emprestimo } from "../emprestimo/Emprestimo";
 import { ControllerRelatorioEmprestimos } from "./ControllerRelatorioEmprestimos";
 
 export async function carregarPaginaDeRelatorioDeEmprestimos(): Promise<ControllerRelatorioEmprestimos> {

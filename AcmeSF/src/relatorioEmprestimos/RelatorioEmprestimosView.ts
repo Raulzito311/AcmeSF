@@ -80,13 +80,17 @@ export class RelatorioEmprestimosView extends View {
 
                     const tdData = document.createElement('td');
                     tdData.classList.add('col-2');
-                    tdData.innerText = new Date(relatorio.data).toLocaleDateString('pt-BR');
+                    tdData.innerText = new Date(`${relatorio.data} 00:00:00-0300`).toLocaleDateString('pt-BR');
+
+                    const tdQtd = document.createElement('td');
+                    tdQtd.classList.add('col-2');
+                    tdQtd.innerText = relatorio.totalEmprestimos.toString();
 
                     const tdTotal = document.createElement('td');
                     tdTotal.classList.add('col-2');
                     tdTotal.innerText = relatorio.valorTotalComJuros.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-                    tr.append(tdId, tdData, tdTotal);
+                    tr.append(tdId, tdData, tdQtd, tdTotal);
                     tbody.appendChild(tr);
                 }
 
