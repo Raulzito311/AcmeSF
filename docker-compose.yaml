@@ -1,12 +1,10 @@
 services:
   db:
-    image: mysql
+    image: raulzito311/acmesf-db
+    build: ./db/.
+    ports: 
+      - "3306:3306"
     restart: always
-    volumes:
-      - ./AcmeSF/api/AcmeSF.sql:/docker-entrypoint-initdb.d/AcmeSF.sql
-      - ./AcmeSF/api/dados.sql:/docker-entrypoint-initdb.d/dados.sql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
   phpmyadmin:
     image: phpmyadmin
     ports:
@@ -16,6 +14,7 @@ services:
     environment:
       - PMA_HOST=db
   api:
+    image: raulzito311/acmesf-api
     build: ./AcmeSF/api/.
     depends_on:
       db:
@@ -27,6 +26,7 @@ services:
       - DB_USER=root
       - DB_PASS=root
   app:
+    image: raulzito311/acmesf
     build: ./AcmeSF/.
     depends_on:
       api:
