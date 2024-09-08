@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql
+    restart: always
+    volumes:
+      - ./AcmeSF/api/AcmeSF.sql:/docker-entrypoint-initdb.d/AcmeSF.sql
+      - ./AcmeSF/api/dados.sql:/docker-entrypoint-initdb.d/dados.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 80:80
+    depends_on:
+      - db
+    environment:
+      - PMA_HOST=db
+  api:
+    build: ./AcmeSF/api/.
+    depends_on:
+      db:
+        condition: service_started
+    ports: 
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASS=root
+  app:
+    build: ./AcmeSF/.
+    depends_on:
+      api:
+        condition: service_started
+    ports: 
+      - "5173:5173"
